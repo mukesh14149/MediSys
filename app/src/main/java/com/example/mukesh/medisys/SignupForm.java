@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
@@ -35,6 +36,7 @@ import android.widget.TextView;
 import com.example.mukesh.medisys.data.MediSysContract;
 import com.example.mukesh.medisys.data.MediSysSQLiteHelper;
 
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -112,6 +114,22 @@ public class SignupForm extends AppCompatActivity {
             long newRowId = db.insert(MediSysContract.MediSysEntry.TABLE_NAME, null, values);
             Log.d("SignupForm.java","I am in background");
             System.out.println("background_signup"+newRowId);
+
+//Store basic information in file and send this to user email id
+            String fileName = email_id+"profile";
+            String content = "Name :-"+name+"\n"+"Mobile no  :-"+mobile_no;
+
+            FileOutputStream outputStream = null;
+            try {
+                System.out.println("Is there any one 1");
+                outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
+                outputStream.write(content.getBytes());
+                outputStream.close();
+            } catch (Exception e) {
+                System.out.println("Is there any one");
+                e.printStackTrace();
+            }
+
             if(newRowId==-1)
                 return false;
 
@@ -119,6 +137,9 @@ public class SignupForm extends AppCompatActivity {
 
             return true;
         }
+
+
+
 
         @Override
         protected void onPostExecute(final Boolean success) {

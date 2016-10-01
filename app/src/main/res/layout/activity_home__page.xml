@@ -9,4 +9,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.mukesh.medisys.Home_Page">
 
+    <ImageView
+        android:id="@+id/profile_pic"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:src="@drawable/default_icon"
+        />
+
+    <Button
+        android:id="@+id/select_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/profile_pic"
+        android:text="select image"/>
+
 </RelativeLayout>

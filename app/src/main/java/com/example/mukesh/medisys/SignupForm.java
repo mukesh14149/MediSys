@@ -4,19 +4,28 @@ package com.example.mukesh.medisys;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 
 import android.os.AsyncTask;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.mukesh.medisys.data.MediSysContract;
 import com.example.mukesh.medisys.data.MediSysSQLiteHelper;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 
 public class SignupForm extends AppCompatActivity {
@@ -93,10 +102,67 @@ public class SignupForm extends AppCompatActivity {
                 outputStream = openFileOutput(fileName, Context.MODE_PRIVATE);
                 outputStream.write(content.getBytes());
                 outputStream.close();
+                Log.i("SignupForm.java","email_id+profile.txt");
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
 
+            BufferedReader input = null;
+            File file = null;
+            try {
+                System.out.println("file is here");
+                file = new File(getFilesDir(), fileName); // Pass getFilesDir() and "MyFile" to read file
+
+                input = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+                String line;
+                StringBuffer buffer = new StringBuffer();
+                while ((line = input.readLine()) != null) {
+                    buffer.append(line);
+                }
+                System.out.println("file content:"+buffer);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+
+            String string = "privateExternal.txt";
+
+            // Get the directory for the app's private pictures directory.
+            File file2 = new File(getExternalFilesDir(
+                    Environment.DIRECTORY_DCIM), "privateExternal.txt");
+
+            try {
+                FileOutputStream stream = null;
+                stream = new FileOutputStream(file2);
+                stream.write(string.getBytes());
+                stream.close();
+                Log.i("SignupForm.java","privateExternal");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
+
+            string = "publicExternal.txt";
+
+            // Get the directory for the app's private pictures directory.
+            File file3 = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "publicExternal.txt");
+
+            try {
+                FileOutputStream stream = null;
+                stream = new FileOutputStream(file3);
+                stream.write(string.getBytes());
+                stream.close();
+                Log.i("SignupForm.java","publicExternal.txt");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
             return true;
         }

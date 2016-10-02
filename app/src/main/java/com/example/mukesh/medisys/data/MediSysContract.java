@@ -1,7 +1,6 @@
 package com.example.mukesh.medisys.data;
 
-import android.content.ContentResolver;
-import android.net.Uri;
+
 import android.provider.BaseColumns;
 
 /**
@@ -15,13 +14,11 @@ public final class MediSysContract {
 
     public static class MediSysEntry implements BaseColumns{
 
-
-
-        public static String TABLE_NAME="sign_up";
-        public static String COLUMN_NAME_EMAIL="email";
-        public static String COLUMN_NAME_NAME="name";
-        public static String COLUMN_NAME_MOBILE="mobile";
-        public static String COLUMN_NAME_PASSWORD="password";
+        final public static String TABLE_NAME="sign_up";
+        final public static String COLUMN_NAME_EMAIL="email";
+        final public static String COLUMN_NAME_NAME="name";
+        final public static String COLUMN_NAME_MOBILE="mobile";
+        final public static String COLUMN_NAME_PASSWORD="password";
 
 
     }

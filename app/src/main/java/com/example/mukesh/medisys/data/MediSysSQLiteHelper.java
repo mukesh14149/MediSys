@@ -9,8 +9,8 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class MediSysSQLiteHelper extends SQLiteOpenHelper {
 
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "MediSys.db";
+    private static final int DATABASE_VERSION = 1;
+    private static final String DATABASE_NAME = "MediSys.db";
 
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE " +MediSysContract.MediSysEntry.TABLE_NAME + " (" +

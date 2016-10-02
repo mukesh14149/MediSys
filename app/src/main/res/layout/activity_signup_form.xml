@@ -31,12 +31,9 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/email_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:hint="@string/prompt_email"
                     android:inputType="textEmailAddress"
-                    android:maxLines="1"
-                    android:singleLine="true" />
+                    style="@style/Login_Input_fields" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -47,12 +44,9 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:hint="@string/prompt_name"
                     android:inputType="textPersonName"
-                    android:maxLines="1"
-                    android:singleLine="true" />
+                    style="@style/Login_Input_fields" />
 
             </android.support.design.widget.TextInputLayout>
 
@@ -63,15 +57,11 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/sign_up_password"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
                     android:inputType="textPassword"
-                    android:maxLines="1"
-                    android:singleLine="true" />
+                    style="@style/Login_Input_fields" />
 
             </android.support.design.widget.TextInputLayout>
-
 
 
 
@@ -81,18 +71,11 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/number"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:hint="@string/prompt_number"
                     android:inputType="phone"
-                    android:maxLines="1"
-                    android:singleLine="true" />
+                    style="@style/Login_Input_fields"/>
 
             </android.support.design.widget.TextInputLayout>
-
-
-
-
 
 
 
@@ -101,7 +84,7 @@
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="@dimen/sixteen"
                 android:text="@string/action_sign_up_submit"
                 android:textStyle="bold" />
 

@@ -8,4 +8,33 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+
+    <style name="select_profile" >
+        <item name="android:layout_width">@dimen/halfcent</item>
+        <item name="android:layout_height">@dimen/halfcent</item>
+        <item name="android:text">+</item>
+        <item name="android:layout_below">@+id/profile_pic</item>
+        <item name="android:layout_alignRight">@+id/profile_pic</item>
+        <item name="android:layout_marginTop">@dimen/negative_sixty</item>
+        <item name="android:background">@drawable/circular_shape</item>
+    </style>
+
+    <style name="Input_fields">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:text">Information</item>
+        <item name="android:layout_marginTop">@dimen/halfcent</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/text_size</item>
+    </style>
+
+    <style name="Login_Input_fields">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+
 </resources>

@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">MediSys</string>
-    <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password (optional)</string>
+    <string name="prompt_password">Password</string>
 
     <string name="prompt_name">Name</string>
     <string name="prompt_number">Mobile Number</string>
@@ -22,4 +21,20 @@
         completions."
     </string>
     <string name="title_activity_signup_form">Sign in</string>
+
+    <string name="login_status">Login_Status</string>
+    <string name="email_id">email_id</string>
+    <string name="mobile_no">mobile_no</string>
+    <string name="name">name</string>
+
+    <string name="delete_account">delete_account</string>
+    <string name="update_account">update_account</string>
+    <string name="Update_Password">Update password</string>
+
+
+    <string name="delete_acc_text">Delete Account</string>
+    <string name="update_acc_text">Update Account</string>
+    <string name="sign_out_text">Sign Out</string>
+
+
 </resources>

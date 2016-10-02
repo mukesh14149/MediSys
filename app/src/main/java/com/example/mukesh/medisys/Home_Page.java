@@ -60,8 +60,9 @@ public class Home_Page extends AppCompatActivity {
         try {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap bitmap = BitmapFactory.decodeFile(dir + "/" + "profile_pic.jpeg", options);
-            imageView.setImageBitmap(bitmap);
+            Bitmap bitmap = BitmapFactory.decodeFile(dir + "/" + sharedread.getString("email_id","Admin")+"profile_pic.jpeg", options);
+            if(bitmap!=null)
+                imageView.setImageBitmap(bitmap);
         } catch (Exception e) {
             e.printStackTrace();
         }

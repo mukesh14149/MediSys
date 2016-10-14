@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         mEmailSignUpButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(), SignupForm.class);
+                Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
             }
         });

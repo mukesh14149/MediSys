@@ -9,7 +9,7 @@
     </style>
 
 
-    <style name="select_profile" >
+    <style name="select_profile">
         <item name="android:layout_width">@dimen/halfcent</item>
         <item name="android:layout_height">@dimen/halfcent</item>
         <item name="android:text">+</item>
@@ -35,6 +35,15 @@
         <item name="android:maxLines">1</item>
         <item name="android:singleLine">true</item>
     </style>
+
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 
 </resources>

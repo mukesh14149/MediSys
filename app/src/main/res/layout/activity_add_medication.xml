@@ -123,13 +123,14 @@
                 android:textSize="30dp"
                 android:textStyle="bold"/>
 
-            <TextView
+            <Button
                 android:id="@+id/start_date"
                 android:text="Start date : Random date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/schedule_template"
                 android:textSize="20dp"
+                android:onClick="showDatePickerDialog"
                 />
 
             <TextView

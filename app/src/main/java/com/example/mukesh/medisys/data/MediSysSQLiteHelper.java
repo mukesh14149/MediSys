@@ -27,7 +27,8 @@ public class MediSysSQLiteHelper extends SQLiteOpenHelper {
                     MediSysContract.MedicationEntry._ID + " INTEGER PRIMARY KEY NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_EMAIL +  " TEXT NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION + " TEXT NOT NULL, " +
-                    MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE + " TEXT NOT NULL, " +
+                    MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DURAtION + " TEXT NOT NULL, " +
+                    MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DAYS + " TEXT NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_REMINDER_TIMER+  " TEXT NOT NULL " +
                     " )";
 

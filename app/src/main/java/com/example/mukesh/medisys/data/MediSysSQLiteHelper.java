@@ -21,8 +21,22 @@ public class MediSysSQLiteHelper extends SQLiteOpenHelper {
                     MediSysContract.MediSysEntry.COLUMN_NAME_MOBILE +  " TEXT NOT NULL " +
                     " )";
 
+
+    private static final String SQL_CREATE_MEDICATIONENTRY =
+            "CREATE TABLE " +MediSysContract.MedicationEntry.TABLE_NAME + " (" +
+                    MediSysContract.MedicationEntry._ID + " INTEGER PRIMARY KEY NOT NULL, " +
+                    MediSysContract.MedicationEntry.COLUMN_NAME_EMAIL +  " TEXT NOT NULL, " +
+                    MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION + " TEXT NOT NULL, " +
+                    MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE + " TEXT NOT NULL, " +
+                    MediSysContract.MedicationEntry.COLUMN_NAME_REMINDER_TIMER+  " TEXT NOT NULL " +
+                    " )";
+
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + MediSysContract.MediSysEntry.TABLE_NAME;
+
+
+    private static final String SQL_DELETE_MEDICATIONENTRY =
+            "DROP TABLE IF EXISTS " + MediSysContract.MedicationEntry.TABLE_NAME;
 
 
     public MediSysSQLiteHelper(Context context){
@@ -34,11 +48,13 @@ public class MediSysSQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL(SQL_CREATE_ENTRIES);
+        db.execSQL(SQL_CREATE_MEDICATIONENTRY);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_ENTRIES);
+        db.execSQL(SQL_DELETE_MEDICATIONENTRY);
         onCreate(db);
     }
 }

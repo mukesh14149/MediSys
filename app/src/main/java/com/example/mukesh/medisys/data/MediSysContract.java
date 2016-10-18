@@ -23,4 +23,13 @@ public final class MediSysContract {
 
     }
 
+    public static class MedicationEntry implements BaseColumns{
+
+        final public static String TABLE_NAME="medication_detail";
+        final public static String COLUMN_NAME_EMAIL="email";
+        final public static String COLUMN_NAME_DESCRIPTION="medication_description";
+        final public static String COLUMN_NAME_REMINDER_TIMER="reminder_timer";
+        final public static String COLUMN_NAME_SCHEDULE="schdule";
+    }
+
 }

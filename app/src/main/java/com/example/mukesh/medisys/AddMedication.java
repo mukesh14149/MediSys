@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,6 +29,7 @@ import java.util.Calendar;
 public class AddMedication extends AppCompatActivity {
     ArrayList<TextView> time=new ArrayList<TextView>();
     LinearLayout reminder;
+
     TextView settime ;
 
     String email=null;
@@ -52,21 +54,44 @@ public class AddMedication extends AppCompatActivity {
     LinearLayout.LayoutParams lprams = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT);
+    ImageButton hide1;
 
-
-
+int x=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_medication);
-
+     hide1=(ImageButton)findViewById(R.id.imageButton2);
         sharedread = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         email=sharedread.getString("email_id","Admin");
 
         editdesc=(EditText)findViewById(R.id.medication_name);
-
+        View panelProfile = findViewById(R.id.hide_schdule);
+        panelProfile.setVisibility(View.GONE);
 
         System.out.println("in oncreate method 111");
+
+        hide1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // DO STUFF
+                View panelProfile = findViewById(R.id.hide_schdule);
+                if(x==0){
+                    panelProfile.setVisibility(View.VISIBLE);
+                    hide1.setImageResource(R.drawable.open);
+                    x=1;}
+                else {
+                    panelProfile.setVisibility(View.GONE);
+                    hide1.setImageResource(R.drawable.close);
+                    x=0;
+
+                }
+
+
+
+
+            }
+        });
     }
 
     public void save_medication(View view){

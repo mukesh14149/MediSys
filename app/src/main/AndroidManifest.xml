@@ -35,8 +35,13 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".MainActivity" />
-        <activity android:name=".AddMedication"></activity>
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".AddMedication" />
+        <activity android:name=".Profile" />
+        <activity android:name=".Rough"></activity>
     </application>
 
 </manifest>

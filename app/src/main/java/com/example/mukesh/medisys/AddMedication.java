@@ -56,12 +56,12 @@ public class AddMedication extends AppCompatActivity {
             LinearLayout.LayoutParams.WRAP_CONTENT);
     ImageButton hide1;
 
-int x=0;
+    int x=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_medication);
-     hide1=(ImageButton)findViewById(R.id.imageButton2);
+        hide1=(ImageButton)findViewById(R.id.imageButton2);
         sharedread = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         email=sharedread.getString("email_id","Admin");
 

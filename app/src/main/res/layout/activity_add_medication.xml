@@ -155,7 +155,7 @@
                         android:id="@+id/hide_schdule"
                         android:layout_below="@+id/schedule_template"
                         android:layout_alignParentStart="false">
-                        <TextView
+                        <Button
                             android:layout_marginLeft="5dp"
                             android:layout_marginBottom="10dp"
                             android:id="@+id/start_date"
@@ -164,6 +164,7 @@
                             android:layout_height="wrap_content"
 
                             android:textSize="20dp" />
+                android:onClick="showDatePickerDialog"
 
                         <TextView
                             android:id="@+id/duration"

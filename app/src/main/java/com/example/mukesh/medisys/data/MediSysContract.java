@@ -29,7 +29,9 @@ public final class MediSysContract {
         final public static String COLUMN_NAME_EMAIL="email";
         final public static String COLUMN_NAME_DESCRIPTION="medication_description";
         final public static String COLUMN_NAME_REMINDER_TIMER="reminder_timer";
-        final public static String COLUMN_NAME_SCHEDULE="schdule";
+        final public static String COLUMN_NAME_SCHEDULE_DURAtION="schdule_duration";
+        final public static String COLUMN_NAME_SCHEDULE_DAYS="schdule_days";
+
     }
 
 }

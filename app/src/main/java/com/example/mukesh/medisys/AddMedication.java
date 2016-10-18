@@ -1,9 +1,15 @@
 package com.example.mukesh.medisys;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.ContentValues;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,6 +17,8 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -21,8 +29,12 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.mukesh.medisys.data.MediSysContract;
+import com.example.mukesh.medisys.data.MediSysSQLiteHelper;
+
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -31,26 +43,25 @@ public class AddMedication extends AppCompatActivity {
     LinearLayout reminder;
 
     TextView settime ;
-
+    Button startdate ;
     String email=null;
     String description=null;
-    String reminder_timer=null;
-    String schedule=null;
 
+    String reminder_timer="";
+    String schedule_duration=null;
+    String schedule_days=null;
 
     RadioGroup radioduration;
-    RadioButton continuous;
-    RadioButton number_of_days;
+    RadioButton buttonduration;
 
     RadioGroup radiodays;
-    RadioButton Everyday;
-    RadioButton specific_days_of_week;
-    RadioButton days_interval;
+    RadioButton buttondays;
 
+    int radio_duration_selected=0;
 
     private SharedPreferences sharedread;;
     private EditText editdesc;
-    public static int c=0;
+    public int c=2014149;
     LinearLayout.LayoutParams lprams = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -68,6 +79,12 @@ public class AddMedication extends AppCompatActivity {
         editdesc=(EditText)findViewById(R.id.medication_name);
         View panelProfile = findViewById(R.id.hide_schdule);
         panelProfile.setVisibility(View.GONE);
+        radioduration=(RadioGroup)findViewById(R.id.radio_duration);
+        radiodays=(RadioGroup)findViewById(R.id.radio_days);
+
+        Calendar currentTime = Calendar.getInstance();
+        Button startdate=(Button)findViewById(R.id.start_date);
+        startdate.setText(currentTime.get(Calendar.YEAR)+"-"+(currentTime.get(Calendar.MONTH)+1)+"-"+currentTime.get(Calendar.DAY_OF_MONTH));
 
         System.out.println("in oncreate method 111");
 
@@ -95,18 +112,76 @@ public class AddMedication extends AppCompatActivity {
     }
 
     public void save_medication(View view){
+        description=editdesc.getText().toString();
+
+        radio_duration_selected=radioduration.getCheckedRadioButtonId();
+        System.out.println("yo buddy we are done"+radio_duration_selected);
+
+        buttonduration=(RadioButton)findViewById(radio_duration_selected);
+        schedule_duration=buttonduration.getText().toString();
+
+        radio_duration_selected=radiodays.getCheckedRadioButtonId();
+        buttondays=(RadioButton)findViewById(radio_duration_selected);
+        schedule_days=buttondays.getText().toString();
+
+        System.out.println( email+" "+description+" "+reminder_timer+" "+schedule_duration+" "+schedule_days);
+        if(email==null||description==null||reminder_timer==null||schedule_duration==null||schedule_days==null){
+            Toast.makeText(getApplication().getApplicationContext(),"Data is store",Toast.LENGTH_SHORT);
+
+        }
+        else {
+            save_data save = new save_data(email, description, reminder_timer, schedule_duration, schedule_days);
+            save.execute();
+        }
+
 
     }
 
+
+    public void showDatePickerDialog(View v) {
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
+    }
+
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
+            Button startdate=(Button)getActivity().findViewById(R.id.start_date);
+            month++;
+            startdate.setText(year+"-"+month+"-"+day);
+            System.out.println("kyyyy"+year+" "+month+" "+day);
+
+        }
+    }
 
     public void Generate_set_time(View view){
         reminder=(LinearLayout) findViewById(R.id.reminder_inner_layout);
 
         settime= new TextView(this);
         settime.setText("2:00"+c);
+
         settime.setId(c++);
+
+
+
         settime.setClickable(true);
         settime.setLayoutParams(lprams);
+
+
         System.out.println("yooo"+settime.getId());
         TextView temp_time=(TextView) findViewById(settime.getId());
         time.add(temp_time);
@@ -115,9 +190,20 @@ public class AddMedication extends AppCompatActivity {
             TextView t;
             @Override
             public void onClick(View v) {
-                System.out.println("in oncreate method"+settime.getId());
+
+                Button startdate=(Button)findViewById(R.id.start_date);
+                String []te=startdate.getText().toString().split("-");
+                final int Year=Integer.parseInt(te[0]);
+                final int Month=Integer.parseInt(te[1]);
+                final int Day=Integer.parseInt(te[2]);
+                System.out.println(Year+" "+Month+" "+Day+"in oncreate method"+settime.getId());
+
+
 
                 t=(TextView) findViewById(v.getId());;
+
+                final Calendar beginCal = Calendar.getInstance();
+
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
                 int minute = mcurrentTime.get(Calendar.MINUTE);
@@ -126,28 +212,69 @@ public class AddMedication extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         t.setText( selectedHour + ":" + selectedMinute);
+
+                        beginCal.set(Year,Month-1, Day, selectedHour, selectedMinute);
+                      //  startdate.setText(beginCal.getTime().toString());
+                        reminder_timer+=beginCal.getTime().toString()+"BBB";
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
+
                 mTimePicker.show();
             }
         });
         reminder.addView(settime);
     }
 
-    public class save_data extends AsyncTask<String, Void,Void>{
-        save_data(){
-
+    public class save_data extends AsyncTask<Void, Void, Boolean>{
+        String email=null;
+        String description=null;
+        String reminder_timer=null;
+        String schedule_duration=null;
+        String schedule_days=null;
+        final MediSysSQLiteHelper mDbHelper = new MediSysSQLiteHelper(getApplication().getApplicationContext());
+        save_data(String email, String description, String reminder_timer, String schedule_duration, String schedule_days){
+            this.email=email;
+            this.description=description;
+            this.reminder_timer=reminder_timer;
+            this.schedule_duration=schedule_duration;
+            this.schedule_days=schedule_days;
         }
 
         @Override
-        protected Void doInBackground(String... params) {
-            return null;
+        protected Boolean doInBackground(Void... params) {
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+            ContentValues values = new ContentValues();
+            values.put(MediSysContract.MedicationEntry.COLUMN_NAME_EMAIL, email);
+            values.put(MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION, description);
+            values.put(MediSysContract.MedicationEntry.COLUMN_NAME_REMINDER_TIMER, reminder_timer);
+            values.put(MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DURAtION, schedule_duration);
+            values.put(MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DAYS, schedule_days);
+
+            long newRowId = db.insert(MediSysContract.MedicationEntry.TABLE_NAME, null, values);
+            System.out.println("yo baby"+newRowId);
+
+            if(newRowId==-1)
+                return false;
+
+            return true;
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(Boolean result) {
+            System.out.println("yo bddd"+result);
+            if(result) {
+              //  Toast.makeText(getApplication().getApplicationContext(), "Data is store", Toast.LENGTH_SHORT);
+                Intent intent=new Intent(AddMedication.this,SetReminder.class);
+                intent.putExtra("Description",description);
+                intent.putExtra("Reminder_timer",reminder_timer);
+                intent.putExtra("Schedule_duration",schedule_duration);
+                intent.putExtra("Schedule_days",schedule_days);
+                startActivity(intent);
+            }
+            else {
+                Toast.makeText(getApplication().getApplicationContext(), "Data is not store", Toast.LENGTH_SHORT);
+            }
         }
     }
 }

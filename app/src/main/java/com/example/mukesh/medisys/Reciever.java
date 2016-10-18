@@ -18,13 +18,8 @@ public class Reciever extends BroadcastReceiver {
 
         // retrieve the value
             int code=intent.getIntExtra("code", 1);
-            String string="yo buddy 1";
-            if(code==7)
-                string="mml";
-            else if(code==8)
-                string="dbmml";
-            else if(code==9)
-                string="tbmml";
+            String string=intent.getStringExtra("Description");
+
 
 
             System.out.println("yo buddy"+code);
@@ -35,9 +30,9 @@ public class Reciever extends BroadcastReceiver {
                     .setContentTitle(string)
                     .setContentText("Subject").setSmallIcon(R.drawable.default_icon)
                     .setContentIntent(pIntent)
-                    .addAction(R.drawable.default_icon, "Call", pIntent)
+                    /*.addAction(R.drawable.default_icon, "Call", pIntent)
                     .addAction(R.drawable.default_icon, "More", pIntent)
-                    .addAction(R.drawable.default_icon, "And more", pIntent).build();
+                    .addAction(R.drawable.default_icon, "And more", pIntent)*/.build();
             // hide the notification after its selected
             noti.flags |= Notification.FLAG_AUTO_CANCEL;
 

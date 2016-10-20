@@ -7,6 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.mukesh.medisys.ReminderArch.ReminderArchclass;
+
+import java.util.ArrayList;
+
 /**
  * Created by mukesh on 14/10/16.
  */
@@ -14,9 +18,9 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
 
         private Context context;
-        String text;
-        public ReminderAdapter(Context context,String string){
-            text=string;
+        ArrayList<ReminderArchclass> remArc;
+        public ReminderAdapter(Context context,ArrayList<ReminderArchclass> remArc){
+            this.remArc=remArc;
         }
 
         private Context getContext() {
@@ -26,11 +30,17 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
         public static class ViewHolder extends RecyclerView.ViewHolder {
             // each data item is just a string in this case
-            TextView textView;
+            TextView description;
+            TextView timer;
+            TextView date;
+            TextView days;
             public ViewHolder(View item) {
 
                 super(item);
-                textView=(TextView) item.findViewById(R.id.info_text);
+                description=(TextView) item.findViewById(R.id.description_view);
+                timer=(TextView) item.findViewById(R.id.timer_view);
+                date=(TextView) item.findViewById(R.id.schedule_date_view);
+                days=(TextView) item.findViewById(R.id.schedule_days_view);
 
             }
         }
@@ -47,11 +57,15 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
             @Override
             public void onBindViewHolder(ReminderAdapter.ViewHolder holder, int position) {
-                holder.textView.setText(text);
+                ReminderArchclass reminderArchclass=remArc.get(position);
+                holder.timer.setText(reminderArchclass.getReminder_timer());
+                holder.description.setText(reminderArchclass.getDescription());
+                holder.date.setText(reminderArchclass.getSchedule_duration());
+                holder.days.setText(reminderArchclass.getSchedule_days());
             }
 
             @Override
             public int getItemCount() {
-                return 1;
+                return remArc.size();
             }
 }

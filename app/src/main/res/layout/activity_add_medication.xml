@@ -168,6 +168,7 @@
                             android:text="Start date : Random date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:background="#FFFFFF"
                             android:onClick="showDatePickerDialog"
                             android:textSize="20dp" />
 
@@ -294,7 +295,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_menu_send"
-        app:backgroundTint="@color/Red"
+        app:backgroundTint="@android:color/holo_blue_light"
         android:onClick="save_medication"/>
 
 </FrameLayout>

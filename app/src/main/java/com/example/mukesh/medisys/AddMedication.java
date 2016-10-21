@@ -64,7 +64,7 @@ public class AddMedication extends AppCompatActivity {
 
     int radio_duration_selected=0;
 
-    private SharedPreferences sharedread;;
+    private SharedPreferences sharedread;
     private EditText editdesc;
     public int c=2014149;
     LinearLayout.LayoutParams lprams = new LinearLayout.LayoutParams(
@@ -117,31 +117,30 @@ public class AddMedication extends AppCompatActivity {
     }
 
     public void save_medication(View view){
-        description=editdesc.getText().toString();
+        try {
+            description = editdesc.getText().toString();
 
-        radio_duration_selected=radioduration.getCheckedRadioButtonId();
-        System.out.println("yo buddy we are done"+radio_duration_selected);
+            radio_duration_selected = radioduration.getCheckedRadioButtonId();
+            System.out.println("yo buddy we are done" + radio_duration_selected);
 
-        buttonduration=(RadioButton)findViewById(radio_duration_selected);
-        schedule_duration=buttonduration.getText().toString();
+            buttonduration = (RadioButton) findViewById(radio_duration_selected);
+            schedule_duration = buttonduration.getText().toString();
 
-        radio_duration_selected=radiodays.getCheckedRadioButtonId();
-        buttondays=(RadioButton)findViewById(radio_duration_selected);
-        schedule_days=buttondays.getText().toString();
+            radio_duration_selected = radiodays.getCheckedRadioButtonId();
+            buttondays = (RadioButton) findViewById(radio_duration_selected);
+            schedule_days = buttondays.getText().toString();
 
-        System.out.println( email+" "+description+" "+reminder_timer+" "+schedule_duration+" "+schedule_days);
-        if(email==null||description==null||reminder_timer==null||schedule_duration==null||schedule_days==null){
-            Toast.makeText(getApplication().getApplicationContext(),"Data is store",Toast.LENGTH_SHORT);
+            System.out.println(email + " " + description + " " + reminder_timer + " " + schedule_duration + " " + schedule_days);
+            if (email == null || description == null || reminder_timer == null || schedule_duration == null || schedule_days == null) {
+                Toast.makeText(getApplication().getApplicationContext(), "Error while updating", Toast.LENGTH_SHORT);
 
+            } else {
+                save_data save = new save_data(email, description, reminder_timer, schedule_duration, schedule_days);
+                save.execute();
+            }
+        }catch(Exception e){
+            Toast.makeText(getApplication().getApplicationContext(), "Some Filled are empty", Toast.LENGTH_SHORT);
         }
-        else {
-            save_data save = new save_data(email, description, reminder_timer, schedule_duration, schedule_days);
-            save.execute();
-        }
-       // initiatePopupWindow();
-
-    }
-
 
 
     private PopupWindow pwindo;
@@ -235,7 +234,7 @@ public class AddMedication extends AppCompatActivity {
 
 
 
-                t=(TextView) findViewById(v.getId());;
+                t=(TextView) findViewById(v.getId());
 
                 final Calendar beginCal = Calendar.getInstance();
 
@@ -289,10 +288,8 @@ public class AddMedication extends AppCompatActivity {
             long newRowId = db.insert(MediSysContract.MedicationEntry.TABLE_NAME, null, values);
             System.out.println("yo baby"+newRowId);
 
-            if(newRowId==-1)
-                return false;
+            return newRowId != -1;
 
-            return true;
         }
 
         @Override

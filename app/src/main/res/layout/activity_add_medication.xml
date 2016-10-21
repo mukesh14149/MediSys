@@ -162,9 +162,9 @@
                             android:text="Start date : Random date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-
+                            android:onClick="showDatePickerDialog"
                             android:textSize="20dp" />
-                android:onClick="showDatePickerDialog"
+
 
                         <TextView
                             android:id="@+id/duration"

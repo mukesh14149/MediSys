@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
@@ -21,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -71,6 +74,7 @@ public class AddMedication extends AppCompatActivity {
     LinearLayout.LayoutParams lprams = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT);
+
     ImageButton hide1;
 
     int x=0;
@@ -78,6 +82,8 @@ public class AddMedication extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_medication);
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         hide1=(ImageButton)findViewById(R.id.imageButton2);
         sharedread = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         email=sharedread.getString("email_id","Admin");
@@ -133,16 +139,15 @@ public class AddMedication extends AppCompatActivity {
 
             System.out.println(email + " " + description + " " + reminder_timer + " " + schedule_duration + " " + schedule_days);
             if (email == null || description == null || reminder_timer == null || schedule_duration == null || schedule_days == null) {
-                Toast.makeText(getApplication().getApplicationContext(), "Error while updating", Toast.LENGTH_SHORT);
+                Toast.makeText(getApplication().getApplicationContext(), "Error while updating", Toast.LENGTH_SHORT).show();
 
             } else {
                 save_data save = new save_data(email, description, reminder_timer, schedule_duration, schedule_days);
                 save.execute();
             }
         } catch (Exception e) {
-            Toast.makeText(getApplication().getApplicationContext(), "Some Filled are empty", Toast.LENGTH_SHORT);
+            Toast.makeText(getApplication().getApplicationContext(), "Some Filled are empty", Toast.LENGTH_SHORT).show();
         }
-
 
     }
     private void initiatePopupWindow() {
@@ -226,12 +231,15 @@ public class AddMedication extends AppCompatActivity {
 
     public void Generate_set_time(View view){
         reminder=(LinearLayout) findViewById(R.id.reminder_inner_layout);
-
+        lprams.setMargins(0,0,0,15);
         settime= new TextView(this);
-        settime.setText("2:00"+c);
+        settime.setText("2:00");
 
         settime.setId(c++);
 
+        settime.setTextColor(Color.parseColor("#33B5E5"));
+        settime.setTextSize(20);
+        settime.setTypeface(null, Typeface.BOLD);
 
 
         settime.setClickable(true);

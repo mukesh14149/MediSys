@@ -229,11 +229,14 @@ public class AddMedication extends AppCompatActivity {
         return local;
     }
 
+
+
+
     public void Generate_set_time(View view){
         reminder=(LinearLayout) findViewById(R.id.reminder_inner_layout);
         lprams.setMargins(0,0,0,15);
         settime= new TextView(this);
-        settime.setText("2:00");
+        settime.setText("2:00 PM");
 
         settime.setId(c++);
 
@@ -263,7 +266,6 @@ public class AddMedication extends AppCompatActivity {
                 System.out.println(Year+" "+Month+" "+Day+"in oncreate method"+settime.getId());
 
 
-
                 t=(TextView) findViewById(v.getId());
 
                 final Calendar beginCal = Calendar.getInstance();
@@ -277,7 +279,6 @@ public class AddMedication extends AppCompatActivity {
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
 System.out.println(selectedHour + ":" + selectedMinute+"mml");
                         t.setText( converttime(selectedHour + ":" + selectedMinute));
-
                         beginCal.set(Year,Month-1, Day, selectedHour, selectedMinute);
                       //  startdate.setText(beginCal.getTime().toString());
                         reminder_timer+=beginCal.getTime().toString()+"BBB";

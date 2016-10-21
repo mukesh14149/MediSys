@@ -30,6 +30,8 @@ public class Reminders extends Fragment {
     private SharedPreferences sharedread;
     String email=null;
 
+    public  ArrayList<ReminderArchclass> remArc=new ArrayList<ReminderArchclass>();
+    ReminderAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,9 +64,18 @@ public class Reminders extends Fragment {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction)
             {
+                viewHolder.itemView.setVisibility(View.GONE);
 
+                ReminderArchclass tempremArc;
+                tempremArc=remArc.get(viewHolder.getAdapterPosition());
 
-                System.out.println("Sujeey"+ viewHolder.itemView);
+                remArc.remove(viewHolder.getAdapterPosition());
+                adapter.notifyItemRemoved(viewHolder.getAdapterPosition());
+                adapter.notifyItemRangeChanged(viewHolder.getAdapterPosition(),remArc.size());
+                System.out.println("Sujeey");
+
+                Delete_item delete_item=new Delete_item(tempremArc);
+                delete_item.execute();
 
 
             }
@@ -98,7 +109,7 @@ public class Reminders extends Fragment {
     }
     public class Getreminder extends AsyncTask<Void,Void,ArrayList<ReminderArchclass>>{
         String mEmail=null;
-        ArrayList<ReminderArchclass> remArc=new ArrayList<ReminderArchclass>();
+
         public Getreminder(String mEmail){
             this.mEmail=mEmail;
         }
@@ -170,10 +181,53 @@ public class Reminders extends Fragment {
             if(!remArc.isEmpty())
                 System.out.println(remArc.size()+"uuuuuuu"+remArc.get(0).getDescription()+remArc.get(0).getReminder_timer());
 
-            ReminderAdapter adapter=new ReminderAdapter(getActivity(),remArc);
+            adapter=new ReminderAdapter(getActivity(),remArc);
             listView.setAdapter(adapter);
         }
     }
+
+
+
+    public class Delete_item extends AsyncTask<Void, Void, Boolean> {
+        ReminderArchclass reminderArchclass;
+        final MediSysSQLiteHelper mDbHelper = new MediSysSQLiteHelper(getActivity().getApplicationContext());
+        Delete_item(ReminderArchclass reminderArchclass) {
+            this.reminderArchclass=reminderArchclass;
+        }
+        @Override
+        protected Boolean doInBackground(Void... params) {
+            SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+            //Log.e(password,"eeeeeeeeeeeeee");
+
+            String selection = MediSysContract.MedicationEntry.COLUMN_NAME_REMINDER_TIMER + "= ? AND "+ MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION+"=?";
+            String[] selectionArgs = {reminderArchclass.getReminder_timer(),reminderArchclass.getDescription()};
+            db.delete(MediSysContract.MedicationEntry.TABLE_NAME,selection,selectionArgs);
+
+
+            return true;
+        }
+
+
+
+
+        @Override
+        protected void onPostExecute(final Boolean success) {
+
+
+            if (success) {
+                //    finish();
+            } else {
+                //Define your problem
+            }
+        }
+
+        @Override
+        protected void onCancelled() {
+
+        }
+    }
+
 
 
 }

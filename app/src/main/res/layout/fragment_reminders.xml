@@ -19,7 +19,7 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:src="@android:drawable/ic_input_add"
-        app:backgroundTint="@color/Red"
+        app:backgroundTint="@android:color/holo_green_dark"
         android:onClick="setReminder"/>
 
 

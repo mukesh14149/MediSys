@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -78,7 +77,19 @@
                         android:textColor="@android:color/holo_blue_dark"/>
 
 
+                    <ImageButton
+                        xmlns:app="http://schemas.android.com/apk/res-auto"
+                        android:id="@+id/fab1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:layout_marginLeft="250dp"
+                        android:src="@drawable/plus"
+                        android:background="#FFFFFF"
+                        android:onClick="Generate_set_time"/>
+<!---
                     <Switch
+
                         android:id="@+id/reminder_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -86,22 +97,17 @@
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="20dp"
                         />
+-->
 
 
-
-                    <Button
-                        android:id="@+id/button"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/reminder_template"
-                        android:onClick="Generate_set_time"/>
 
                     <LinearLayout
                         android:id="@+id/reminder_inner_layout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@+id/button"
+                        android:layout_below="@+id/reminder_template"
                         android:orientation="vertical"
+
                         ></LinearLayout>
 
 
@@ -280,14 +286,15 @@
         </RelativeLayout>
     </ScrollView>
 
-    <Button
+    <android.support.design.widget.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_menu_send"
+        app:backgroundTint="@color/Red"
+        android:onClick="save_medication"/>
 
-        android:text="NEXT"
-        android:onClick="save_medication"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true" />
-
-
-</RelativeLayout>
+</FrameLayout>

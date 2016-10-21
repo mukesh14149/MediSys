@@ -6,6 +6,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
 
 /**
@@ -28,12 +31,21 @@ public class Reciever extends BroadcastReceiver {
             PendingIntent pIntent = PendingIntent.getActivity(context, (int) System.currentTimeMillis(), i, 0);
             Notification noti = new Notification.Builder(context)
                     .setContentTitle(string)
-                    .setContentText("Subject").setSmallIcon(R.drawable.default_icon)
+                    .setContentText("Touch to change delete/edit this.").setSmallIcon(R.drawable.default_icon)
                     .setContentIntent(pIntent)
                     /*.addAction(R.drawable.default_icon, "Call", pIntent)
                     .addAction(R.drawable.default_icon, "More", pIntent)
                     .addAction(R.drawable.default_icon, "And more", pIntent)*/.build();
             // hide the notification after its selected
+        try {
+            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+            Ringtone r = RingtoneManager.getRingtone(context, notification);
+            r.play();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
             noti.flags |= Notification.FLAG_AUTO_CANCEL;
 
             notificationManager.notify(0, noti);

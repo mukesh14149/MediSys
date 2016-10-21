@@ -36,8 +36,10 @@ public class SetReminder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_set_reminder);
         intent1=getIntent();
+        createNotification();
+        startActivity(new Intent(this,MainActivity.class));
     }
-    public void createNotification(View view) {
+    public void createNotification() {
         // Prepare intent which is triggered if the
         // notification is selected
         ComponentName receiver = new ComponentName(getApplicationContext(), Reciever.class);
@@ -75,9 +77,5 @@ public class SetReminder extends AppCompatActivity {
 // set for 30 seconds later
             alarmMgr.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmIntent);
         }
-
-
     }
-
-
 }

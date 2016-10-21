@@ -23,7 +23,6 @@
         <activity
             android:name=".SignupForm"
             android:label="@string/title_activity_signup_form" />
-        <activity android:name=".Home_Page" />
         <activity android:name=".SetReminder" />
         <activity android:name=".NotificationReceiverActivity" />
 

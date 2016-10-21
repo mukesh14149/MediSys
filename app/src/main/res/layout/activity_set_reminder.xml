@@ -8,11 +8,5 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.mukesh.medisys.SetReminder">
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:onClick="createNotification"
-        android:text="Create Notification" >
-    </Button>
+
 </RelativeLayout>

@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
         if(sharedread.getBoolean(getString(R.string.login_status),false)) {
-            Intent intent=new Intent(getApplicationContext(), Home_Page.class);
+            Intent intent=new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
         }
 
@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         mEmailSignUpButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(getApplicationContext(),MainActivity.class);
+                Intent intent=new Intent(getApplicationContext(),SignupForm.class);
                 startActivity(intent);
             }
         });
@@ -328,7 +328,7 @@ public class LoginActivity extends AppCompatActivity {
             showProgress(false);
 
             if (success) {
-                Intent intent=new Intent(getApplicationContext(),Home_Page.class);
+                Intent intent=new Intent(getApplicationContext(),MainActivity.class);
                 startActivity(intent);
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

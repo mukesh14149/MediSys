@@ -46,7 +46,8 @@ import java.util.Calendar;
 public class AddMedication extends AppCompatActivity {
     ArrayList<TextView> time=new ArrayList<TextView>();
     LinearLayout reminder;
-
+    private PopupWindow pwindo;
+    Button btnClosePopup;
     TextView settime ;
     Button startdate ;
     String email=null;
@@ -116,7 +117,7 @@ public class AddMedication extends AppCompatActivity {
         });
     }
 
-    public void save_medication(View view){
+    public void save_medication(View view) {
         try {
             description = editdesc.getText().toString();
 
@@ -138,13 +139,12 @@ public class AddMedication extends AppCompatActivity {
                 save_data save = new save_data(email, description, reminder_timer, schedule_duration, schedule_days);
                 save.execute();
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             Toast.makeText(getApplication().getApplicationContext(), "Some Filled are empty", Toast.LENGTH_SHORT);
         }
 
 
-    private PopupWindow pwindo;
-    Button btnClosePopup;
+    }
     private void initiatePopupWindow() {
         try {
 // We need to get the instance of the LayoutInflater
@@ -202,6 +202,28 @@ public class AddMedication extends AppCompatActivity {
         }
     }
 
+    public String converttime(String time){
+        String t[]=time.split(":");
+        String h=t[0];
+        String m=t[1];
+        String suffix;
+        int var=Integer.parseInt(h);
+        if(var<12)
+        {
+            suffix="AM";
+        }
+        else{
+            suffix="PM";
+            if(var>=13)
+            {
+                var=var-12;
+            }
+        }
+        String local=Integer.toString(var)+":"+m+" "+suffix;
+        System.out.println("Date"+local);
+        return local;
+    }
+
     public void Generate_set_time(View view){
         reminder=(LinearLayout) findViewById(R.id.reminder_inner_layout);
 
@@ -245,7 +267,8 @@ public class AddMedication extends AppCompatActivity {
                 mTimePicker = new TimePickerDialog(AddMedication.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        t.setText( selectedHour + ":" + selectedMinute);
+System.out.println(selectedHour + ":" + selectedMinute+"mml");
+                        t.setText( converttime(selectedHour + ":" + selectedMinute));
 
                         beginCal.set(Year,Month-1, Day, selectedHour, selectedMinute);
                       //  startdate.setText(beginCal.getTime().toString());

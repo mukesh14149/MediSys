@@ -113,7 +113,27 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             }
 
 
-
+    public String converttime(String time){
+        String t[]=time.split(":");
+        String h=t[0];
+        String m=t[1];
+        String suffix;
+        int var=Integer.parseInt(h);
+        if(var<12)
+        {
+            suffix="AM";
+        }
+        else{
+            suffix="PM";
+            if(var>=13)
+            {
+                var=var-12;
+            }
+        }
+        String local=Integer.toString(var)+":"+m+" "+suffix;
+        System.out.println(local);
+return local;
+    }
 
 
 
@@ -129,10 +149,11 @@ int prevTextViewId=2014108;
                 int i;
                 String[] words=a.split("BBB");
                 String[] word = words[0].split(" ");
+if(word.length>2) {
+    word[3] = word[3].substring(0, (word[3].length() - 3));
+    holder.timer.setText(converttime(word[3]));
 
-                    word[3] = word[3].substring(0, (word[3].length() - 3));
-
-                holder.timer.setText(word[3]);
+}
                 for(i=1;i<words.length;i++) {
                      word = words[i].split(" ");
 
@@ -140,7 +161,7 @@ int prevTextViewId=2014108;
 
 
                    final  TextView textView = new TextView(getContext());
-                    textView.setText(word[3].substring(0, (word[3].length() - 3)));
+                    textView.setText(converttime(word[3].substring(0, (word[3].length() - 3))));
 
                     textView.setTextColor(Color.parseColor("#33B5E5"));
                     textView.setTextSize(20);
@@ -150,7 +171,7 @@ int prevTextViewId=2014108;
                     int curTextViewId = prevTextViewId + 1;
                     textView.setId(curTextViewId);
                     final LinearLayout.LayoutParams params =
-                            new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT,
+                            new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                                     LinearLayout.LayoutParams.WRAP_CONTENT);
                     textView.setLayoutParams(params);
                     prevTextViewId = curTextViewId;

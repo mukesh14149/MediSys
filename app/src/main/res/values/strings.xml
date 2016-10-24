@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MediSys</string>
+    <string name="app_name">MediCare</string>
 
     <!-- Strings related to login -->
     <string name="navigation_drawer_open">Open navigation drawer</string>

@@ -9,11 +9,14 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/health"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".LoginActivity"
+            android:icon="@mipmap/ic_launcher"
+
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -23,8 +26,13 @@
         <activity
             android:name=".SignupForm"
             android:label="@string/title_activity_signup_form" />
-        <activity android:name=".SetReminder" />
-        <activity android:name=".NotificationReceiverActivity" />
+        <activity android:name=".SetReminder"
+            android:icon="@drawable/health"
+            android:label="@string/app_name"
+            android:windowFullscreen="true"/>
+        <activity android:name=".NotificationReceiverActivity"
+            android:icon="@drawable/health"
+            android:label="@string/app_name"/>
 
         <receiver
             android:name=".Reciever"
@@ -36,9 +44,12 @@
 
         <activity
             android:name=".MainActivity"
+            android:icon="@mipmap/ic_launcher"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddMedication" />
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustPan"/>
+        <activity android:name=".AddMedication"
+            android:windowFullscreen="true"/>
         <activity android:name=".Profile" />
         <activity android:name=".Rough"></activity>
     </application>

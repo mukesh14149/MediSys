@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -16,6 +18,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.mukesh.medisys.ReminderArch.ReminderArchclass;
 import com.example.mukesh.medisys.data.MediSysContract;
@@ -29,7 +35,7 @@ public class Reminders extends Fragment {
 
     private SharedPreferences sharedread;
     String email=null;
-
+    LinearLayout frag;
     public  ArrayList<ReminderArchclass> remArc=new ArrayList<ReminderArchclass>();
     ReminderAdapter adapter;
 
@@ -37,21 +43,36 @@ public class Reminders extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
+
+
+
         sharedread = PreferenceManager.getDefaultSharedPreferences(getActivity());
         email=sharedread.getString("email_id","Admin");
+        View rootView;
 
-        View rootView= inflater.inflate(R.layout.fragment_reminders, container, false);
-        listView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-        listView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-        Getreminder getreminder=new Getreminder(email);
-        getreminder.execute();
+          // // View view = (View) LayoutInflater.from(ctx).inflate(R.layout.fragment_reminders, null);
+            //TextView editText =(TextView)rootView.findViewById(R.id.empty1);
+            //editText.setVisibility(View.VISIBLE);
+
+        if (remArc.size() == 0)
+            System.out.print("dddd");
+
+
+        rootView = inflater.inflate(R.layout.fragment_reminders, container, false);
+            listView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+            listView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+            Getreminder getreminder = new Getreminder(email);
+            getreminder.execute();
+
 
 
         ItemTouchHelper swipeToDismissTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
@@ -83,17 +104,19 @@ public class Reminders extends Fragment {
         });
         swipeToDismissTouchHelper.attachToRecyclerView(listView);
 
+        // if (remArc.size() == 0) {
+         //   View v;
+
+           // System.out.print("ddddd");
 
 
 
 
 
 
-
-
-
-
-
+            //rootView = inflater.inflate(R.layout.fragment_remindre_empty, container, false);
+            //holder.t.setVisibility(View.VISIBLE);
+        //}
 
 
 

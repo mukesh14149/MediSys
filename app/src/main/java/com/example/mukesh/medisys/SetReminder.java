@@ -54,8 +54,6 @@ public class SetReminder extends AppCompatActivity {
         schedule_duration=intent1.getStringExtra("Schedule_duration");
         schedule_days=intent1.getStringExtra("Schedule_days");
 
-        System.out.println( "uuuiiii "+description+" "+reminder_timer+" "+schedule_duration+" "+schedule_days);
-
         String[] temp=reminder_timer.toString().split("BBB");
         Calendar cal = Calendar.getInstance();
         System.out.println("tobha"+Calendar.getInstance().getTime());
@@ -69,10 +67,21 @@ public class SetReminder extends AppCompatActivity {
             }catch (Exception e){
                 e.printStackTrace();
             }
+            cal.set(Calendar.SECOND, 0);
             System.out.println(temp[id]+"codingninja"+id+7+"ss"+cal.getTime()+"dd"+Calendar.getInstance().getTime());
+
+            System.out.println( "uuuiiii "+description+" "+reminder_timer+" "+schedule_duration+" "+schedule_days);
             intent.putExtra("code",id+7);
             intent.putExtra("Description",description);
-            PendingIntent alarmIntent = PendingIntent.getBroadcast(this, id, intent, 0);
+            int tempvalue=0;
+            for(int i = 0; i < description.length() ; i++){   // while counting characters if less than the length add one
+                char character = description.charAt(i); // start on the first character
+                int ascii = (int) character; //convert the first character
+                tempvalue+=ascii;
+            }
+
+
+            PendingIntent alarmIntent = PendingIntent.getBroadcast(this, (id+tempvalue), intent, 0);
 
 // set for 30 seconds later
             alarmMgr.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmIntent);

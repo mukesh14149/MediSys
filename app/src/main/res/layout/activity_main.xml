@@ -15,4 +15,6 @@
         android:name="com.example.mukesh.medisys.Reminders">
 
     </fragment>
+
+
 </RelativeLayout>

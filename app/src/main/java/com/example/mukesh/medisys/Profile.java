@@ -56,6 +56,7 @@ public class Profile  extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+
         sharedread = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         imageView = (ImageView) findViewById(R.id.uploadImage);

@@ -95,7 +95,7 @@ public class AddMedication extends AppCompatActivity {
         radiodays=(RadioGroup)findViewById(R.id.radio_days);
 
         Calendar currentTime = Calendar.getInstance();
-        Button startdate=(Button)findViewById(R.id.start_date);
+        TextView startdate=(TextView)findViewById(R.id.start_date);
         startdate.setText(currentTime.get(Calendar.YEAR)+"-"+(currentTime.get(Calendar.MONTH)+1)+"-"+currentTime.get(Calendar.DAY_OF_MONTH));
 
         System.out.println("in oncreate method 111");
@@ -199,7 +199,7 @@ public class AddMedication extends AppCompatActivity {
 
         public void onDateSet(DatePicker view, int year, int month, int day) {
             // Do something with the date chosen by the user
-            Button startdate=(Button)getActivity().findViewById(R.id.start_date);
+            TextView startdate=(TextView) getActivity().findViewById(R.id.start_date);
             month++;
             startdate.setText(year+"-"+month+"-"+day);
             System.out.println("kyyyy"+year+" "+month+" "+day);
@@ -258,7 +258,7 @@ public class AddMedication extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Button startdate=(Button)findViewById(R.id.start_date);
+                TextView startdate=(TextView) findViewById(R.id.start_date);
                 String []te=startdate.getText().toString().split("-");
                 final int Year=Integer.parseInt(te[0]);
                 final int Month=Integer.parseInt(te[1]);
@@ -277,7 +277,7 @@ public class AddMedication extends AppCompatActivity {
                 mTimePicker = new TimePickerDialog(AddMedication.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-System.out.println(selectedHour + ":" + selectedMinute+"mml");
+                System.out.println(selectedHour + ":" + selectedMinute+"mml");
                         t.setText( converttime(selectedHour + ":" + selectedMinute));
                         beginCal.set(Year,Month-1, Day, selectedHour, selectedMinute);
                       //  startdate.setText(beginCal.getTime().toString());

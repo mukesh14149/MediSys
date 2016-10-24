@@ -50,7 +50,6 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     }
 
 
-
     public void setReminder(View view) {
         Intent intent=new Intent(this,AddMedication.class);
         startActivity(intent);

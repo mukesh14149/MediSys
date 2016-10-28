@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -13,6 +14,9 @@ import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,6 +33,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -67,6 +72,8 @@ public class AddMedication extends AppCompatActivity {
     RadioButton buttondays;
 
     int radio_duration_selected=0;
+
+    String number_of_days="";
 
     private SharedPreferences sharedread;
     private EditText editdesc;
@@ -123,6 +130,161 @@ public class AddMedication extends AppCompatActivity {
         });
     }
 
+    public void popupsdow(View view){
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment newFragment = new PropNumberDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("type","popupsdow");
+        newFragment.setArguments(args);
+
+        newFragment.show(ft, "dialog");
+    }
+
+
+    public void popupnod(View view){
+
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment newFragment = new PropNumberDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("type","popupnod");
+        newFragment.setArguments(args);
+
+        newFragment.show(ft, "dialog");
+    }
+
+    public static class PropNumberDialogFragment extends DialogFragment {
+        NumberPicker numberpicker;
+        String selected_no;
+        String type="";
+        ArrayList<Integer> mSelectedItems;
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            //getting proper access to LayoutInflater is the trick. getLayoutInflater is a                   //Function
+
+            type=getArguments().getString("type");
+            Log.i("type",type);
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+            if(type.equals("popupnod")) {
+                LayoutInflater inflater = getActivity().getLayoutInflater();
+
+                View view = inflater.inflate(R.layout.number_picker_dialog, null);
+                builder.setView(view);
+                builder.setTitle("Select number").setNeutralButton(
+                        "", null);
+
+
+                builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do something else
+                        TextView setnod = (TextView) getActivity().findViewById(R.id.set_nod);
+                        setnod.setText(selected_no);
+
+
+                        getDialog().dismiss();
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do something else
+                        getDialog().dismiss();
+                    }
+                });
+
+
+                numberpicker = (NumberPicker) view.findViewById(R.id.numberPicker1);
+                numberpicker.setMinValue(0);
+                numberpicker.setMaxValue(365);
+                numberpicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
+                    @Override
+                    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+
+                        //textview.setText("Selected Value is : " + newVal);
+                        selected_no = Integer.toString(newVal);
+                    }
+                });
+            }
+            else{
+                mSelectedItems = new ArrayList();
+                builder.setTitle("Pick Items")
+                        // Specify the list array, the items to be selected by default (null for none),
+                        // and the listener through which to receive callbacks when items are selected
+                        .setMultiChoiceItems(R.array.toppings, null,
+                                new DialogInterface.OnMultiChoiceClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which,
+                                                        boolean isChecked) {
+                                        if (isChecked) {
+                                            // If the user checked the item, add it to the selected items
+                                            mSelectedItems.add(which);
+                                        } else if (mSelectedItems.contains(which)) {
+                                            // Else, if the item is already in the array, remove it
+                                            mSelectedItems.remove(Integer.valueOf(which));
+                                        }
+                                    }
+                                })
+                        // Set the action buttons
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User clicked OK, so save the mSelectedItems results somewhere
+                                // or return them to the component that opened the dialog
+                                Toast.makeText(getActivity().getApplicationContext(),"mmmml",Toast.LENGTH_LONG).show();
+                                String temp="";
+                                Log.i("Length of array",Integer.toString(mSelectedItems.size()));
+                                    for(Integer i:mSelectedItems){
+                                        if(i==0)
+                                            temp+="Sun"+" ";
+                                        if(i==1)
+                                            temp+="Mon"+" ";
+                                        if(i==2)
+                                            temp+="Tue"+" ";
+                                        if(i==3)
+                                            temp+="Wed"+" ";
+                                        if(i==4)
+                                            temp+="Thu"+" ";
+                                        if(i==5)
+                                            temp+="Fri"+" ";
+                                        if(i==6)
+                                            temp+="Sat"+" ";
+                                    }
+                                TextView textView=(TextView)getActivity().findViewById(R.id.set_sdow);
+                                textView.setText(temp);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+
+                                Toast.makeText(getActivity().getApplicationContext(),"ccccl",Toast.LENGTH_LONG).show();
+                            }
+                        });
+            }
+            return builder.create();
+        }
+    }
+
+
+
+
+
     public void save_medication(View view) {
         try {
             description = editdesc.getText().toString();
@@ -132,10 +294,24 @@ public class AddMedication extends AppCompatActivity {
 
             buttonduration = (RadioButton) findViewById(radio_duration_selected);
             schedule_duration = buttonduration.getText().toString();
+            if(schedule_duration.equals("number of days")) {
+                TextView temp = (TextView)findViewById(R.id.set_nod);
+                schedule_duration=temp.getText().toString();
+
+            }
+            Log.i("Schedule_duaration",schedule_duration);
 
             radio_duration_selected = radiodays.getCheckedRadioButtonId();
             buttondays = (RadioButton) findViewById(radio_duration_selected);
             schedule_days = buttondays.getText().toString();
+            if(schedule_days.equals("specific days of week")) {
+                TextView temp = (TextView)findViewById(R.id.set_sdow);
+                schedule_days=temp.getText().toString();
+
+            }
+            Log.i("Schedule_days",schedule_days);
+
+
 
             System.out.println(email + " " + description + " " + reminder_timer + " " + schedule_duration + " " + schedule_days);
             if (email == null || description == null || reminder_timer == null || schedule_duration == null || schedule_days == null) {
@@ -146,6 +322,7 @@ public class AddMedication extends AppCompatActivity {
                 save.execute();
             }
         } catch (Exception e) {
+            e.printStackTrace();
             Toast.makeText(getApplication().getApplicationContext(), "Some Filled are empty", Toast.LENGTH_SHORT).show();
         }
 

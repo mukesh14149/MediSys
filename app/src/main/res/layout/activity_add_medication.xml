@@ -228,13 +228,25 @@
                                     android:text="continuous"
                                     android:textSize="20dp"/>
 
-                                <RadioButton
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="number of days"
-                                    android:textSize="20dp"/>
+                                    <RadioButton
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="number of days"
+                                        android:onClick="popupnod"
+                                        android:textSize="20dp">
+
+                                    </RadioButton>
+
+
 
                             </RadioGroup>
+                            <TextView
+                                android:id="@+id/set_nod"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+
+                                />
+
                         </LinearLayout>
 
                         <TextView
@@ -273,7 +285,8 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="specific days of week"
-                                    android:textSize="20dp"/>
+                                    android:textSize="20dp"
+                                    android:onClick="popupsdow"/>
 
                                 <RadioButton
                                     android:layout_width="wrap_content"
@@ -289,12 +302,16 @@
 
                             </RadioGroup>
                         </LinearLayout>
+                        <TextView
+                            android:id="@+id/set_sdow"
+                            android:layout_below="@+id/groupofdays"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="hhhhhhhhhhhhh"/>
 
                         <View
                             android:layout_marginTop="5dp"
                             android:layout_marginBottom="5dp"
-
-
 
                             android:layout_width="match_parent"
                             android:layout_height="1dp"

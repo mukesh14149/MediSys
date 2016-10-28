@@ -13,6 +13,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -54,6 +55,8 @@ public class SetReminder extends AppCompatActivity {
         schedule_duration=intent1.getStringExtra("Schedule_duration");
         schedule_days=intent1.getStringExtra("Schedule_days");
 
+        Log.i("Check schedule_duration",schedule_duration+" "+schedule_days);
+
         String[] temp=reminder_timer.toString().split("BBB");
         Calendar cal = Calendar.getInstance();
         System.out.println("tobha"+Calendar.getInstance().getTime());
@@ -71,20 +74,26 @@ public class SetReminder extends AppCompatActivity {
             System.out.println(temp[id]+"codingninja"+id+7+"ss"+cal.getTime()+"dd"+Calendar.getInstance().getTime());
 
             System.out.println( "uuuiiii "+description+" "+reminder_timer+" "+schedule_duration+" "+schedule_days);
-            intent.putExtra("code",id+7);
-            intent.putExtra("Description",description);
+
             int tempvalue=0;
+
             for(int i = 0; i < description.length() ; i++){   // while counting characters if less than the length add one
                 char character = description.charAt(i); // start on the first character
                 int ascii = (int) character; //convert the first character
                 tempvalue+=ascii;
-            }
 
+            }
+            Log.i("Check value of temp",Integer.toString(tempvalue));
+            intent.putExtra("code",(id+tempvalue));
+            intent.putExtra("Description",description);
+            intent.putExtra("Time",cal.getTimeInMillis());
+            intent.putExtra("schedule_duration", schedule_duration);
+            intent.putExtra("schedule_days",schedule_days);
+            intent.putExtra("Reminder_timer",temp[id]);
 
             PendingIntent alarmIntent = PendingIntent.getBroadcast(this, (id+tempvalue), intent, 0);
-
-// set for 30 seconds later
-            alarmMgr.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmIntent);
+            // set for 30 seconds later
+            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),AlarmManager.INTERVAL_DAY, alarmIntent);
         }
     }
 }

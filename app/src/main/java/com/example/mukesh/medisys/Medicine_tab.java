@@ -1,27 +1,18 @@
 package com.example.mukesh.medisys;
-
-
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.example.mukesh.medisys.ReminderArch.ReminderArchclass;
 import com.example.mukesh.medisys.data.MediSysContract;
@@ -30,14 +21,14 @@ import com.example.mukesh.medisys.data.MediSysSQLiteHelper;
 import java.util.ArrayList;
 
 
-public class Reminders extends Fragment {
+public class Medicine_tab extends Fragment {
     RecyclerView listView;
 
     private SharedPreferences sharedread;
     String email=null;
     LinearLayout frag;
-    public  ArrayList<ReminderArchclass> remArc=new ArrayList<ReminderArchclass>();
-    ReminderAdapter adapter;
+    public ArrayList<ReminderArchclass> remArc=new ArrayList<ReminderArchclass>();
+    Adapter_medicine adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,23 +49,23 @@ public class Reminders extends Fragment {
         View rootView;
 
 
-          // // View view = (View) LayoutInflater.from(ctx).inflate(R.layout.fragment_reminders, null);
-            //TextView editText =(TextView)rootView.findViewById(R.id.empty1);
-            //editText.setVisibility(View.VISIBLE);
+        // // View view = (View) LayoutInflater.from(ctx).inflate(R.layout.fragment_reminders, null);
+        //TextView editText =(TextView)rootView.findViewById(R.id.empty1);
+        //editText.setVisibility(View.VISIBLE);
 
         if (remArc.size() == 0)
             System.out.print("dddd");
 
 
-        rootView = inflater.inflate(R.layout.fragment_reminders, container, false);
-            listView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
-            listView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rootView = inflater.inflate(R.layout.fragment_medicine_records, container, false);
+        listView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
+        listView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
-            Getreminder getreminder = new Getreminder(email);
-            getreminder.execute();
+        Medicine_tab.Getreminder getreminder = new Medicine_tab.Getreminder(email);
+        getreminder.execute();
 
 
-
+/*
         ItemTouchHelper swipeToDismissTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -95,27 +86,27 @@ public class Reminders extends Fragment {
                 adapter.notifyItemRangeChanged(viewHolder.getAdapterPosition(),remArc.size());
                 System.out.println("Sujeey");
 
-                Delete_item delete_item=new Delete_item(tempremArc);
+                Medicine_tab.Delete_item delete_item=new Medicine_tab.Delete_item(tempremArc);
                 delete_item.execute();
 
 
             }
 
         });
-        swipeToDismissTouchHelper.attachToRecyclerView(listView);
+        swipeToDismissTouchHelper.attachToRecyclerView(listView);*/
 
         // if (remArc.size() == 0) {
-         //   View v;
+        //   View v;
 
-           // System.out.print("ddddd");
-
-
+        // System.out.print("ddddd");
 
 
 
 
-            //rootView = inflater.inflate(R.layout.fragment_remindre_empty, container, false);
-            //holder.t.setVisibility(View.VISIBLE);
+
+
+        //rootView = inflater.inflate(R.layout.fragment_remindre_empty, container, false);
+        //holder.t.setVisibility(View.VISIBLE);
         //}
 
 
@@ -130,7 +121,7 @@ public class Reminders extends Fragment {
 
         return  rootView;
     }
-    public class Getreminder extends AsyncTask<Void,Void,ArrayList<ReminderArchclass>>{
+    public class Getreminder extends AsyncTask<Void,Void,ArrayList<ReminderArchclass>> {
         String mEmail=null;
 
         public Getreminder(String mEmail){
@@ -157,7 +148,6 @@ public class Reminders extends Fragment {
                         MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DURAtION,
                         MediSysContract.MedicationEntry.COLUMN_NAME_REMINDER_TIMER,
                         MediSysContract.MedicationEntry.COLUMN_NAME_SKIP,
-
 
                 };
 
@@ -207,7 +197,7 @@ public class Reminders extends Fragment {
             if(!remArc.isEmpty())
                 System.out.println(remArc.size()+"uuuuuuu"+remArc.get(0).getDescription()+remArc.get(0).getReminder_timer());
 
-            adapter=new ReminderAdapter(getActivity(),remArc);
+            adapter=new Adapter_medicine(getActivity(),remArc);
             listView.setAdapter(adapter);
         }
     }
@@ -257,3 +247,4 @@ public class Reminders extends Fragment {
 
 
 }
+

@@ -26,10 +26,12 @@ public class MediSysSQLiteHelper extends SQLiteOpenHelper {
             "CREATE TABLE " +MediSysContract.MedicationEntry.TABLE_NAME + " (" +
                     MediSysContract.MedicationEntry._ID + " INTEGER PRIMARY KEY NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_EMAIL +  " TEXT NOT NULL, " +
+                    MediSysContract.MedicationEntry.COLUMN_NAME_UNIQUE_ID +  " TEXT NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION + " TEXT NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DURAtION + " TEXT NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DAYS + " TEXT NOT NULL, " +
-                    MediSysContract.MedicationEntry.COLUMN_NAME_REMINDER_TIMER+  " TEXT NOT NULL " +
+                    MediSysContract.MedicationEntry.COLUMN_NAME_REMINDER_TIMER+  " TEXT NOT NULL, " +
+                    MediSysContract.MedicationEntry.COLUMN_NAME_SKIP+  " TEXT NOT NULL " +
                     " )";
 
     private static final String SQL_DELETE_ENTRIES =

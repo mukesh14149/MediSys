@@ -30,7 +30,10 @@ public class SetReminder extends AppCompatActivity {
     String reminder_timer=null;
     String schedule_duration=null;
     String schedule_days=null;
+    String unique_id=null;
     Intent intent1;
+
+    public static AlarmManager alarmMgr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,24 +57,28 @@ public class SetReminder extends AppCompatActivity {
         reminder_timer=intent1.getStringExtra("Reminder_timer");
         schedule_duration=intent1.getStringExtra("Schedule_duration");
         schedule_days=intent1.getStringExtra("Schedule_days");
+        unique_id=intent1.getStringExtra("Unique_id");
 
         Log.i("Check schedule_duration",schedule_duration+" "+schedule_days);
 
-        String[] temp=reminder_timer.toString().split("BBB");
+        Log.i("I wanna see time",Calendar.getInstance().getTime()+" "+Calendar.getInstance().getTimeInMillis());
+
+        String[] reminder_time_array=reminder_timer.toString().split("BBB");
         Calendar cal = Calendar.getInstance();
         System.out.println("tobha"+Calendar.getInstance().getTime());
-        AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, Reciever.class);
-        for (int id = 0; id < temp.length; id++) {
 
+
+        for (int id = 0; id < reminder_time_array.length; id++) {
             SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
             try {
-                cal.setTime(sdf.parse(temp[id]));// all done
+                cal.setTime(sdf.parse(reminder_time_array[id]));// all done
             }catch (Exception e){
                 e.printStackTrace();
             }
             cal.set(Calendar.SECOND, 0);
-            System.out.println(temp[id]+"codingninja"+id+7+"ss"+cal.getTime()+"dd"+Calendar.getInstance().getTime());
+            System.out.println(reminder_time_array[id]+"codingninja"+id+7+"ss"+cal.getTime()+"dd"+cal.getTimeInMillis()+" "+Calendar.getInstance().getTime()+" "+Calendar.getInstance().getTimeInMillis());
 
             System.out.println( "uuuiiii "+description+" "+reminder_timer+" "+schedule_duration+" "+schedule_days);
 
@@ -83,17 +90,24 @@ public class SetReminder extends AppCompatActivity {
                 tempvalue+=ascii;
 
             }
+
             Log.i("Check value of temp",Integer.toString(tempvalue));
             intent.putExtra("code",(id+tempvalue));
             intent.putExtra("Description",description);
             intent.putExtra("Time",cal.getTimeInMillis());
             intent.putExtra("schedule_duration", schedule_duration);
             intent.putExtra("schedule_days",schedule_days);
-            intent.putExtra("Reminder_timer",temp[id]);
+            intent.putExtra("Reminder_timer",reminder_time_array[id]);
+            intent.putExtra("Unique_id",unique_id);
+            addReminder(this,(id+tempvalue),intent,0,cal.getTimeInMillis(),1);
 
-            PendingIntent alarmIntent = PendingIntent.getBroadcast(this, (id+tempvalue), intent, 0);
-            // set for 30 seconds later
-            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),AlarmManager.INTERVAL_DAY, alarmIntent);
+        }
+    }
+
+    public static void addReminder(Context context,int requestcode, Intent intent, int flag, long triggerAtMills, int type){
+        if(type==1) {
+            PendingIntent alarmIntent = PendingIntent.getBroadcast(context, requestcode, intent, flag);
+            alarmMgr.setRepeating(AlarmManager.RTC_WAKEUP, triggerAtMills, AlarmManager.INTERVAL_DAY, alarmIntent);
         }
     }
 }

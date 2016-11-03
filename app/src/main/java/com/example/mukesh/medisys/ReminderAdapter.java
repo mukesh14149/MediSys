@@ -1,12 +1,17 @@
 package com.example.mukesh.medisys;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.helper.ItemTouchHelper;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,7 +31,6 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
 
     private Context context;
-
     ArrayList<ReminderArchclass> remArc;
 
     public ReminderAdapter(Context context, ArrayList<ReminderArchclass> remArc) {
@@ -53,6 +57,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
         TextView timer;
         TextView date;
         TextView days;
+        Toolbar toolbar_edit;
 
         public ViewHolder(View item) {
 
@@ -62,15 +67,15 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
             frag = (LinearLayout) item.findViewById(R.id.parent_frag);
             bel = (ImageButton) item.findViewById(R.id.bell);
             bel.setOnClickListener(this);
-            TAke = (Button) item.findViewById(R.id.take);
+       /*     TAke = (Button) item.findViewById(R.id.take);
             SKip = (Button) item.findViewById(R.id.skip);
             TAke.setOnClickListener(this);
-            SKip.setOnClickListener(this);
+            SKip.setOnClickListener(this);*/
             description = (TextView) item.findViewById(R.id.description_view);
             timer = (TextView) item.findViewById(R.id.timer_view);
             date = (TextView) item.findViewById(R.id.schedule_date_view);
             days = (TextView) item.findViewById(R.id.schedule_days_view);
-
+            toolbar_edit=(Toolbar)item.findViewById(R.id.toolbar_edit);
 
         }
 
@@ -91,11 +96,11 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
                     bel.setTag("on");
                 }
 
-            } else if (v.getId() == TAke.getId()) {
+           /* } else if (v.getId() == TAke.getId()) {
                 Toast.makeText(v.getContext(), "Take", Toast.LENGTH_SHORT).show();
 
             } else if (v.getId() == SKip.getId()) {
-                Toast.makeText(v.getContext(), "Skip", Toast.LENGTH_SHORT).show();
+                Toast.makeText(v.getContext(), "Skip", Toast.LENGTH_SHORT).show();*/
 
             } else {
                 Toast.makeText(v.getContext(), "ROW PRESSED = " + String.valueOf(this), Toast.LENGTH_SHORT).show();
@@ -140,7 +145,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
     @Override
     public void onBindViewHolder(ReminderAdapter.ViewHolder holder, int position) {
 
-        ReminderArchclass reminderArchclass = remArc.get(position);
+        final ReminderArchclass reminderArchclass = remArc.get(position);
         String a = reminderArchclass.getReminder_timer();
 
 
@@ -179,12 +184,57 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
         holder.description.setText(reminderArchclass.getDescription());
         holder.date.setText(reminderArchclass.getSchedule_duration());
         holder.days.setText(reminderArchclass.getSchedule_days());
+        holder.toolbar_edit.setOnClickListener(new View.OnClickListener(){
 
+            @Override
+            public void onClick(View view) {
+                ShowPopup(getContext(),view, reminderArchclass);
+
+            }
+        });
         //
     }
 
+    public void ShowPopup(Context mContext,View view, ReminderArchclass reminderArchclass){
+        PopupMenu popup = new PopupMenu(mContext, view);
+        MenuInflater inflater = popup.getMenuInflater();
+        inflater.inflate(R.menu.medication_menu, popup.getMenu());
+        popup.setOnMenuItemClickListener(new MyMenuItemClickListener(reminderArchclass));
+        popup.show();
+    }
+
+    class MyMenuItemClickListener implements PopupMenu.OnMenuItemClickListener {
+
+        ReminderArchclass reminderArchclass;
+        public MyMenuItemClickListener(ReminderArchclass reminderArchclass) {
+            this.reminderArchclass=reminderArchclass;
+        }
+
+        public void Edit(){
+            Toast.makeText(getContext(), reminderArchclass.getDescription(), Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getContext(), AddMedication.class);
+            Bundle b = new Bundle();
+            b.putParcelable("ReminderArchclass", reminderArchclass);
+            intent.putExtras(b);
+            getContext().startActivity(intent);
 
 
+        }
+
+        @Override
+        public boolean onMenuItemClick(MenuItem menuItem) {
+            switch (menuItem.getItemId()) {
+                case R.id.edit_medication:
+                    Edit();
+                    return true;
+                case R.id.delete_medication:
+                    Toast.makeText(getContext(), "Delete", Toast.LENGTH_SHORT).show();
+                    return true;
+                default:
+            }
+            return false;
+        }
+    }
 
 
             @Override

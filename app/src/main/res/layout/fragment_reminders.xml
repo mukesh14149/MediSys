@@ -21,7 +21,48 @@
         android:textColor="#525252"
         android:textSize="19.0sp"
         android:visibility="gone" />
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="bottom|end">
 
+
+
+
+    <android.support.design.widget.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fab2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin1"
+        android:src="@drawable/medi"
+
+        app:backgroundTint="@android:color/holo_orange_light"
+        android:onClick="setReminder"
+        android:visibility="gone"/>
+   <!-- <android.support.design.widget.FloatingActionButton
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fab3"
+        android:layout_width="279dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@android:drawable/ic_input_add"
+        app:backgroundTint="#3087B4"
+        android:onClick="setReminder"
+        android:visibility="gone"/>-->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin1"
+        android:src="@drawable/record1"
+        app:backgroundTint="@android:color/holo_orange_dark"
+        android:onClick="setRecord"
+        android:visibility="gone"/>
     <android.support.design.widget.FloatingActionButton
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/fab"
@@ -29,10 +70,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@android:drawable/ic_input_add"
+        android:src="@drawable/add"
         app:backgroundTint="#3087B4"
-        android:onClick="setReminder"/>
+        android:onClick="fab"/>
 
+</LinearLayout>
 
 
 

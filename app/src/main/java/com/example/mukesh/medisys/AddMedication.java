@@ -42,6 +42,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.example.mukesh.medisys.ReminderArch.ReminderArchclass;
 import com.example.mukesh.medisys.data.MediSysContract;
 import com.example.mukesh.medisys.data.MediSysSQLiteHelper;
 
@@ -50,6 +51,7 @@ import org.w3c.dom.Text;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 public class AddMedication extends AppCompatActivity {
     ArrayList<TextView> time=new ArrayList<TextView>();
@@ -59,6 +61,7 @@ public class AddMedication extends AppCompatActivity {
     TextView settime ;
     Button startdate ;
     String email=null;
+    String skip="";
     String description=null;
 
     String reminder_timer="";
@@ -89,6 +92,18 @@ public class AddMedication extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_medication);
+        try {
+            Bundle b = getIntent().getExtras();
+            ReminderArchclass reminderArchclass = b.getParcelable("ReminderArchclass");
+            Log.i("Check bhai","yo budd");
+            System.out.println(reminderArchclass.getDescription());
+        }catch (Exception e){
+            Log.i("Check bhai","yo");
+            e.printStackTrace();
+        }
+
+
+
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         hide1=(ImageButton)findViewById(R.id.imageButton2);
@@ -318,7 +333,7 @@ public class AddMedication extends AppCompatActivity {
                 Toast.makeText(getApplication().getApplicationContext(), "Error while updating", Toast.LENGTH_SHORT).show();
 
             } else {
-                save_data save = new save_data(email, description, reminder_timer, schedule_duration, schedule_days);
+                save_data save = new save_data(email, description, reminder_timer, schedule_duration, schedule_days,skip);
                 save.execute();
             }
         } catch (Exception e) {
@@ -390,6 +405,8 @@ public class AddMedication extends AppCompatActivity {
         String m=t[1];
         String suffix;
         int var=Integer.parseInt(h);
+
+
         if(var<12)
         {
             suffix="AM";
@@ -401,7 +418,12 @@ public class AddMedication extends AppCompatActivity {
                 var=var-12;
             }
         }
-        String local=Integer.toString(var)+":"+m+" "+suffix;
+        String local;
+        if(var<10) {
+             local = "0"+Integer.toString(var) + ":" + m + " " + suffix;
+        }
+        else
+            local = Integer.toString(var) + ":" + m + " " + suffix;
         System.out.println("Date"+local);
         return local;
     }
@@ -413,7 +435,7 @@ public class AddMedication extends AppCompatActivity {
         reminder=(LinearLayout) findViewById(R.id.reminder_inner_layout);
         lprams.setMargins(0,0,0,15);
         settime= new TextView(this);
-        settime.setText("2:00 PM");
+        settime.setText("02:00 PM");
 
         settime.setId(c++);
 
@@ -475,24 +497,29 @@ public class AddMedication extends AppCompatActivity {
         String reminder_timer=null;
         String schedule_duration=null;
         String schedule_days=null;
+        String skip=null; String unique_id=null;
         final MediSysSQLiteHelper mDbHelper = new MediSysSQLiteHelper(getApplication().getApplicationContext());
-        save_data(String email, String description, String reminder_timer, String schedule_duration, String schedule_days){
+        save_data(String email, String description, String reminder_timer, String schedule_duration, String schedule_days,String  skip){
             this.email=email;
             this.description=description;
             this.reminder_timer=reminder_timer;
             this.schedule_duration=schedule_duration;
             this.schedule_days=schedule_days;
+            this.skip=skip; this.unique_id=Long.toString(System.currentTimeMillis());
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
             ContentValues values = new ContentValues();
+            values.put(MediSysContract.MedicationEntry.COLUMN_NAME_UNIQUE_ID,unique_id);
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_EMAIL, email);
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION, description);
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_REMINDER_TIMER, reminder_timer);
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DURAtION, schedule_duration);
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DAYS, schedule_days);
+            values.put(MediSysContract.MedicationEntry.COLUMN_NAME_SKIP,skip);
+
 
             long newRowId = db.insert(MediSysContract.MedicationEntry.TABLE_NAME, null, values);
             System.out.println("yo baby"+newRowId);
@@ -511,6 +538,7 @@ public class AddMedication extends AppCompatActivity {
                 intent.putExtra("Reminder_timer",reminder_timer);
                 intent.putExtra("Schedule_duration",schedule_duration);
                 intent.putExtra("Schedule_days",schedule_days);
+                intent.putExtra("Unique_id",unique_id);
                 startActivity(intent);
             }
             else {

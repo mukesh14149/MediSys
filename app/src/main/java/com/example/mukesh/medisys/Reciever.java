@@ -7,11 +7,15 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+
+import com.example.mukesh.medisys.data.MediSysContract;
+import com.example.mukesh.medisys.data.MediSysSQLiteHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -36,7 +40,7 @@ public class Reciever extends BroadcastReceiver {
         week.put(4,"Fri");
         week.put(5,"Sat");
 
-
+            Log.i("Reciever.java","See the detail");
             int code=intent.getIntExtra("code", 1);
             String string=intent.getStringExtra("Description");
             System.out.println(string +"yo buddy"+code);
@@ -44,6 +48,7 @@ public class Reciever extends BroadcastReceiver {
             String dayofweek=intent.getStringExtra("schedule_days");
             String reminder_time=intent.getStringExtra("Reminder_timer");
             Calendar cal = Calendar.getInstance();
+            System.out.println(dayofweek+" "+reminder_time+" ");
             SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
             try {
                 cal.setTime(sdf.parse(reminder_time));// all done
@@ -79,7 +84,8 @@ public class Reciever extends BroadcastReceiver {
             }
 
             else{
-                if(dayofweek.equals("specific days of week")||dayofweek.contains(week.get(cal.get(Calendar.DAY_OF_WEEK)))){
+                System.out.println(dayofweek+"aaaaa");
+                if(dayofweek.equals("Every day")||dayofweek.equals("specific days of week")||dayofweek.contains(week.get(cal.get(Calendar.DAY_OF_WEEK)))){
                     show_notiication(intent,string,context);
                 }
             }
@@ -89,7 +95,7 @@ public class Reciever extends BroadcastReceiver {
     }
 
     public void show_notiication(Intent intent,String string, Context context){
-
+        Log.i("I am in show_",string);
         int unique=(id+intent.getIntExtra("code",1));
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -123,9 +129,11 @@ public class Reciever extends BroadcastReceiver {
     public PendingIntent getPendingAction(Context context, Intent intent,int unique,String action) {
         // Prepare intent which is triggered if the
         // notification is selected
+        Log.i("Check Descript_R",intent.getStringExtra("Description"));
         Intent i = new Intent(context, NotificationReceiverActivity.class);
         i.putExtra("unique code",(id+intent.getIntExtra("code",1)));
         i.putExtra("Description",intent.getStringExtra("Description"));
+        i.putExtra("Unique_id",intent.getStringExtra("Unique_id"));
         i.putExtra("ACTION", action);
         i.setAction(action);
         return  PendingIntent.getActivity(context, unique, i, PendingIntent.FLAG_UPDATE_CURRENT);

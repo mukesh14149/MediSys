@@ -21,11 +21,16 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity  implements NavigationView.OnNavigationItemSelectedListener  {
     private SharedPreferences sharedread;
+    android.support.design.widget.FloatingActionButton fab,fab1,fab2,fab3;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_act);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
+        fab=(android.support.design.widget.FloatingActionButton)findViewById(R.id.fab);
+        fab1=(android.support.design.widget.FloatingActionButton)findViewById(R.id.fab1);
+        fab2=(android.support.design.widget.FloatingActionButton)findViewById(R.id.fab2);
 
 
 
@@ -49,9 +54,25 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     }
 
+int v=0;
+    public void fab(View view) {
+        if (v == 0) {
+            fab1.setVisibility(View.VISIBLE);
+            fab2.setVisibility(View.VISIBLE);
 
+            v = 1;
+        } else {
+            fab1.setVisibility(View.GONE);
+            fab2.setVisibility(View.GONE);
+            v = 0;
+        }
+    }
     public void setReminder(View view) {
         Intent intent=new Intent(this,AddMedication.class);
+       startActivity(intent);
+    }
+    public void setRecord(View view) {
+        Intent intent=new Intent(this,AddMedical_history.class);
         startActivity(intent);
     }
     @Override
@@ -99,7 +120,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
         } else if (id == R.id.medication) {
 
         } else if (id == R.id.records) {
-
+                Intent intent=new Intent(this,History.class);
+                startActivity(intent);
         } else if (id == R.id.settings) {
 
         } else if (id == R.id.nav_share) {

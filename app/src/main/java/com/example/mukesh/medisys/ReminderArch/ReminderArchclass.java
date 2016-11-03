@@ -1,13 +1,21 @@
 package com.example.mukesh.medisys.ReminderArch;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by mukesh on 21/10/16.
  */
-public class ReminderArchclass {
+public class ReminderArchclass implements Parcelable {
     private String reminder_timer=null;
     private String schedule_duration=null;
     private String schedule_days=null;
     private String description=null;
+    private String skip=null;
+    public ReminderArchclass(){
+
+    }
+
 
     public void setReminder_timer(String reminder_timer){
         this.reminder_timer=reminder_timer;
@@ -23,6 +31,9 @@ public class ReminderArchclass {
 
     public void setDescription(String description){
         this.description=description;
+    }
+    public void setskip(String skip){
+        this.skip=skip;
     }
 
 
@@ -41,6 +52,44 @@ public class ReminderArchclass {
     public String getDescription(){
         return description;
     }
+    public String getskip(){
+        return skip;
+    }
+    private ReminderArchclass(Parcel in){
+        reminder_timer = in.readString();
+        schedule_duration = in.readString();
+        schedule_days = in.readString();
+        description = in.readString();
+        skip=in.readString();
+    }
 
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+            parcel.writeString(reminder_timer);
+            parcel.writeString(schedule_duration);
+            parcel.writeString(schedule_days);
+            parcel.writeString(description);
+            parcel.writeString(skip);
+    }
+    public static final Parcelable.Creator<ReminderArchclass> CREATOR = new Parcelable.Creator<ReminderArchclass>()
+    {
+
+        @Override
+        public ReminderArchclass createFromParcel(Parcel parcel)
+        {
+            return new ReminderArchclass(parcel);
+        }
+
+        @Override
+        public ReminderArchclass[] newArray(int i)
+        {
+            return new ReminderArchclass[i];
+        }
+    };
 }

@@ -226,7 +226,7 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="continuous"
-                                    android:textSize="20dp"/>
+                                    android:textSize="20dp" />
 
                                     <RadioButton
                                         android:layout_width="wrap_content"
@@ -307,7 +307,9 @@
                             android:layout_below="@+id/groupofdays"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="hhhhhhhhhhhhh"/>
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            android:text="Sun,Mon,Tue,Wed,Thur,Fri,Sat" />
 
                         <View
                             android:layout_marginTop="5dp"

@@ -32,6 +32,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
     private Context context;
     ArrayList<ReminderArchclass> remArc;
+    public static int prevTextViewId = 2014108;
 
     public ReminderAdapter(Context context, ArrayList<ReminderArchclass> remArc) {
         this.remArc = remArc;
@@ -47,6 +48,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         // each data item is just a string in this case
+
 
         TextView t;
         TextView description;
@@ -146,21 +148,19 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
     public void onBindViewHolder(ReminderAdapter.ViewHolder holder, int position) {
 
         final ReminderArchclass reminderArchclass = remArc.get(position);
-        String a = reminderArchclass.getReminder_timer();
+        ArrayList<String> words = reminderArchclass.getReminder_timer();
 
-
-        int prevTextViewId = 2014108;
 
         int i;
-        String[] words = a.split("BBB");
-        String[] word = words[0].split(" ");
+        //String[] words = a.split("BBB");
+        String[] word = words.get(0).split(" ");
         if (word.length > 2) {
             word[3] = word[3].substring(0, (word[3].length() - 3));
             holder.timer.setText(converttime(word[3]));
 
         }
-        for (i = 1; i < words.length; i++) {
-            word = words[i].split(" ");
+        for (i = 1; i < words.size(); i++) {
+            word = words.get(i).split(" ");
 
 
             final TextView textView = new TextView(getContext());

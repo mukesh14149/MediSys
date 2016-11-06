@@ -21,13 +21,16 @@ import com.example.mukesh.medisys.data.MediSysContract;
 import com.example.mukesh.medisys.data.MediSysSQLiteHelper;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class SetReminder extends AppCompatActivity {
 
     String description=null;
-    String reminder_timer=null;
+   HashMap<String,String> id_reminder_timer=null;
     String schedule_duration=null;
     String schedule_days=null;
     String unique_id=null;
@@ -41,7 +44,7 @@ public class SetReminder extends AppCompatActivity {
         setContentView(R.layout.activity_set_reminder);
         intent1=getIntent();
         createNotification();
-        startActivity(new Intent(this,MainActivity.class));
+       startActivity(new Intent(this,MainActivity.class));
     }
     public void createNotification() {
         // Prepare intent which is triggered if the
@@ -54,52 +57,58 @@ public class SetReminder extends AppCompatActivity {
                 PackageManager.DONT_KILL_APP);
 
         description=intent1.getStringExtra("Description");
-        reminder_timer=intent1.getStringExtra("Reminder_timer");
+        id_reminder_timer=(HashMap<String,String>) intent1.getSerializableExtra("Reminder_timer");
         schedule_duration=intent1.getStringExtra("Schedule_duration");
         schedule_days=intent1.getStringExtra("Schedule_days");
         unique_id=intent1.getStringExtra("Unique_id");
+        Log.i("In SetReminder","Below");
+        for(Map.Entry<String,String> info:id_reminder_timer.entrySet()){
+            System.out.println(info.getKey()+" "+info.getValue());
+
+        }
+
 
         Log.i("Check schedule_duration",schedule_duration+" "+schedule_days);
 
         Log.i("I wanna see time",Calendar.getInstance().getTime()+" "+Calendar.getInstance().getTimeInMillis());
 
-        String[] reminder_time_array=reminder_timer.toString().split("BBB");
+        //String[] reminder_time_array=reminder_timer.toString().split("BBB");
         Calendar cal = Calendar.getInstance();
         System.out.println("tobha"+Calendar.getInstance().getTime());
         alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, Reciever.class);
 
 
-        for (int id = 0; id < reminder_time_array.length; id++) {
+        for(Map.Entry<String,String> info:id_reminder_timer.entrySet()){
             SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
             try {
-                cal.setTime(sdf.parse(reminder_time_array[id]));// all done
+                cal.setTime(sdf.parse(id_reminder_timer.get(info.getKey())));// all done
             }catch (Exception e){
                 e.printStackTrace();
             }
             cal.set(Calendar.SECOND, 0);
-            System.out.println(reminder_time_array[id]+"codingninja"+id+7+"ss"+cal.getTime()+"dd"+cal.getTimeInMillis()+" "+Calendar.getInstance().getTime()+" "+Calendar.getInstance().getTimeInMillis());
+            System.out.println(id_reminder_timer.get(info.getKey())+"codingninja"+7+"ss"+cal.getTime()+"dd"+cal.getTimeInMillis()+" "+Calendar.getInstance().getTime()+" "+Calendar.getInstance().getTimeInMillis());
 
-            System.out.println( "uuuiiii "+description+" "+reminder_timer+" "+schedule_duration+" "+schedule_days);
+            System.out.println( "uuuiiii "+description+" "+" "+schedule_duration+" "+schedule_days);
 
             int tempvalue=0;
-
+/*
             for(int i = 0; i < description.length() ; i++){   // while counting characters if less than the length add one
                 char character = description.charAt(i); // start on the first character
                 int ascii = (int) character; //convert the first character
                 tempvalue+=ascii;
 
-            }
+            }*/
 
-            Log.i("Check value of temp",Integer.toString(tempvalue));
-            intent.putExtra("code",(id+tempvalue));
+            Log.i("Check value id_reminder",info.getKey()+"aaa"+id_reminder_timer.get(info.getKey()));
+            intent.putExtra("unique_timer_id",Integer.parseInt(info.getKey()));
             intent.putExtra("Description",description);
             intent.putExtra("Time",cal.getTimeInMillis());
             intent.putExtra("schedule_duration", schedule_duration);
             intent.putExtra("schedule_days",schedule_days);
-            intent.putExtra("Reminder_timer",reminder_time_array[id]);
+            intent.putExtra("Reminder_timer",id_reminder_timer.get(info.getKey()));
             intent.putExtra("Unique_id",unique_id);
-            addReminder(this,(id+tempvalue),intent,0,cal.getTimeInMillis(),1);
+            addReminder(this,Integer.parseInt(info.getKey()),intent,0,cal.getTimeInMillis(),1);
 
         }
     }

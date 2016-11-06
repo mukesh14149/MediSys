@@ -33,17 +33,22 @@ public class Reciever extends BroadcastReceiver {
         // retrieve the value
         HashMap<Integer,String> week=new HashMap<Integer, String>();
 
-        week.put(0,"Mon");
-        week.put(1,"Tue");
-        week.put(2,"Wed");
-        week.put(3,"Thu");
-        week.put(4,"Fri");
-        week.put(5,"Sat");
+        week.put(2,"Mon");
+        week.put(3,"Tue");
+        week.put(4,"Wed");
+        week.put(5,"Thu");
+        week.put(6,"Fri");
+        week.put(7,"Sat");
+        week.put(1,"Sun");
 
-            Log.i("Reciever.java","See the detail");
-            int code=intent.getIntExtra("code", 1);
-            String string=intent.getStringExtra("Description");
-            System.out.println(string +"yo buddy"+code);
+
+
+        Log.i("Reciever.java","See the detail");
+        Log.i("Check value id_reminde","aaa"+intent.getStringExtra("Reminder_timer"));
+
+
+        String string=intent.getStringExtra("Description");
+            //System.out.println(string +"yo buddy"+code);
 
             String dayofweek=intent.getStringExtra("schedule_days");
             String reminder_time=intent.getStringExtra("Reminder_timer");
@@ -76,7 +81,7 @@ public class Reciever extends BroadcastReceiver {
                         Log.i("I am checking days","kat gya");
                 }
                 else{
-                    PendingIntent alarmIntent = PendingIntent.getBroadcast(context, (id+intent.getIntExtra("code",1)), intent, 0);
+                    PendingIntent alarmIntent = PendingIntent.getBroadcast(context, (intent.getIntExtra("unique_timer_id",1)), intent, 0);
                     alarmIntent.cancel();
                     AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                     alarmMgr.cancel(alarmIntent);
@@ -84,8 +89,10 @@ public class Reciever extends BroadcastReceiver {
             }
 
             else{
-                System.out.println(dayofweek+"aaaaa");
-                if(dayofweek.equals("Every day")||dayofweek.equals("specific days of week")||dayofweek.contains(week.get(cal.get(Calendar.DAY_OF_WEEK)))){
+              System.out.println(Calendar.SATURDAY+"a"+Calendar.SUNDAY+"b"+Calendar.MONDAY);
+
+                //  System.out.println(dayofweek.contains(week.get(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)))+"aaaaa"+week.get(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))+Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
+                if(dayofweek.equals("Every day")||dayofweek.equals("specific days of week")||dayofweek.contains(week.get(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)))){
                     show_notiication(intent,string,context);
                 }
             }
@@ -96,7 +103,7 @@ public class Reciever extends BroadcastReceiver {
 
     public void show_notiication(Intent intent,String string, Context context){
         Log.i("I am in show_",string);
-        int unique=(id+intent.getIntExtra("code",1));
+        int unique=(id+intent.getIntExtra("unique_timer_id",1));
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         Notification noti = new Notification.Builder(context)
@@ -120,7 +127,7 @@ public class Reciever extends BroadcastReceiver {
 
         notificationManager.notify(unique, noti);
 
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, (id+intent.getIntExtra("code",1)), intent, 0);
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, (id+intent.getIntExtra("unique_timer_id",1)), intent, 0);
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         alarmMgr.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis()+10000, alarmIntent);
 
@@ -131,7 +138,7 @@ public class Reciever extends BroadcastReceiver {
         // notification is selected
         Log.i("Check Descript_R",intent.getStringExtra("Description"));
         Intent i = new Intent(context, NotificationReceiverActivity.class);
-        i.putExtra("unique code",(id+intent.getIntExtra("code",1)));
+        i.putExtra("unique_temp_timer_id",id+intent.getIntExtra("unique_timer_id",1));
         i.putExtra("Description",intent.getStringExtra("Description"));
         i.putExtra("Unique_id",intent.getStringExtra("Unique_id"));
         i.putExtra("ACTION", action);

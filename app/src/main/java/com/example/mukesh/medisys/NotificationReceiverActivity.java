@@ -28,10 +28,8 @@ public class NotificationReceiverActivity extends AppCompatActivity {
 
 
             Intent intent = new Intent(this, Reciever.class);
-            intent.putExtra("code",getIntent().getIntExtra("unique code",1));
+            intent.putExtra("unique_timer_id",getIntent().getIntExtra("unique_temp_timer_id",1));
             intent.putExtra("Description",getIntent().getStringExtra("Description"));
-
-
 
 
 
@@ -134,9 +132,9 @@ public class NotificationReceiverActivity extends AppCompatActivity {
             db.update(MediSysContract.MedicationEntry.TABLE_NAME,cv,selection,selectionArgs);
            System.out.println(skip+"0"+"sss"+getIntent().getStringExtra("Description"));
             //  intent.putExtra("Time",intent.getIntExtra("Time",1));
-            System.out.println("voooooooo"+ getIntent().getIntExtra("unique code",1));
+            System.out.println("voooooooo"+ getIntent().getIntExtra("unique_temp_timer_id",1));
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
-                    getIntent().getIntExtra("unique code",1), intent, 0);
+                    getIntent().getIntExtra("unique_temp_timer_id",1), intent, 0);
             pendingIntent.cancel();
             AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             alarmMgr.cancel(pendingIntent);
@@ -148,9 +146,9 @@ public class NotificationReceiverActivity extends AppCompatActivity {
             db.update(MediSysContract.MedicationEntry.TABLE_NAME,cv,selection,selectionArgs);
             System.out.println(skip+"1"+"sss"+getIntent().getStringExtra("Description"));
             //  intent.putExtra("Time",intent.getIntExtra("Time",1));
-            System.out.println("voooooooo"+ getIntent().getIntExtra("unique code",1));
+            System.out.println("voooooooo"+ getIntent().getIntExtra("unique_temp_timer_id",1));
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this,
-                    getIntent().getIntExtra("unique code",1), intent, 0);
+                    getIntent().getIntExtra("unique_temp_timer_id",1), intent, 0);
             pendingIntent.cancel();
             AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             alarmMgr.cancel(pendingIntent);

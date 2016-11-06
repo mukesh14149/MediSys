@@ -46,25 +46,23 @@ import com.example.mukesh.medisys.ReminderArch.ReminderArchclass;
 import com.example.mukesh.medisys.data.MediSysContract;
 import com.example.mukesh.medisys.data.MediSysSQLiteHelper;
 
-import org.w3c.dom.Text;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.concurrent.ExecutionException;
+import java.util.HashMap;
 
-public class AddMedication extends AppCompatActivity {
+
+public class AddMedication extends AppCompatActivity implements PropNumberDialogFragment.OnCompleteListener{
     ArrayList<TextView> time=new ArrayList<TextView>();
     LinearLayout reminder;
     private PopupWindow pwindo;
     Button btnClosePopup;
     TextView settime ;
-    Button startdate ;
+    TextView startdate ;
     String email=null;
     String skip="";
     String description=null;
 
-    String reminder_timer="";
+    ArrayList<String> reminder_timer=new ArrayList<String>();
     String schedule_duration=null;
     String schedule_days=null;
 
@@ -77,7 +75,9 @@ public class AddMedication extends AppCompatActivity {
     int radio_duration_selected=0;
 
     String number_of_days="";
+    int flag_for_object=0;
 
+    ReminderArchclass reminderArchclass;
     private SharedPreferences sharedread;
     private EditText editdesc;
     public int c=2014149;
@@ -92,17 +92,6 @@ public class AddMedication extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_medication);
-        try {
-            Bundle b = getIntent().getExtras();
-            ReminderArchclass reminderArchclass = b.getParcelable("ReminderArchclass");
-            Log.i("Check bhai","yo budd");
-            System.out.println(reminderArchclass.getDescription());
-        }catch (Exception e){
-            Log.i("Check bhai","yo");
-            e.printStackTrace();
-        }
-
-
 
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
@@ -117,7 +106,7 @@ public class AddMedication extends AppCompatActivity {
         radiodays=(RadioGroup)findViewById(R.id.radio_days);
 
         Calendar currentTime = Calendar.getInstance();
-        TextView startdate=(TextView)findViewById(R.id.start_date);
+        startdate=(TextView)findViewById(R.id.start_date);
         startdate.setText(currentTime.get(Calendar.YEAR)+"-"+(currentTime.get(Calendar.MONTH)+1)+"-"+currentTime.get(Calendar.DAY_OF_MONTH));
 
         System.out.println("in oncreate method 111");
@@ -143,6 +132,64 @@ public class AddMedication extends AppCompatActivity {
 
             }
         });
+
+        try {
+
+            Bundle b = getIntent().getExtras();
+             reminderArchclass = b.getParcelable("ReminderArchclass");
+            Log.i("Check bhai","yo budd");
+            System.out.println(reminderArchclass.getDescription());
+            editdesc.setText(reminderArchclass.getDescription());
+
+            ArrayList<String> words = reminderArchclass.getReminder_timer();
+            String[] word = words.get(0).split(" ");
+            if (word.length > 2) {
+                word[3] = word[3].substring(0, (word[3].length() - 3));
+                Set_timer(converttime(word[3]));
+            }
+            for (int i = 1; i < words.size(); i++) {
+                word = words.get(i).split(" ");
+                Set_timer(converttime(word[3].substring(0, (word[3].length() - 3))));
+            }
+            if(reminderArchclass.getSchedule_duration().equals("continuous")) {
+               buttonduration=(RadioButton) findViewById(R.id.rb_continuous);
+                buttonduration.setChecked(true);
+            }
+            else if(reminderArchclass.getSchedule_duration().equals("number of days")){
+                buttonduration=(RadioButton)findViewById(R.id.rb_number_of_days);
+                buttonduration.setChecked(true);
+            }else{
+                buttonduration=(RadioButton)findViewById(R.id.rb_number_of_days);
+                buttonduration.setChecked(true);
+                TextView temp_textview=(TextView)findViewById(R.id.set_nod);
+                temp_textview.setText(reminderArchclass.getSchedule_duration().toString());
+            }
+
+            if(reminderArchclass.getSchedule_days().equals("Every day")){
+                buttonduration=(RadioButton)findViewById(R.id.rb_every_day);
+                buttonduration.setChecked(true);
+            }
+            else if(reminderArchclass.getSchedule_days().equals("specific days of week")){
+                buttonduration=(RadioButton)findViewById(R.id.rb_specific_days_of_week);
+                buttonduration.setChecked(true);
+            }else{
+                buttonduration=(RadioButton)findViewById(R.id.rb_specific_days_of_week);
+                buttonduration.setChecked(true);
+                TextView temp_textview=(TextView)findViewById(R.id.set_sdow);
+                temp_textview.setText(reminderArchclass.getSchedule_days().toString());
+            }
+
+
+            flag_for_object=1;
+        }catch (Exception e){
+            flag_for_object=0;
+            Log.i("Check bhai","yo");
+            e.printStackTrace();
+        }
+
+
+
+
     }
 
     public void popupsdow(View view){
@@ -183,118 +230,38 @@ public class AddMedication extends AppCompatActivity {
         newFragment.show(ft, "dialog");
     }
 
-    public static class PropNumberDialogFragment extends DialogFragment {
-        NumberPicker numberpicker;
-        String selected_no;
-        String type="";
-        ArrayList<Integer> mSelectedItems;
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            //getting proper access to LayoutInflater is the trick. getLayoutInflater is a                   //Function
-
-            type=getArguments().getString("type");
-            Log.i("type",type);
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-
-            if(type.equals("popupnod")) {
-                LayoutInflater inflater = getActivity().getLayoutInflater();
-
-                View view = inflater.inflate(R.layout.number_picker_dialog, null);
-                builder.setView(view);
-                builder.setTitle("Select number").setNeutralButton(
-                        "", null);
+    public void popuptimepicker(View view){
 
 
-                builder.setPositiveButton("Set", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do something else
-                        TextView setnod = (TextView) getActivity().findViewById(R.id.set_nod);
-                        setnod.setText(selected_no);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        Fragment prev = getSupportFragmentManager().findFragmentByTag("dialog");
+        if (prev != null) {
+            ft.remove(prev);
+        }
+        ft.addToBackStack(null);
+
+        // Create and show the dialog.
+        DialogFragment newFragment = new PropNumberDialogFragment();
+        Bundle args = new Bundle();
+        args.putString("type","popuptimepicker");
+        newFragment.setArguments(args);
+        newFragment.show(ft, "dialog");
+    }
 
 
-                        getDialog().dismiss();
-                    }
-                });
+    @Override
+    public void onComplete(String time, int selectedHour, int selectedMinute) {
 
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // Do something else
-                        getDialog().dismiss();
-                    }
-                });
+        try{
+          //  reminder_timer.add(time);
+            Set_timer(converttime(selectedHour + ":" + selectedMinute));
+            Log.i("In OnComplete Activ",time);
 
-
-                numberpicker = (NumberPicker) view.findViewById(R.id.numberPicker1);
-                numberpicker.setMinValue(0);
-                numberpicker.setMaxValue(365);
-                numberpicker.setOnValueChangedListener(new NumberPicker.OnValueChangeListener() {
-                    @Override
-                    public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-
-                        //textview.setText("Selected Value is : " + newVal);
-                        selected_no = Integer.toString(newVal);
-                    }
-                });
-            }
-            else{
-                mSelectedItems = new ArrayList();
-                builder.setTitle("Pick Items")
-                        // Specify the list array, the items to be selected by default (null for none),
-                        // and the listener through which to receive callbacks when items are selected
-                        .setMultiChoiceItems(R.array.toppings, null,
-                                new DialogInterface.OnMultiChoiceClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which,
-                                                        boolean isChecked) {
-                                        if (isChecked) {
-                                            // If the user checked the item, add it to the selected items
-                                            mSelectedItems.add(which);
-                                        } else if (mSelectedItems.contains(which)) {
-                                            // Else, if the item is already in the array, remove it
-                                            mSelectedItems.remove(Integer.valueOf(which));
-                                        }
-                                    }
-                                })
-                        // Set the action buttons
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User clicked OK, so save the mSelectedItems results somewhere
-                                // or return them to the component that opened the dialog
-                                Toast.makeText(getActivity().getApplicationContext(),"mmmml",Toast.LENGTH_LONG).show();
-                                String temp="";
-                                Log.i("Length of array",Integer.toString(mSelectedItems.size()));
-                                    for(Integer i:mSelectedItems){
-                                        if(i==0)
-                                            temp+="Sun"+" ";
-                                        if(i==1)
-                                            temp+="Mon"+" ";
-                                        if(i==2)
-                                            temp+="Tue"+" ";
-                                        if(i==3)
-                                            temp+="Wed"+" ";
-                                        if(i==4)
-                                            temp+="Thu"+" ";
-                                        if(i==5)
-                                            temp+="Fri"+" ";
-                                        if(i==6)
-                                            temp+="Sat"+" ";
-                                    }
-                                TextView textView=(TextView)getActivity().findViewById(R.id.set_sdow);
-                                textView.setText(temp);
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                Toast.makeText(getActivity().getApplicationContext(),"ccccl",Toast.LENGTH_LONG).show();
-                            }
-                        });
-            }
-            return builder.create();
+        }catch (Exception e){
+            e.printStackTrace();
         }
     }
+
 
 
 
@@ -303,6 +270,9 @@ public class AddMedication extends AppCompatActivity {
     public void save_medication(View view) {
         try {
             description = editdesc.getText().toString();
+
+            fill_reminder_timer();
+
 
             radio_duration_selected = radioduration.getCheckedRadioButtonId();
             System.out.println("yo buddy we are done" + radio_duration_selected);
@@ -328,12 +298,18 @@ public class AddMedication extends AppCompatActivity {
 
 
 
+
+
             System.out.println(email + " " + description + " " + reminder_timer + " " + schedule_duration + " " + schedule_days);
             if (email == null || description == null || reminder_timer == null || schedule_duration == null || schedule_days == null) {
                 Toast.makeText(getApplication().getApplicationContext(), "Error while updating", Toast.LENGTH_SHORT).show();
 
             } else {
-                save_data save = new save_data(email, description, reminder_timer, schedule_duration, schedule_days,skip);
+                if(flag_for_object==1){
+                    Reminders.Delete_item delete_item=new Reminders.Delete_item(reminderArchclass,getApplicationContext());
+                    delete_item.execute();
+                }
+                save_data save = new save_data(email, description, reminder_timer, schedule_duration, schedule_days,skip,flag_for_object, reminderArchclass);
                 save.execute();
             }
         } catch (Exception e) {
@@ -374,6 +350,7 @@ public class AddMedication extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 
+
     public static class DatePickerFragment extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
 
@@ -399,7 +376,7 @@ public class AddMedication extends AppCompatActivity {
         }
     }
 
-    public String converttime(String time){
+    public static String converttime(String time){
         String t[]=time.split(":");
         String h=t[0];
         String m=t[1];
@@ -432,10 +409,16 @@ public class AddMedication extends AppCompatActivity {
 
 
     public void Generate_set_time(View view){
+        Set_timer("02:00 PM");
+    }
+
+    public void Set_timer(String placholder_time){
         reminder=(LinearLayout) findViewById(R.id.reminder_inner_layout);
         lprams.setMargins(0,0,0,15);
         settime= new TextView(this);
-        settime.setText("02:00 PM");
+
+
+        settime.setText(placholder_time);
 
         settime.setId(c++);
 
@@ -457,17 +440,12 @@ public class AddMedication extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                TextView startdate=(TextView) findViewById(R.id.start_date);
-                String []te=startdate.getText().toString().split("-");
-                final int Year=Integer.parseInt(te[0]);
-                final int Month=Integer.parseInt(te[1]);
-                final int Day=Integer.parseInt(te[2]);
-                System.out.println(Year+" "+Month+" "+Day+"in oncreate method"+settime.getId());
+
+               // System.out.println(Year+" "+Month+" "+Day+"in oncreate method"+settime.getId());
 
 
                 t=(TextView) findViewById(v.getId());
 
-                final Calendar beginCal = Calendar.getInstance();
 
                 Calendar mcurrentTime = Calendar.getInstance();
                 int hour = mcurrentTime.get(Calendar.HOUR_OF_DAY);
@@ -476,11 +454,15 @@ public class AddMedication extends AppCompatActivity {
                 mTimePicker = new TimePickerDialog(AddMedication.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                System.out.println(selectedHour + ":" + selectedMinute+"mml");
+                        System.out.println(selectedHour + ":" + selectedMinute+"mml");
                         t.setText( converttime(selectedHour + ":" + selectedMinute));
-                        beginCal.set(Year,Month-1, Day, selectedHour, selectedMinute);
-                      //  startdate.setText(beginCal.getTime().toString());
-                        reminder_timer+=beginCal.getTime().toString()+"BBB";
+
+                        //  startdate.setText(beginCal.getTime().toString());
+                        /*String temp_t=beginCal.getTime().toString();
+                        if(reminder_timer.contains(temp_t)){
+                            reminder_timer.add(reminder_timer.indexOf(temp_t),);
+                        }*/
+
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 mTimePicker.setTitle("Select Time");
@@ -491,41 +473,126 @@ public class AddMedication extends AppCompatActivity {
         reminder.addView(settime);
     }
 
+    public static String convertime_12_to_24(String time){
+        String[] sTime = time.split(":");
+
+        int x = sTime[sTime.length - 1].contains("PM") ? (sTime[0].equals("12") ? 0 : 12) : 0 ;
+
+        String val1 = (x == 12) ?  (Integer.parseInt(sTime[0]) + x) + "" :  (sTime[0].equals("12") ? "00" : sTime[0]);
+        String min="00";
+        if(sTime[sTime.length - 1].contains("PM")){
+            //System.out.println("yo"+sTime[1]);
+            min=sTime[sTime.length - 1].replace(" PM","");
+
+        }
+        else
+            min=sTime[sTime.length - 1].replace(" AM","");
+
+        String result = val1 + ":" + min ;
+        System.out.println(result);
+        return  result;
+    }
+
+    public void fill_reminder_timer(){
+        Log.i("In next","asd");
+        TextView textView;
+        TextView startdate=(TextView) findViewById(R.id.start_date);
+        String []te=startdate.getText().toString().split("-");
+        final int Year=Integer.parseInt(te[0]);
+        final int Month=Integer.parseInt(te[1]);
+        final int Day=Integer.parseInt(te[2]);
+
+        final Calendar beginCal = Calendar.getInstance();
+
+
+        for(int k=2014149;k<c;k++){
+            textView =(TextView)findViewById(k);
+
+
+            try {
+                String [] time=convertime_12_to_24(textView.getText().toString()).split(":");
+              //  System.out.println(convertime_12_to_24(textView.getText().toString())+"sd"+time[1]+"aaaseer"+time[0]+"   "+textView.getText().toString());
+                beginCal.set(Year,Month-1, Day, Integer.parseInt(time[0]), Integer.parseInt(time[1]));
+                beginCal.set(Calendar.SECOND,0);
+                reminder_timer.add(beginCal.getTime().toString());
+            }catch (Exception e){
+                System.out.println("ss");
+            }
+        }
+    }
+
     public class save_data extends AsyncTask<Void, Void, Boolean>{
         String email=null;
         String description=null;
-        String reminder_timer=null;
+        HashMap<String,String> id_reminder_timer=new HashMap<String,String>();
+        ArrayList<String> reminder_timer=new ArrayList<String>();
         String schedule_duration=null;
         String schedule_days=null;
-        String skip=null; String unique_id=null;
+        String skip=null;
+        String unique_id=null;
+        int flag_for_object=0;
+        ReminderArchclass reminderArchclass;
         final MediSysSQLiteHelper mDbHelper = new MediSysSQLiteHelper(getApplication().getApplicationContext());
-        save_data(String email, String description, String reminder_timer, String schedule_duration, String schedule_days,String  skip){
+        save_data(String email, String description, ArrayList<String> reminder_timer, String schedule_duration, String schedule_days,String  skip, int flag_for_object,ReminderArchclass reminderArchclass){
+           this.flag_for_object=flag_for_object;
             this.email=email;
             this.description=description;
             this.reminder_timer=reminder_timer;
             this.schedule_duration=schedule_duration;
             this.schedule_days=schedule_days;
-            this.skip=skip; this.unique_id=Long.toString(System.currentTimeMillis());
+            this.skip=skip;
+            this.unique_id=Long.toString(System.currentTimeMillis());
+            this.reminderArchclass=reminderArchclass;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+
+
+
             ContentValues values = new ContentValues();
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_UNIQUE_ID,unique_id);
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_EMAIL, email);
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION, description);
-            values.put(MediSysContract.MedicationEntry.COLUMN_NAME_REMINDER_TIMER, reminder_timer);
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DURAtION, schedule_duration);
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DAYS, schedule_days);
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_SKIP,skip);
 
+            long newRowId;
+            Log.i("AddMedicationcheck",Integer.toString(flag_for_object));
+            newRowId= db.insert(MediSysContract.MedicationEntry.TABLE_NAME, null, values);
+            try {
+                int t = 149;
+                for (String time : reminder_timer) {
+                    System.out.println(time);
+                    Integer i=(int)(long)Long.parseLong(unique_id);
+                    String temp_unique_timer_id = Integer.toString(i + t);
+                    ContentValues tempvalue = new ContentValues();
+                    tempvalue.put(MediSysContract.MedicationReminders.COLUMN_NAME_DESCRIPTION, description);
+                    tempvalue.put(MediSysContract.MedicationReminders.COLUMN_NAME_REMINDER_TIMER, time);
+                    tempvalue.put(MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_ID, unique_id);
+                    tempvalue.put(MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_TIMER_ID, temp_unique_timer_id);
+                    id_reminder_timer.put(temp_unique_timer_id, time);
+                    db.insert(MediSysContract.MedicationReminders.TABLE_NAME, null, tempvalue);
+                    t++;
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            /*if(flag_for_object==1){
+                Log.i("AddMedicationcheck",reminderArchclass.getUnique_id());
 
-            long newRowId = db.insert(MediSysContract.MedicationEntry.TABLE_NAME, null, values);
-            System.out.println("yo baby"+newRowId);
+                newRowId=db.update(MediSysContract.MedicationEntry.TABLE_NAME,values, MediSysContract.MedicationEntry.COLUMN_NAME_UNIQUE_ID+"="+reminderArchclass.getUnique_id(),null);
+            }
+            else {
+                newRowId= db.insert(MediSysContract.MedicationEntry.TABLE_NAME, null, values);
+            }*/
 
-            return newRowId != -1;
+            System.out.println("yo baby+++++"+newRowId);
 
+            return newRowId!=-1;
         }
 
         @Override
@@ -535,7 +602,7 @@ public class AddMedication extends AppCompatActivity {
               //  Toast.makeText(getApplication().getApplicationContext(), "Data is store", Toast.LENGTH_SHORT);
                 Intent intent=new Intent(AddMedication.this,SetReminder.class);
                 intent.putExtra("Description",description);
-                intent.putExtra("Reminder_timer",reminder_timer);
+                intent.putExtra("Reminder_timer",id_reminder_timer);
                 intent.putExtra("Schedule_duration",schedule_duration);
                 intent.putExtra("Schedule_days",schedule_days);
                 intent.putExtra("Unique_id",unique_id);
@@ -547,3 +614,5 @@ public class AddMedication extends AppCompatActivity {
         }
     }
 }
+
+

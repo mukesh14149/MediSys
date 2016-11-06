@@ -3,21 +3,24 @@ package com.example.mukesh.medisys.ReminderArch;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+
 /**
  * Created by mukesh on 21/10/16.
  */
 public class ReminderArchclass implements Parcelable {
-    private String reminder_timer=null;
+    private ArrayList<String> reminder_timer=null;
     private String schedule_duration=null;
     private String schedule_days=null;
     private String description=null;
     private String skip=null;
+    private String unique_id=null;
     public ReminderArchclass(){
 
     }
 
 
-    public void setReminder_timer(String reminder_timer){
+    public void setReminder_timer(ArrayList<String> reminder_timer){
         this.reminder_timer=reminder_timer;
     }
 
@@ -32,12 +35,16 @@ public class ReminderArchclass implements Parcelable {
     public void setDescription(String description){
         this.description=description;
     }
+    public void setUnique_id(String unique_id){
+        this.unique_id=unique_id;
+    }
+
     public void setskip(String skip){
         this.skip=skip;
     }
 
 
-    public String getReminder_timer(){
+    public ArrayList<String> getReminder_timer(){
         return reminder_timer;
     }
 
@@ -52,15 +59,19 @@ public class ReminderArchclass implements Parcelable {
     public String getDescription(){
         return description;
     }
+    public String getUnique_id(){
+        return unique_id;
+    }
     public String getskip(){
         return skip;
     }
     private ReminderArchclass(Parcel in){
-        reminder_timer = in.readString();
+        reminder_timer = (ArrayList<String>) in.readSerializable();;;
         schedule_duration = in.readString();
         schedule_days = in.readString();
         description = in.readString();
         skip=in.readString();
+        unique_id=in.readString();
     }
 
 
@@ -71,11 +82,12 @@ public class ReminderArchclass implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel parcel, int i) {
-            parcel.writeString(reminder_timer);
-            parcel.writeString(schedule_duration);
-            parcel.writeString(schedule_days);
-            parcel.writeString(description);
-            parcel.writeString(skip);
+        parcel.writeSerializable(reminder_timer);
+        parcel.writeString(schedule_duration);
+        parcel.writeString(schedule_days);
+        parcel.writeString(description);
+        parcel.writeString(skip);
+        parcel.writeString(unique_id);
     }
     public static final Parcelable.Creator<ReminderArchclass> CREATOR = new Parcelable.Creator<ReminderArchclass>()
     {

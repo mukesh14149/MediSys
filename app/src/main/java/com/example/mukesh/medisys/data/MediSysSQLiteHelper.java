@@ -30,9 +30,19 @@ public class MediSysSQLiteHelper extends SQLiteOpenHelper {
                     MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION + " TEXT NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DURAtION + " TEXT NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DAYS + " TEXT NOT NULL, " +
-                    MediSysContract.MedicationEntry.COLUMN_NAME_REMINDER_TIMER+  " TEXT NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_SKIP+  " TEXT NOT NULL " +
                     " )";
+
+
+    private static final String SQL_CREATE_MEDICATIONREMINDERS =
+            "CREATE TABLE " +MediSysContract.MedicationReminders.TABLE_NAME + " (" +
+                    MediSysContract.MedicationReminders._ID + " INTEGER PRIMARY KEY NOT NULL, " +
+                    MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_ID +  " TEXT NOT NULL, " +
+                    MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_TIMER_ID +  " TEXT NOT NULL, " +
+                    MediSysContract.MedicationReminders.COLUMN_NAME_DESCRIPTION + " TEXT NOT NULL, " +
+                    MediSysContract.MedicationReminders.COLUMN_NAME_REMINDER_TIMER+  " TEXT NOT NULL " +
+                    " )";
+
 
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + MediSysContract.MediSysEntry.TABLE_NAME;
@@ -41,6 +51,8 @@ public class MediSysSQLiteHelper extends SQLiteOpenHelper {
     private static final String SQL_DELETE_MEDICATIONENTRY =
             "DROP TABLE IF EXISTS " + MediSysContract.MedicationEntry.TABLE_NAME;
 
+    private static final String SQL_DELETE_MEDICATIOREMINDERS =
+            "DROP TABLE IF EXISTS " + MediSysContract.MedicationReminders.TABLE_NAME;
 
     public MediSysSQLiteHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -52,12 +64,14 @@ public class MediSysSQLiteHelper extends SQLiteOpenHelper {
 
         db.execSQL(SQL_CREATE_ENTRIES);
         db.execSQL(SQL_CREATE_MEDICATIONENTRY);
+        db.execSQL(SQL_CREATE_MEDICATIONREMINDERS);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_ENTRIES);
         db.execSQL(SQL_DELETE_MEDICATIONENTRY);
+        db.execSQL(SQL_DELETE_MEDICATIOREMINDERS);
         onCreate(db);
     }
 }

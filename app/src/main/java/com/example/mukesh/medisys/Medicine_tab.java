@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class Medicine_tab extends Fragment {
     RecyclerView listView;
 
-    private SharedPreferences sharedread;
+   /* private SharedPreferences sharedread;
     String email=null;
     LinearLayout frag;
     public ArrayList<ReminderArchclass> remArc=new ArrayList<ReminderArchclass>();
@@ -65,7 +65,7 @@ public class Medicine_tab extends Fragment {
         getreminder.execute();
 
 
-/*
+*//*
         ItemTouchHelper swipeToDismissTouchHelper = new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -93,7 +93,7 @@ public class Medicine_tab extends Fragment {
             }
 
         });
-        swipeToDismissTouchHelper.attachToRecyclerView(listView);*/
+        swipeToDismissTouchHelper.attachToRecyclerView(listView);*//*
 
         // if (remArc.size() == 0) {
         //   View v;
@@ -244,7 +244,7 @@ public class Medicine_tab extends Fragment {
         }
     }
 
-
+*/
 
 }
 

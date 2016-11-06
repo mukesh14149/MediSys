@@ -109,7 +109,7 @@ public class Adapter_medicine extends RecyclerView.Adapter<Adapter_medicine.View
     public void onBindViewHolder(Adapter_medicine.ViewHolder holder, int position) {
 
         ReminderArchclass reminderArchclass = remArc.get(position);
-        String a = reminderArchclass.getReminder_timer();
+       // String a = reminderArchclass.getReminder_timer();
 
 
         holder.description.setText(reminderArchclass.getDescription());

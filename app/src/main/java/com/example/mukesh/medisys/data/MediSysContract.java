@@ -36,4 +36,13 @@ public final class MediSysContract {
 
     }
 
+    public static class MedicationReminders implements BaseColumns{
+        final public static String TABLE_NAME="medication_reminders";
+        final public static String COLUMN_NAME_UNIQUE_ID="unique_id";
+        final public static String COLUMN_NAME_UNIQUE_TIMER_ID="unique_timer_id";
+        final public static String COLUMN_NAME_DESCRIPTION="medication_description";
+        final public static String COLUMN_NAME_REMINDER_TIMER="reminder_timer";
+
+    }
+
 }

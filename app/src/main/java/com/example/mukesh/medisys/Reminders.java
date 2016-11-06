@@ -1,12 +1,14 @@
 package com.example.mukesh.medisys;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -35,7 +37,7 @@ public class Reminders extends Fragment {
 
     private SharedPreferences sharedread;
     String email=null;
-    LinearLayout frag;
+
     public  ArrayList<ReminderArchclass> remArc=new ArrayList<ReminderArchclass>();
     ReminderAdapter adapter;
 
@@ -95,7 +97,7 @@ public class Reminders extends Fragment {
                 adapter.notifyItemRangeChanged(viewHolder.getAdapterPosition(),remArc.size());
                 System.out.println("Sujeey");
 
-                Delete_item delete_item=new Delete_item(tempremArc);
+                Delete_item delete_item=new Delete_item(tempremArc,getActivity());
                 delete_item.execute();
 
 
@@ -155,8 +157,8 @@ public class Reminders extends Fragment {
                         MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION,
                         MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DAYS,
                         MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DURAtION,
-                        MediSysContract.MedicationEntry.COLUMN_NAME_REMINDER_TIMER,
                         MediSysContract.MedicationEntry.COLUMN_NAME_SKIP,
+                        MediSysContract.MedicationEntry.COLUMN_NAME_UNIQUE_ID,
 
 
                 };
@@ -178,16 +180,62 @@ public class Reminders extends Fragment {
                     System.out.println("aaa"+remArc.size());
                     while(cursor.moveToNext()) {
                         ReminderArchclass reminderArchclass = new ReminderArchclass();
-                        String reminder_timer = cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_REMINDER_TIMER));
                         String schedule_duration = cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DURAtION));
                         String schedule_days = cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DAYS));
                         String description = cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION));
                         String skip=cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_SKIP));
-                        reminderArchclass.setReminder_timer(reminder_timer);
+                        String unique_id=cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_UNIQUE_ID));
+
                         reminderArchclass.setSchedule_duration(schedule_duration);
                         reminderArchclass.setDescription(description);
                         reminderArchclass.setSchedule_days(schedule_days);
                         reminderArchclass.setskip(skip);
+                        reminderArchclass.setUnique_id(unique_id);
+
+
+
+
+
+
+
+
+                        String selection_reminder_timer = MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_ID + " = ?";
+                        String[] selectionArgs_reminder_timer = {unique_id};
+                        String sortOrder_reminder_timer =
+                                MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_TIMER_ID + " DESC";
+
+                        String[] projection_reminder_timer = {
+                                MediSysContract.MedicationReminders.COLUMN_NAME_REMINDER_TIMER,
+
+                        };
+
+
+                        Cursor cursor_reminder_timer = db.query(
+                                MediSysContract.MedicationReminders.TABLE_NAME,                     // The table to query
+                                projection_reminder_timer,                               // The columns to return
+                                selection_reminder_timer,                                // The columns for the WHERE clause
+                                selectionArgs_reminder_timer,                            // The values for the WHERE clause
+                                null,                                     // don't group the rows
+                                null,                                     // don't filter by row groups
+                                sortOrder_reminder_timer                                 // The sort order
+                        );
+
+
+
+
+                        if (cursor_reminder_timer.getCount() > 0) {
+                           // System.out.println("aaa" + remArc.size());
+                            ArrayList<String> tempreminder=new ArrayList<String>();
+                            while (cursor_reminder_timer.moveToNext()) {
+                                String timer = cursor_reminder_timer.getString(cursor_reminder_timer.getColumnIndex(MediSysContract.MedicationReminders.COLUMN_NAME_REMINDER_TIMER));
+                                tempreminder.add(timer);
+                            }
+                            reminderArchclass.setReminder_timer(tempreminder);
+                        }
+
+
+
+
                         remArc.add(reminderArchclass);
                     }
                 }
@@ -214,21 +262,45 @@ public class Reminders extends Fragment {
 
 
 
-    public class Delete_item extends AsyncTask<Void, Void, Boolean> {
+    public static class Delete_item extends AsyncTask<Void, Void, Boolean> {
         ReminderArchclass reminderArchclass;
-        final MediSysSQLiteHelper mDbHelper = new MediSysSQLiteHelper(getActivity().getApplicationContext());
-        Delete_item(ReminderArchclass reminderArchclass) {
+        Context context;
+        final MediSysSQLiteHelper mDbHelper;
+        Delete_item(ReminderArchclass reminderArchclass,Context context) {
             this.reminderArchclass=reminderArchclass;
+            this.context=context;
+            mDbHelper= new MediSysSQLiteHelper(context);
         }
+
+
         @Override
         protected Boolean doInBackground(Void... params) {
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
             //Log.e(password,"eeeeeeeeeeeeee");
+            Intent intent = new Intent(context, Reciever.class);
+            intent.putExtra("code",Integer.parseInt(reminderArchclass.getUnique_id()));
+            intent.putExtra("Description",reminderArchclass.getDescription());
 
-            String selection = MediSysContract.MedicationEntry.COLUMN_NAME_REMINDER_TIMER + "= ? AND "+ MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION+"=?";
-            String[] selectionArgs = {reminderArchclass.getReminder_timer(),reminderArchclass.getDescription()};
+
+
+
+
+
+          /*  PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                    Integer.parseInt(reminderArchclass.getUnique_id()), intent, 0);
+            pendingIntent.cancel();
+            AlarmManager alarmMgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            alarmMgr.cancel(pendingIntent);
+*/
+
+
+            String selection = MediSysContract.MedicationEntry.COLUMN_NAME_UNIQUE_ID + " = ?";
+            String[] selectionArgs = {reminderArchclass.getUnique_id()};
             db.delete(MediSysContract.MedicationEntry.TABLE_NAME,selection,selectionArgs);
+
+            selection= MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_ID + " = ?";
+            db.delete(MediSysContract.MedicationReminders.TABLE_NAME,selection,selectionArgs);
 
 
             return true;
@@ -253,7 +325,6 @@ public class Reminders extends Fragment {
 
         }
     }
-
 
 
 }

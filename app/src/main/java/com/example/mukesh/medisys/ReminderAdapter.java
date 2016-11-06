@@ -221,6 +221,8 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
 
         }
 
+
+
         @Override
         public boolean onMenuItemClick(MenuItem menuItem) {
             switch (menuItem.getItemId()) {
@@ -228,6 +230,7 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
                     Edit();
                     return true;
                 case R.id.delete_medication:
+                  //  Delete();
                     Toast.makeText(getContext(), "Delete", Toast.LENGTH_SHORT).show();
                     return true;
                 default:

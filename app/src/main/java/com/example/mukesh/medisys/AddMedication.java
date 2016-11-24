@@ -574,6 +574,7 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
                     tempvalue.put(MediSysContract.MedicationReminders.COLUMN_NAME_REMINDER_TIMER, time);
                     tempvalue.put(MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_ID, unique_id);
                     tempvalue.put(MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_TIMER_ID, temp_unique_timer_id);
+                    tempvalue.put(MediSysContract.MedicationReminders.COLUMN_NAME_SKIP,skip);
                     id_reminder_timer.put(temp_unique_timer_id, time);
                     db.insert(MediSysContract.MedicationReminders.TABLE_NAME, null, tempvalue);
                     t++;

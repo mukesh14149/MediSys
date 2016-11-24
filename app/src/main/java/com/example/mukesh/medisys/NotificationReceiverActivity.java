@@ -31,7 +31,7 @@ public class NotificationReceiverActivity extends AppCompatActivity {
             intent.putExtra("unique_timer_id",getIntent().getIntExtra("unique_temp_timer_id",1));
             intent.putExtra("Description",getIntent().getStringExtra("Description"));
 
-
+      System.out.println(getIntent().getIntExtra("unique_temp_timer_id",1)-2014149+"ss"+getIntent().getStringExtra("Unique_id"));
 
             final MediSysSQLiteHelper mDbHelper = new MediSysSQLiteHelper(getApplication().getApplicationContext());
 
@@ -45,21 +45,21 @@ public class NotificationReceiverActivity extends AppCompatActivity {
             try {
                 SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-                String selection = MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION+"=?";
-                String[] selectionArgs = {getIntent().getStringExtra("Description")};
+                String selection = MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_TIMER_ID+"=?";
+                String[] selectionArgs = {Integer.toString(getIntent().getIntExtra("unique_temp_timer_id",1)-2014149)};
 
 
                 String[] projection = {
-                        MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION,
+                        MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_TIMER_ID,
 
-                        MediSysContract.MedicationEntry.COLUMN_NAME_SKIP,
+                        MediSysContract.MedicationReminders.COLUMN_NAME_SKIP,
 
 
                 };
 
 
                 Cursor cursor = db.query(
-                        MediSysContract.MedicationEntry.TABLE_NAME,                     // The table to query
+                        MediSysContract.MedicationReminders.TABLE_NAME,                     // The table to query
                         projection,                               // The columns to return
                         selection,                                // The columns for the WHERE clause
                         selectionArgs,                            // The values for the WHERE clause
@@ -75,7 +75,7 @@ public class NotificationReceiverActivity extends AppCompatActivity {
                     while(cursor.moveToNext()) {
 
 
-                         skip=cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_SKIP));
+                         skip=cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationReminders.COLUMN_NAME_SKIP));
 
                     }
                 }
@@ -119,8 +119,8 @@ public class NotificationReceiverActivity extends AppCompatActivity {
 
 
             SQLiteDatabase db = mDbHelper.getWritableDatabase();
-            String selection =  MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION+"=?";
-            String[] selectionArgs = {getIntent().getStringExtra("Description")};
+            String selection =  MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_TIMER_ID+"=?";
+        String[] selectionArgs = {Integer.toString(getIntent().getIntExtra("unique_temp_timer_id",1)-2014149)};
 
 
             ContentValues cv = new ContentValues();
@@ -129,7 +129,7 @@ public class NotificationReceiverActivity extends AppCompatActivity {
 
             cv.put("skip",skip+"0");
 
-            db.update(MediSysContract.MedicationEntry.TABLE_NAME,cv,selection,selectionArgs);
+            db.update(MediSysContract.MedicationReminders.TABLE_NAME,cv,selection,selectionArgs);
            System.out.println(skip+"0"+"sss"+getIntent().getStringExtra("Description"));
             //  intent.putExtra("Time",intent.getIntExtra("Time",1));
             System.out.println("voooooooo"+ getIntent().getIntExtra("unique_temp_timer_id",1));
@@ -143,7 +143,7 @@ public class NotificationReceiverActivity extends AppCompatActivity {
 
             cv.put("skip",skip+"1");
 
-            db.update(MediSysContract.MedicationEntry.TABLE_NAME,cv,selection,selectionArgs);
+            db.update(MediSysContract.MedicationReminders.TABLE_NAME,cv,selection,selectionArgs);
             System.out.println(skip+"1"+"sss"+getIntent().getStringExtra("Description"));
             //  intent.putExtra("Time",intent.getIntExtra("Time",1));
             System.out.println("voooooooo"+ getIntent().getIntExtra("unique_temp_timer_id",1));
@@ -159,7 +159,7 @@ public class NotificationReceiverActivity extends AppCompatActivity {
 
             cv.put("skip",skip+"2");
 
-            db.update(MediSysContract.MedicationEntry.TABLE_NAME,cv,selection,selectionArgs);
+            db.update(MediSysContract.MedicationReminders.TABLE_NAME,cv,selection,selectionArgs);
         }
 
 

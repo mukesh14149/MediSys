@@ -2,23 +2,31 @@ package com.example.mukesh.medisys;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mukesh.medisys.ReminderArch.ReminderArchclass;
+import com.example.mukesh.medisys.data.MediSysContract;
+import com.example.mukesh.medisys.data.MediSysSQLiteHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Adapter_medicine extends RecyclerView.Adapter<Adapter_medicine.ViewHolder> {
@@ -50,6 +58,7 @@ public class Adapter_medicine extends RecyclerView.Adapter<Adapter_medicine.View
         ImageButton bel;
         String skip;
         LinearLayout layout, frag;
+        ImageView indic;
 
 
         public ViewHolder(View item) {
@@ -58,15 +67,12 @@ public class Adapter_medicine extends RecyclerView.Adapter<Adapter_medicine.View
 
             layout = (LinearLayout) item.findViewById(R.id.medicine_details);
             frag = (LinearLayout) item.findViewById(R.id.parent_frag);
-             item.setOnClickListener(this);
+            item.setOnClickListener(this);
 
 
             description = (TextView) item.findViewById(R.id.description_view);
-           t = (TextView) item.findViewById(R.id.emptyforskip);
-
-
-
-
+            t = (TextView) item.findViewById(R.id.emptyforskip);
+            indic = (ImageView) item.findViewById(R.id.indicator);
 
         }
 
@@ -114,8 +120,104 @@ public class Adapter_medicine extends RecyclerView.Adapter<Adapter_medicine.View
 
         holder.description.setText(reminderArchclass.getDescription());
        holder.t.setText(reminderArchclass.getskip());
+        System.out.println("SUuuu"+reminderArchclass.getskip());
        // holder.skip=reminderArchclass.getskip();
-        //
+
+
+
+
+
+
+
+
+        final MediSysSQLiteHelper mDbHelper = new MediSysSQLiteHelper(context);
+
+
+
+
+        String skip="";
+
+
+
+        try {
+            SQLiteDatabase db = mDbHelper.getReadableDatabase();
+
+            String selection = MediSysContract.MedicationReminders.COLUMN_NAME_DESCRIPTION+"=?";
+            String[] selectionArgs = {reminderArchclass.getDescription()};
+
+
+            String[] projection = {
+                    MediSysContract.MedicationReminders.COLUMN_NAME_DESCRIPTION,
+
+                    MediSysContract.MedicationReminders.COLUMN_NAME_SKIP,
+
+                    MediSysContract.MedicationReminders.COLUMN_NAME_REMINDER_TIMER,
+
+
+            };
+
+
+            Cursor cursor = db.query(
+                    MediSysContract.MedicationReminders.TABLE_NAME,                     // The table to query
+                    projection,                               // The columns to return
+                    selection,                                // The columns for the WHERE clause
+                    selectionArgs,                            // The values for the WHERE clause
+                    null,                                     // don't group the rows
+                    null,                                     // don't filter by row groups
+                    null                                // The sort order
+            );
+            Log.i("Reminders","cursor count");
+            System.out.println(cursor.getCount()+"qaz");
+
+
+            if (cursor.getCount() > 0) {
+
+                while(cursor.moveToNext()) {
+
+                    skip=cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationReminders.COLUMN_NAME_SKIP));
+
+
+
+
+
+                }
+            }
+        }catch (Exception e) {
+            Log.i("Reminders", "exception");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        if (skip.length() > 0) {
+            char h = skip.charAt(skip.length() - 1);
+            //
+
+            if (h == '0') {
+                holder.indic.setImageResource(R.drawable.cross);
+            } else if (h == '1') {
+                holder.indic.setImageResource(R.drawable.green);
+            } else {
+                holder.indic.setImageResource(R.drawable.exclamtion);
+            }
+
+        }
+
+
     }
 
 

@@ -13,6 +13,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.mukesh.medisys.data.MediSysContract;
 import com.example.mukesh.medisys.data.MediSysSQLiteHelper;
@@ -28,6 +29,7 @@ public class Reciever extends BroadcastReceiver {
     public static int  id=2014149;
     @Override
     public void onReceive(Context context, Intent intent) {
+
 
 
         // retrieve the value
@@ -137,13 +139,21 @@ public class Reciever extends BroadcastReceiver {
         // Prepare intent which is triggered if the
         // notification is selected
         Log.i("Check Descript_R",intent.getStringExtra("Description"));
-        Intent i = new Intent(context, NotificationReceiverActivity.class);
+        Intent i = new Intent(context,NotificationReceiverActivity.class);
         i.putExtra("unique_temp_timer_id",id+intent.getIntExtra("unique_timer_id",1));
         i.putExtra("Description",intent.getStringExtra("Description"));
         i.putExtra("Unique_id",intent.getStringExtra("Unique_id"));
+
+        i.putExtra("Time",intent.getStringExtra("Time"));
+        i.putExtra("schedule_duration",intent.getStringExtra("schedule_duration"));
+        i.putExtra("schedule_days",intent.getStringExtra("schedule_days"));
+        i.putExtra("Reminder_timer",intent.getStringExtra("Reminder_timer"));
+
+        i.putExtra("notification_unique_id",unique);
         i.putExtra("ACTION", action);
         i.setAction(action);
-        return  PendingIntent.getActivity(context, unique, i, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        return  PendingIntent.getBroadcast(context, unique, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
     }
 

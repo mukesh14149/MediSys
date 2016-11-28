@@ -44,6 +44,15 @@ public class MediSysSQLiteHelper extends SQLiteOpenHelper {
                     MediSysContract.MedicationReminders.COLUMN_NAME_REMINDER_TIMER+  " TEXT NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_SKIP+  " TEXT NOT NULL " +
                     " )";
+    private static final String SQL_CREATE_MEDICALHISTORY =
+            "CREATE TABLE " +MediSysContract.MedicalHistory.TABLE_NAME + " (" +
+
+                    MediSysContract.MedicalHistory.COLUMN_NAME_UNIQUE_ID +  " TEXT NOT NULL, " +
+                    MediSysContract.MedicalHistory.COLUMN_NAME_DOCTOR +  " TEXT NOT NULL, " +
+                    MediSysContract.MedicalHistory.COLUMN_NAME_SPECIALITY + " TEXT NOT NULL, " +
+                    MediSysContract.MedicalHistory.COLUMN_NAME_ADVISE+  " TEXT NOT NULL " +
+
+                    " )";
 
 
     private static final String SQL_DELETE_ENTRIES =
@@ -55,6 +64,8 @@ public class MediSysSQLiteHelper extends SQLiteOpenHelper {
 
     private static final String SQL_DELETE_MEDICATIOREMINDERS =
             "DROP TABLE IF EXISTS " + MediSysContract.MedicationReminders.TABLE_NAME;
+    private static final String SQL_DELETE_MEDICALHISTORY =
+            "DROP TABLE IF EXISTS " + MediSysContract.MedicalHistory.TABLE_NAME;
 
     public MediSysSQLiteHelper(Context context){
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -67,6 +78,7 @@ public class MediSysSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_CREATE_ENTRIES);
         db.execSQL(SQL_CREATE_MEDICATIONENTRY);
         db.execSQL(SQL_CREATE_MEDICATIONREMINDERS);
+        db.execSQL(SQL_CREATE_MEDICALHISTORY);
     }
 
     @Override
@@ -74,6 +86,7 @@ public class MediSysSQLiteHelper extends SQLiteOpenHelper {
         db.execSQL(SQL_DELETE_ENTRIES);
         db.execSQL(SQL_DELETE_MEDICATIONENTRY);
         db.execSQL(SQL_DELETE_MEDICATIOREMINDERS);
+        db.execSQL(SQL_DELETE_MEDICALHISTORY);
         onCreate(db);
     }
 }

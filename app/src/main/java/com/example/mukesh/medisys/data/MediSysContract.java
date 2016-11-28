@@ -46,5 +46,14 @@ public final class MediSysContract {
         final public static String COLUMN_NAME_SKIP="skip";
 
     }
+    public static class MedicalHistory implements BaseColumns{
+        final public static String TABLE_NAME="medical_history";
+        final public static String COLUMN_NAME_UNIQUE_ID="unique_id";
+        final public static String COLUMN_NAME_DOCTOR="name";
+        final public static String COLUMN_NAME_SPECIALITY="speciality";
+        final public static String COLUMN_NAME_ADVISE="advise";
+
+
+    }
 
 }

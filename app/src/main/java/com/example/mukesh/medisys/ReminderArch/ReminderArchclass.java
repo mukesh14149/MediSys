@@ -17,6 +17,9 @@ public class ReminderArchclass implements Parcelable {
     private String skip=null;
     private String unique_id=null;
     private String alarm_status=null;
+    private String doctor=null;
+    private String advise=null;
+    private String speciality=null;
     private HashMap<String,String> id_reminder_timer=null;
 
     public ReminderArchclass(){
@@ -81,6 +84,15 @@ public class ReminderArchclass implements Parcelable {
     }
     public String getAlarm_status(){
         return alarm_status;
+    }
+    public String getDoctor(){
+        return doctor;
+    }
+    public String getAdvise(){
+        return advise;
+    }
+    public String getSpeciality(){
+        return speciality;
     }
     private ReminderArchclass(Parcel in){
         reminder_timer = (ArrayList<String>) in.readSerializable();

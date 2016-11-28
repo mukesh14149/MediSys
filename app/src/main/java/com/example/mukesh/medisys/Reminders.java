@@ -3,6 +3,7 @@ package com.example.mukesh.medisys;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -339,7 +340,7 @@ public class Reminders extends Fragment {
                         MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DURAtION,
                         MediSysContract.MedicationEntry.COLUMN_NAME_SKIP,
                         MediSysContract.MedicationEntry.COLUMN_NAME_UNIQUE_ID,
-
+                        MediSysContract.MedicationEntry.COLUMN_NAME_ALARM_STATUS,
 
                 };
 
@@ -360,130 +361,123 @@ public class Reminders extends Fragment {
                     System.out.println("aaa"+remArc.size());
                     while(cursor.moveToNext()) {
                         ReminderArchclass reminderArchclass = new ReminderArchclass();
-                        String schedule_duration = cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DURAtION));
-                        String schedule_days = cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DAYS));
-                        String description = cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION));
-                        String skip=cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_SKIP));
-                        String unique_id=cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_UNIQUE_ID));
+                        if(cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_ALARM_STATUS)).equals("true")) {
 
-                        reminderArchclass.setSchedule_duration(schedule_duration);
-                        reminderArchclass.setDescription(description);
-                        reminderArchclass.setSchedule_days(schedule_days);
-                        reminderArchclass.setskip(skip);
-                        reminderArchclass.setUnique_id(unique_id);
+                            String schedule_duration = cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DURAtION));
+                            String schedule_days = cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DAYS));
+                            String description = cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION));
+                            String skip = cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_SKIP));
+                            String unique_id = cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_UNIQUE_ID));
 
-
-
-
+                            reminderArchclass.setSchedule_duration(schedule_duration);
+                            reminderArchclass.setDescription(description);
+                            reminderArchclass.setSchedule_days(schedule_days);
+                            reminderArchclass.setskip(skip);
+                            reminderArchclass.setUnique_id(unique_id);
 
 
+                            String selection_reminder_timer = MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_ID + " = ?";
+                            String[] selectionArgs_reminder_timer = {unique_id};
+                            String sortOrder_reminder_timer =
+                                    MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_TIMER_ID + " DESC";
+
+                            String[] projection_reminder_timer = {
+                                    MediSysContract.MedicationReminders.COLUMN_NAME_REMINDER_TIMER,
+
+                            };
 
 
-                        String selection_reminder_timer = MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_ID + " = ?";
-                        String[] selectionArgs_reminder_timer = {unique_id};
-                        String sortOrder_reminder_timer =
-                                MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_TIMER_ID + " DESC";
-
-                        String[] projection_reminder_timer = {
-                                MediSysContract.MedicationReminders.COLUMN_NAME_REMINDER_TIMER,
-
-                        };
-
-
-                        Cursor cursor_reminder_timer = db.query(
-                                MediSysContract.MedicationReminders.TABLE_NAME,                     // The table to query
-                                projection_reminder_timer,                               // The columns to return
-                                selection_reminder_timer,                                // The columns for the WHERE clause
-                                selectionArgs_reminder_timer,                            // The values for the WHERE clause
-                                null,                                     // don't group the rows
-                                null,                                     // don't filter by row groups
-                                sortOrder_reminder_timer                                 // The sort order
-                        );
+                            Cursor cursor_reminder_timer = db.query(
+                                    MediSysContract.MedicationReminders.TABLE_NAME,                     // The table to query
+                                    projection_reminder_timer,                               // The columns to return
+                                    selection_reminder_timer,                                // The columns for the WHERE clause
+                                    selectionArgs_reminder_timer,                            // The values for the WHERE clause
+                                    null,                                     // don't group the rows
+                                    null,                                     // don't filter by row groups
+                                    sortOrder_reminder_timer                                 // The sort order
+                            );
 
 
+                            if (cursor_reminder_timer.getCount() > 0) {
+                                // System.out.println("aaa" + remArc.size());
+                                ArrayList<String> tempreminder = new ArrayList<String>();
+                                while (cursor_reminder_timer.moveToNext()) {
+                                    String timer = cursor_reminder_timer.getString(cursor_reminder_timer.getColumnIndex(MediSysContract.MedicationReminders.COLUMN_NAME_REMINDER_TIMER));
+                                    Log.i("Check timeReminder", Integer.toString(position));
+                                    // timer="Sun Nov 27 04:37:00 GMT+05:30 2016";
+                                    String date[] = timer.split(" ");
+                                    String time[] = date[3].split(":");
+                                    System.out.println(Integer.parseInt(time[0]));
 
 
-                        if (cursor_reminder_timer.getCount() > 0) {
-                           // System.out.println("aaa" + remArc.size());
-                            ArrayList<String> tempreminder=new ArrayList<String>();
-                            while (cursor_reminder_timer.moveToNext()) {
-                                String timer = cursor_reminder_timer.getString(cursor_reminder_timer.getColumnIndex(MediSysContract.MedicationReminders.COLUMN_NAME_REMINDER_TIMER));
-                                Log.i("Check timeReminder",Integer.toString(position));
-                               // timer="Sun Nov 27 04:37:00 GMT+05:30 2016";
-                                String date[]=timer.split(" ");
-                                String time[]=date[3].split(":");
-                                System.out.println(Integer.parseInt(time[0]));
+                                    /*switch (position)
+                                    {
+                                        case 0:if(Integer.parseInt(time[0])>=4&&Integer.parseInt(time[0])<12){
+                                            tempreminder.add(timer);
+                                        }
 
+                                        case 1:if(Integer.parseInt(time[0])>=12&&Integer.parseInt(time[0])<18){
+                                            tempreminder.add(timer);
+                                        }
 
-                                /*switch (position)
-                                {
-                                    case 0:if(Integer.parseInt(time[0])>=4&&Integer.parseInt(time[0])<12){
-                                        tempreminder.add(timer);
+                                        case 2:
+                                        }
+
+                                        case 3:if(Integer.parseInt(time[0])>=0&&Integer.parseInt(time[0])<4){
+                                            tempreminder.add(timer);
+                                        }
                                     }
 
-                                    case 1:if(Integer.parseInt(time[0])>=12&&Integer.parseInt(time[0])<18){
-                                        tempreminder.add(timer);
-                                    }
+    */
 
-                                    case 2:
-                                    }
+                                    Calendar calendar = Calendar.getInstance();
+                                    Calendar calendar1 = Calendar.getInstance();
+                                    SimpleDateFormat sdf = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
+                                    calendar.setTime(sdf.parse(timer));
+                                    calendar.set(Calendar.HOUR, 0);
+                                    calendar.set(Calendar.MINUTE, 0);
+                                    calendar.set(Calendar.SECOND, 0);
 
-                                    case 3:if(Integer.parseInt(time[0])>=0&&Integer.parseInt(time[0])<4){
-                                        tempreminder.add(timer);
+                                    calendar1.setTime(sdf.parse(current_time));
+                                    calendar1.set(Calendar.HOUR, 0);
+                                    calendar1.set(Calendar.MINUTE, 0);
+                                    calendar1.set(Calendar.SECOND, 0);
+
+                                    System.out.println(calendar.getTime().toString() + "asd" + calendar1.getTime().toString() + "I am not null" + timer);
+                                    if (calendar1.getTimeInMillis() >= calendar.getTimeInMillis()) {
+                                        if (position == 0) {
+                                            if (Integer.parseInt(time[0]) >= 4 && Integer.parseInt(time[0]) < 12) {
+                                                tempreminder.add(timer);
+                                            }
+                                        }
+                                        if (position == 1) {
+                                            if (Integer.parseInt(time[0]) >= 12 && Integer.parseInt(time[0]) < 18) {
+                                                tempreminder.add(timer);
+                                            }
+                                        }
+                                        if (position == 2) {
+                                            if (Integer.parseInt(time[0]) >= 18 && Integer.parseInt(time[0]) < 24) {
+                                                tempreminder.add(timer);
+                                            }
+                                        }
+
+                                        if (position == 3) {
+                                            if (Integer.parseInt(time[0]) >= 0 && Integer.parseInt(time[0]) < 4) {
+                                                tempreminder.add(timer);
+                                            }
+                                        }
                                     }
+                                    // tempreminder.add(timer);
                                 }
+                                reminderArchclass.setReminder_timer(tempreminder);
+                                if (tempreminder.size() != 0) {
 
-*/
-
-                                Calendar calendar=Calendar.getInstance();
-                                Calendar calendar1=Calendar.getInstance();
-                                SimpleDateFormat sdf=new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy", Locale.ENGLISH);
-                                calendar.setTime(sdf.parse(timer));
-                                calendar.set(Calendar.HOUR,0);
-                                calendar.set(Calendar.MINUTE,0);
-                                calendar.set(Calendar.SECOND,0);
-
-                                calendar1.setTime(sdf.parse(current_time));
-                                calendar1.set(Calendar.HOUR,0);
-                                calendar1.set(Calendar.MINUTE,0);
-                                calendar1.set(Calendar.SECOND,0);
-
-                                System.out.println(calendar.getTime().toString()+"asd"+calendar1.getTime().toString()+"I am not null"+timer);
-                                if(calendar1.getTimeInMillis()>=calendar.getTimeInMillis()) {
-                                    if (position == 0) {
-                                        if (Integer.parseInt(time[0]) >= 4 && Integer.parseInt(time[0]) < 12) {
-                                            tempreminder.add(timer);
-                                        }
-                                    }
-                                    if (position == 1) {
-                                        if (Integer.parseInt(time[0]) >= 12 && Integer.parseInt(time[0]) < 18) {
-                                            tempreminder.add(timer);
-                                        }
-                                    }
-                                    if (position == 2) {
-                                        if (Integer.parseInt(time[0]) >= 18 && Integer.parseInt(time[0]) < 24) {
-                                            tempreminder.add(timer);
-                                        }
-                                    }
-
-                                    if (position == 3) {
-                                        if (Integer.parseInt(time[0]) >= 0 && Integer.parseInt(time[0]) < 4) {
-                                            tempreminder.add(timer);
-                                        }
-                                    }
+                                    remArc.add(reminderArchclass);
                                 }
-                               // tempreminder.add(timer);
                             }
-                            reminderArchclass.setReminder_timer(tempreminder);
-                            if(tempreminder.size()!=0){
 
-                                remArc.add(reminderArchclass);
-                            }
+
                         }
-
-
-
-
                     }
                 }
             }catch (Exception e){
@@ -532,6 +526,7 @@ public class Reminders extends Fragment {
             String[] projection_reminder_timer = {
                     MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_TIMER_ID,
                     MediSysContract.MedicationReminders.COLUMN_NAME_REMINDER_TIMER,
+
             };
 
 
@@ -590,6 +585,19 @@ public class Reminders extends Fragment {
             alarmMgr.cancel(pendingIntent);
 */
 
+            ContentValues values = new ContentValues();
+            values.put(MediSysContract.MedicationEntry.COLUMN_NAME_ALARM_STATUS,"false" );
+            String selection = MediSysContract.MedicationEntry.COLUMN_NAME_UNIQUE_ID + " LIKE ?";
+            String[] selectionArgs = { reminderArchclass.getUnique_id() };
+            int count = db.update(
+                    MediSysContract.MedicationEntry.TABLE_NAME,
+                    values,
+                    selection,
+                    selectionArgs);
+            System.out.println("ssdddddddd"+count);
+
+
+/*
 
             String selection = MediSysContract.MedicationEntry.COLUMN_NAME_UNIQUE_ID + " = ?";
             String[] selectionArgs = {reminderArchclass.getUnique_id()};
@@ -597,6 +605,7 @@ public class Reminders extends Fragment {
 
             selection= MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_ID + " = ?";
             db.delete(MediSysContract.MedicationReminders.TABLE_NAME,selection,selectionArgs);
+*/
 
 
             return true;

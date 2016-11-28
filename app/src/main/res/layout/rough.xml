@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/light_black"
+    android:layout_marginBottom="25dp">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:id="@+id/repli"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp">
+
+
+            <TextView
+                android:text="40%"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="normal|bold"
+                android:id="@+id/percent2"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:textColor="@color/TextColor" />
+
+            <TextView
+                android:text="09:00 am"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="normal|bold"
+                android:id="@+id/percent"
+                android:textColor="@color/TextColor"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="10dp" />
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <View
+                    android:id="@+id/bar1"
+                    android:layout_width="11dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="15dp"
+                    android:background="@color/Red"
+                    android:layout_marginRight="10dp"/>
+                <TextView
+                    android:text="Taken"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="15dp"
+
+                    android:layout_marginRight="45dp"
+                    android:textSize="12sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/TextColor" />
+                <TextView
+                    android:text="Skipped"
+                    android:id="@+id/take"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="15dp"
+
+
+                    android:textSize="12sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/TextColor" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <View
+                    android:id="@+id/bar2"
+                    android:layout_width="11dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="15dp"
+                    android:background="@color/blue_light" />
+
+                <TextView
+                    android:text="Skipped"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="15dp"
+
+                     android:layout_marginRight="35dp"
+                    android:textSize="12sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/TextColor" />
+                <TextView
+                    android:text="Skipped"
+                    android:id="@+id/skip"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:layout_height="15dp"
+
+
+                    android:textSize="12sp"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:textColor="@color/TextColor" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </LinearLayout>
+</LinearLayout>

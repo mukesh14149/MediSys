@@ -28,7 +28,6 @@ import java.util.Map;
 public class RecycleAllAlarm extends BroadcastReceiver {
 
 
-
     @Override
     public void onReceive(Context context, Intent intent) {
 

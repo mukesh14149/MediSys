@@ -34,11 +34,9 @@
         <receiver
             android:name=".NotificationReceiverActivity"
             android:enabled="true" />
-
         <receiver
             android:name=".Reciever"
             android:enabled="true" />
-
         <receiver
             android:name=".RecycleAllAlarm"
             android:enabled="true">
@@ -72,8 +70,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainFragmentDetails"></activity>
-        <activity android:name=".MedicationItemPagerActivity"></activity>
+        <activity android:name=".MainFragmentDetails" />
+        <activity android:name=".MedicationItemPagerActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:label="@string/title_activity_settings"></activity>
     </application>
 
 </manifest>

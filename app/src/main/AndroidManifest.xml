@@ -12,7 +12,7 @@
         android:icon="@drawable/health"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".LoginActivity"
             android:icon="@mipmap/ic_launcher">
@@ -33,7 +33,7 @@
 
         <receiver
             android:name=".NotificationReceiverActivity"
-            android:enabled="true"></receiver>
+            android:enabled="true" />
         <receiver
             android:name=".Reciever"
             android:enabled="false">
@@ -57,7 +57,6 @@
         <activity android:name=".Rough" />
         <activity android:name=".Medicine_Graph" />
         <activity android:name=".AddMedical_history" />
-
         <activity
             android:name=".OkGoogle"
             android:label="@string/title_activity_ok_google"
@@ -68,6 +67,8 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainFragmentDetails"></activity>
+        <activity android:name=".MedicationItemPagerActivity"></activity>
     </application>
 
 </manifest>

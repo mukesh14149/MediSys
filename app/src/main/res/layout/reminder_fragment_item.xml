@@ -1,28 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/parent_frag"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
-    <TextView
-        android:id="@+id/empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:visibility="gone"
-        android:text="no_data_available" />
+
 
     <android.support.v7.widget.CardView
-
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_gravity="center"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        card_view:cardBackgroundColor="#F5F5F5"
         android:elevation="10dp"
-        card_view:cardCornerRadius="4dp">
+        card_view:cardCornerRadius="12dp">
 
         <LinearLayout
             android:id="@+id/first1"
@@ -34,36 +27,40 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="40dp"
                 android:paddingTop="4dp"
                 android:paddingBottom="4dp"
                 android:layout_marginBottom="10dp"
                 android:orientation="horizontal"
-                android:background="@drawable/side_nav_bar">
+                android:background="#e0e0e0">
+
+                <!--
+                #81d4fa
                 <ImageView
                     android:layout_marginLeft="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/pill"
-
-                    />
+                    />-->
                 <TextView
                     android:layout_marginLeft="15dp"
                     android:id="@+id/description_view"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:text="Description"
-                    android:textColor="#ffffff"
+                    android:textColor="#212121"
                     android:textSize="25dp"
-                    android:textStyle="bold"
+                    android:textStyle="italic"
                     />
-                <android.support.v7.widget.Toolbar
+               <!-- <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar_edit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="-50dp"
-                    android:background="@color/light_black"></android.support.v7.widget.Toolbar>
+                    android:background="@drawable/ic_mode_edit_black_24dp">
 
+                </android.support.v7.widget.Toolbar>
+-->
             </LinearLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -85,7 +82,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="20dp"
-                        android:textStyle="bold"
+                        android:textStyle="italic"
                         android:textColor="#33B5E5"
                         android:text="No alarm"/>
 
@@ -114,7 +111,7 @@
                         />
                 </LinearLayout>
 
-                <LinearLayout
+               <!-- <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -131,7 +128,7 @@
                         android:tag="on"
                         android:background="?android:attr/selectableItemBackground" />
 
-                </LinearLayout>
+                </LinearLayout>-->
             </RelativeLayout>
 
             <RelativeLayout

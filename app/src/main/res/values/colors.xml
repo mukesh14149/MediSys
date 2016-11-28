@@ -13,4 +13,6 @@
     <color name="TextColor">#ffffff</color>
     <color name="indigo">#303F9F</color>
     <color name="green">#ffffff</color>
+
+    <color name="viewBg">#f1f5f8</color>
 </resources>

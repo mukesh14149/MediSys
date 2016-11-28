@@ -30,7 +30,8 @@ public class MediSysSQLiteHelper extends SQLiteOpenHelper {
                     MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION + " TEXT NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DURAtION + " TEXT NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DAYS + " TEXT NOT NULL, " +
-                    MediSysContract.MedicationEntry.COLUMN_NAME_SKIP+  " TEXT NOT NULL " +
+                    MediSysContract.MedicationEntry.COLUMN_NAME_SKIP+  " TEXT NOT NULL, " +
+                    MediSysContract.MedicationEntry.COLUMN_NAME_ALARM_STATUS +  " TEXT NOT NULL " +
                     " )";
 
 

@@ -71,30 +71,46 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-                    <TextView
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="5dp"
-                        android:id="@+id/reminder_template"
-                        android:text="Reminder Times"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:textSize="20dp"
-                        android:paddingLeft="10dp"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/holo_blue_light"/>
 
 
-                    <!---
-                    <Switch
-
-                        android:id="@+id/reminder_status"
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_alignParentTop="true"
-                        android:layout_marginTop="20dp"
-                        />
--->
+                        android:orientation="horizontal">
+                        <TextView
+                            android:layout_marginLeft="5dp"
+                            android:layout_marginTop="5dp"
+                            android:id="@+id/reminder_template"
+                            android:text="Reminder Times"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:textSize="20dp"
+                            android:paddingLeft="10dp"
+                            android:textStyle="bold"
+                            android:textColor="@android:color/holo_blue_light"/>
+
+
+
+                       <!-- <Switch
+                            android:id="@+id/alarm_status"
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginTop="5dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            />-->
+
+                        <ImageButton
+                            android:id="@+id/fab1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginTop="5dp"
+                            android:src="@drawable/plus"
+                            android:background="#FFFFFF"
+                            android:onClick="popuptimepicker"
+                            />
+
+                    </LinearLayout>
 
 
 
@@ -108,18 +124,6 @@
 
                         ></LinearLayout>
 
-                    <ImageButton
-                        android:id="@+id/fab1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="250dp"
-                        android:src="@drawable/plus"
-                        android:background="#FFFFFF"
-                        android:onClick="popuptimepicker"
-                        android:layout_centerVertical="true"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="11dp"
-                        />
 
 
                 </RelativeLayout>

@@ -559,6 +559,7 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DURAtION, schedule_duration);
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DAYS, schedule_days);
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_SKIP,skip);
+            values.put(MediSysContract.MedicationEntry.COLUMN_NAME_ALARM_STATUS,"true");
 
             long newRowId;
             Log.i("AddMedicationcheck",Integer.toString(flag_for_object));

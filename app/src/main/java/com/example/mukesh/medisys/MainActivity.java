@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,12 +27,13 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.main_act);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
-        fab=(android.support.design.widget.FloatingActionButton)findViewById(R.id.fab);
-        fab1=(android.support.design.widget.FloatingActionButton)findViewById(R.id.fab1);
-        fab2=(android.support.design.widget.FloatingActionButton)findViewById(R.id.fab2);
+        setSupportActionBar(toolbar);
 
 
 
@@ -54,27 +57,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
     }
 
-int v=0;
-    public void fab(View view) {
-        if (v == 0) {
-            fab1.setVisibility(View.VISIBLE);
-            fab2.setVisibility(View.VISIBLE);
 
-            v = 1;
-        } else {
-            fab1.setVisibility(View.GONE);
-            fab2.setVisibility(View.GONE);
-            v = 0;
-        }
-    }
-    public void setReminder(View view) {
-        Intent intent=new Intent(this,AddMedication.class);
-       startActivity(intent);
-    }
-    public void setRecord(View view) {
-        Intent intent=new Intent(this,AddMedical_history.class);
-        startActivity(intent);
-    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

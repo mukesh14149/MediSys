@@ -33,6 +33,7 @@ public final class MediSysContract {
         final public static String COLUMN_NAME_SCHEDULE_DURAtION="schdule_duration";
         final public static String COLUMN_NAME_SCHEDULE_DAYS="schdule_days";
         final public static String COLUMN_NAME_SKIP="skip";
+        final public static String COLUMN_NAME_ALARM_STATUS="alaram_status";
 
     }
 

@@ -49,12 +49,6 @@ public class SetReminder extends AppCompatActivity {
     public void createNotification() {
         // Prepare intent which is triggered if the
         // notification is selected
-        ComponentName receiver = new ComponentName(getApplicationContext(), Reciever.class);
-        PackageManager pm = getApplicationContext().getPackageManager();
-
-        pm.setComponentEnabledSetting(receiver,
-                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                PackageManager.DONT_KILL_APP);
 
         description=intent1.getStringExtra("Description");
         id_reminder_timer=(HashMap<String,String>) intent1.getSerializableExtra("Reminder_timer");

@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * Created by mukesh on 21/10/16.
@@ -15,6 +16,9 @@ public class ReminderArchclass implements Parcelable {
     private String description=null;
     private String skip=null;
     private String unique_id=null;
+    private String alarm_status=null;
+    private HashMap<String,String> id_reminder_timer=null;
+
     public ReminderArchclass(){
 
     }
@@ -28,6 +32,9 @@ public class ReminderArchclass implements Parcelable {
         this.schedule_duration=schedule_duration;
     }
 
+    public void setId_reminder_timer(HashMap<String,String> id_reminder_timer){
+        this.id_reminder_timer=id_reminder_timer;
+    }
     public  void setSchedule_days(String schedule_days){
         this.schedule_days=schedule_days;
     }
@@ -42,10 +49,17 @@ public class ReminderArchclass implements Parcelable {
     public void setskip(String skip){
         this.skip=skip;
     }
-
+    public void setAlarm_status(String alarm_status)
+    {
+        this.alarm_status=alarm_status;
+    }
 
     public ArrayList<String> getReminder_timer(){
         return reminder_timer;
+    }
+
+    public HashMap<String,String> getId_reminder_timer(){
+        return id_reminder_timer;
     }
 
     public String getSchedule_duration(){
@@ -65,13 +79,18 @@ public class ReminderArchclass implements Parcelable {
     public String getskip(){
         return skip;
     }
+    public String getAlarm_status(){
+        return alarm_status;
+    }
     private ReminderArchclass(Parcel in){
-        reminder_timer = (ArrayList<String>) in.readSerializable();;;
+        reminder_timer = (ArrayList<String>) in.readSerializable();
+        id_reminder_timer=(HashMap<String, String>)in.readSerializable();
         schedule_duration = in.readString();
         schedule_days = in.readString();
         description = in.readString();
         skip=in.readString();
         unique_id=in.readString();
+        alarm_status=in.readString();
     }
 
 
@@ -83,11 +102,13 @@ public class ReminderArchclass implements Parcelable {
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeSerializable(reminder_timer);
+        parcel.writeSerializable(id_reminder_timer);
         parcel.writeString(schedule_duration);
         parcel.writeString(schedule_days);
         parcel.writeString(description);
         parcel.writeString(skip);
         parcel.writeString(unique_id);
+        parcel.writeString(alarm_status);
     }
     public static final Parcelable.Creator<ReminderArchclass> CREATOR = new Parcelable.Creator<ReminderArchclass>()
     {

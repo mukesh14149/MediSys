@@ -7,10 +7,12 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
@@ -108,30 +110,40 @@ public class Reciever extends BroadcastReceiver {
         int unique=(id+intent.getIntExtra("unique_timer_id",1));
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        Notification noti = new Notification.Builder(context)
-                .setContentTitle(string)
-                .setContentText("Time to Take Pill").setSmallIcon(R.drawable.bellimage)
-                .setContentIntent(getPendingAction(context, intent, unique, "Action_Main"))
-                .addAction(R.drawable.bellimage, "Skip", getPendingAction(context, intent, unique, "Action_Skip"))
-                .addAction(R.drawable.bellimage, "Snooze",getPendingAction(context, intent, unique, "Action_Snooze"))
-                .addAction(R.drawable.bellimage, "Take",getPendingAction(context, intent, unique, "Action_Take")).build();
-        // hide the notification after its selected
-        try {
-            Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            Ringtone r = RingtoneManager.getRingtone(context, notification);
-            r.play();
-        } catch (Exception e) {
-            e.printStackTrace();
+
+
+        NotificationCompat.Action action = new NotificationCompat.Action.Builder(R.drawable.ic_alarm_off_black_24dp,"SKIP", getPendingAction(context, intent, unique, "Action_Skip")).build();
+        NotificationCompat.Action action1 = new NotificationCompat.Action.Builder(R.drawable.ic_update_black_24dp,  "Snooze", getPendingAction(context, intent, unique, "Action_Snooze")).build();
+        NotificationCompat.Action action2 = new NotificationCompat.Action.Builder(R.drawable.ic_alarm_on_black_24dp,"Take", getPendingAction(context, intent, unique, "Action_Take")).build();
+
+        Log.i("In notification vala","yo") ;
+        long vibrate[]={1000,1000};
+        if(!PreferenceManager.getDefaultSharedPreferences(context).getBoolean("notifications_new_message_vibrate",true)){
+            vibrate=null;
         }
+
+        Notification noti = new NotificationCompat.Builder(context)
+                .setContentTitle(string)
+                .setContentText("Time to Take Pill").setSmallIcon(R.drawable.ic_spa_black_24dp)
+                .setContentIntent(getPendingAction(context, intent, unique, "Action_Main"))
+                .setSound(Uri.parse(PreferenceManager.getDefaultSharedPreferences(context).getString("notifications_new_message_ringtone", null)))
+                .setVibrate(vibrate)
+                .addAction(action)
+                .addAction(action1)
+                .addAction(action2).build();
+        // hide the notification after its selected
+
 
 
         noti.flags |= Notification.FLAG_AUTO_CANCEL;
 
         notificationManager.notify(unique, noti);
+        Integer frequency=60000*Integer.parseInt(PreferenceManager.getDefaultSharedPreferences(context).getString("sync_frequency","10"));
+        System.out.println(frequency);
 
         PendingIntent alarmIntent = PendingIntent.getBroadcast(context, (id+intent.getIntExtra("unique_timer_id",1)), intent, 0);
         AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        alarmMgr.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis()+10000, alarmIntent);
+        alarmMgr.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis()+frequency, alarmIntent);
 
     }
 

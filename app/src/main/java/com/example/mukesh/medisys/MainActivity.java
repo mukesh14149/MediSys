@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
 
 
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -107,6 +108,8 @@ public class MainActivity extends AppCompatActivity  implements NavigationView.O
                 Intent intent=new Intent(this,History.class);
                 startActivity(intent);
         } else if (id == R.id.settings) {
+                Intent intent=new Intent(this,SettingsActivity.class);
+                startActivity(intent);
 
         } else if (id == R.id.nav_share) {
 

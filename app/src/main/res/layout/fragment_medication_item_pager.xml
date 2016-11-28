@@ -90,8 +90,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="italic"
                 android:textSize="20dp"
-                android:text="Reminders"
-                />
+                android:text="Reminders" />
 
             <TextView
                 android:id="@+id/timer_view"
@@ -109,7 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="100dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="-10dp"
             android:orientation="horizontal">
             <ImageButton
                 android:id="@+id/edit"
@@ -119,12 +118,7 @@
                 android:src="@drawable/ic_mode_edit_black_24dp"
                 android:background="#ffffff"/>
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp"
-                android:src="@drawable/ic_alarm_off_black_24dp"
-                android:background="#ffffff"/>
+
 
             <ImageButton
                 android:id="@+id/delete"

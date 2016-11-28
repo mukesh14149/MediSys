@@ -54,9 +54,11 @@ import java.util.HashMap;
 public class AddMedication extends AppCompatActivity implements PropNumberDialogFragment.OnCompleteListener{
     ArrayList<TextView> time=new ArrayList<TextView>();
     LinearLayout reminder;
+    LinearLayout reminder_inner;
     private PopupWindow pwindo;
     Button btnClosePopup;
     TextView settime ;
+    ImageButton settime_delete;
     TextView startdate ;
     String email=null;
     String skip="";
@@ -81,7 +83,12 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
     private SharedPreferences sharedread;
     private EditText editdesc;
     public int c=2014149;
+    public int c1=2015149;
     LinearLayout.LayoutParams lprams = new LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT);
+
+    LinearLayout.LayoutParams lprams1 = new LinearLayout.LayoutParams(
             LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT);
 
@@ -272,7 +279,10 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
             description = editdesc.getText().toString();
 
             fill_reminder_timer();
-
+            System.out.println("yo kha ha "+reminder_timer.size());
+            for(int i=0;i<reminder_timer.size();i++){
+                System.out.println("aaa"+reminder_timer);
+            }
 
             radio_duration_selected = radioduration.getCheckedRadioButtonId();
             System.out.println("yo buddy we are done" + radio_duration_selected);
@@ -414,13 +424,20 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
 
     public void Set_timer(String placholder_time){
         reminder=(LinearLayout) findViewById(R.id.reminder_inner_layout);
-        lprams.setMargins(0,0,0,15);
-        settime= new TextView(this);
+        reminder_inner=new LinearLayout(getApplicationContext());
 
+
+        lprams.setMargins(0,0,0,15);
+        lprams1.setMargins(300,0,0,15);
+        settime= new TextView(this);
+        settime_delete=new ImageButton(this);
 
         settime.setText(placholder_time);
+        settime_delete.setBackgroundResource(R.drawable.ic_clear_black_24dp);
 
         settime.setId(c++);
+        reminder_inner.setId(c1++);
+        settime_delete.setId(c1++);
 
         settime.setTextColor(Color.parseColor("#33B5E5"));
         settime.setTextSize(20);
@@ -428,8 +445,20 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
 
 
         settime.setClickable(true);
-        settime.setLayoutParams(lprams);
+        settime_delete.setClickable(true);
 
+        settime.setLayoutParams(lprams);
+        settime_delete.setLayoutParams(lprams1);
+
+
+        settime_delete.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                    LinearLayout linearLayout=(LinearLayout)view.getParent();
+                    linearLayout.removeAllViews();
+            }
+        });
 
         System.out.println("yooo"+settime.getId());
         TextView temp_time=(TextView) findViewById(settime.getId());
@@ -442,7 +471,6 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
 
 
                // System.out.println(Year+" "+Month+" "+Day+"in oncreate method"+settime.getId());
-
 
                 t=(TextView) findViewById(v.getId());
 
@@ -470,7 +498,9 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
                 mTimePicker.show();
             }
         });
-        reminder.addView(settime);
+        reminder_inner.addView(settime);
+        reminder_inner.addView(settime_delete);
+        reminder.addView(reminder_inner);
     }
 
     public static String convertime_12_to_24(String time){
@@ -507,7 +537,7 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
 
         for(int k=2014149;k<c;k++){
             textView =(TextView)findViewById(k);
-
+            System.out.println(textView.getText()+"checkout");
 
             try {
                 String [] time=convertime_12_to_24(textView.getText().toString()).split(":");

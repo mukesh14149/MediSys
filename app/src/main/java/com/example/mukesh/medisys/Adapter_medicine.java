@@ -83,7 +83,7 @@ public class Adapter_medicine extends RecyclerView.Adapter<Adapter_medicine.View
 
 
 
-               Toast.makeText(v.getContext(), "ROW PRESSED = " + String.valueOf(this), Toast.LENGTH_SHORT).show();
+              /* Toast.makeText(v.getContext(), "ROW PRESSED = " + String.valueOf(this), Toast.LENGTH_SHORT).show();*/
             Intent intent=new Intent(context,Medicine_Graph.class);
 
             intent.putExtra("skip",t.getText() );

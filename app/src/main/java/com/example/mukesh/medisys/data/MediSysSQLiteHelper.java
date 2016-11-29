@@ -26,6 +26,7 @@ public class MediSysSQLiteHelper extends SQLiteOpenHelper {
             "CREATE TABLE " +MediSysContract.MedicationEntry.TABLE_NAME + " (" +
                     MediSysContract.MedicationEntry._ID + " INTEGER PRIMARY KEY NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_EMAIL +  " TEXT NOT NULL, " +
+                    MediSysContract.MedicationEntry.COLUMN_NAME_PRESCRIPTION_UNIQUE_ID +  " TEXT NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_UNIQUE_ID +  " TEXT NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION + " TEXT NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_SCHEDULE_DURAtION + " TEXT NOT NULL, " +
@@ -44,9 +45,9 @@ public class MediSysSQLiteHelper extends SQLiteOpenHelper {
                     MediSysContract.MedicationReminders.COLUMN_NAME_REMINDER_TIMER+  " TEXT NOT NULL, " +
                     MediSysContract.MedicationEntry.COLUMN_NAME_SKIP+  " TEXT NOT NULL " +
                     " )";
+
     private static final String SQL_CREATE_MEDICALHISTORY =
             "CREATE TABLE " +MediSysContract.MedicalHistory.TABLE_NAME + " (" +
-
                     MediSysContract.MedicalHistory.COLUMN_NAME_UNIQUE_ID +  " TEXT NOT NULL, " +
                     MediSysContract.MedicalHistory.COLUMN_NAME_DOCTOR +  " TEXT NOT NULL, " +
                     MediSysContract.MedicalHistory.COLUMN_NAME_SPECIALITY + " TEXT NOT NULL, " +

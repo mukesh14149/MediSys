@@ -1,11 +1,7 @@
 package com.example.mukesh.medisys;
 
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,8 +11,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mukesh.medisys.ReminderArch.ReminderArchclass;
-import com.example.mukesh.medisys.data.MediSysContract;
-import com.example.mukesh.medisys.data.MediSysSQLiteHelper;
 
 import java.util.ArrayList;
 
@@ -25,8 +19,7 @@ import java.util.ArrayList;
  */
 
 public class Adapter_history extends RecyclerView.Adapter<Adapter_history.ViewHolder> {
-    public  String naam;
-//    public  String skip;
+    //    public  String skip;
 
 
     static private Context context;
@@ -38,7 +31,7 @@ public class Adapter_history extends RecyclerView.Adapter<Adapter_history.ViewHo
         this.context = context;
     }
 
-    LinearLayout frag;
+    // --Commented out by Inspection (29/11/16 10:58 AM):LinearLayout frag;
 
     public Context getContext() {
         return context;
@@ -50,10 +43,10 @@ public class Adapter_history extends RecyclerView.Adapter<Adapter_history.ViewHo
 
         TextView t;
         TextView disease;
-        ImageButton bel;
+
         String skip;
         LinearLayout layout, frag;
-        ImageView indic;
+
 
 
         public ViewHolder(View item) {

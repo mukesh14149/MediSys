@@ -3,17 +3,14 @@ package com.example.mukesh.medisys;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,12 +19,8 @@ import com.example.mukesh.medisys.ReminderArch.ReminderArchclass;
 import com.example.mukesh.medisys.data.MediSysContract;
 import com.example.mukesh.medisys.data.MediSysSQLiteHelper;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 
 public class AddMedical_history extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
@@ -54,7 +47,7 @@ public class AddMedical_history extends AppCompatActivity implements AdapterView
         try {
 
             // Spinner Drop down elements
-            List<String> categories = new ArrayList<String>();
+            List<String> categories = new ArrayList<>();
             categories.add("Physician");
             categories.add("Surgion");
             categories.add("Cardiologist");
@@ -110,7 +103,7 @@ int i;
                 med=med+"="+getIntent().getStringExtra("Description");
             }
 
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
 
             // Drop down layout style - list view with radio button
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -142,7 +135,7 @@ int i;
         intent.putExtra("unique_id",unique_id);
         intent.putExtra("Doctor",Doctor.getText().toString());
         intent.putExtra("Advice",Advise.getText().toString());
-        intent.putExtra("Category",speciality.toString());
+        intent.putExtra("Category",speciality);
         intent.putExtra("Medi",med);
         startActivity(intent);
     }

@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,16 +15,11 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -35,11 +29,9 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.NumberPicker;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -54,7 +46,7 @@ import java.util.HashMap;
 
 
 public class AddMedication extends AppCompatActivity implements PropNumberDialogFragment.OnCompleteListener{
-    ArrayList<TextView> time=new ArrayList<TextView>();
+    ArrayList<TextView> time= new ArrayList<>();
     LinearLayout reminder;
     LinearLayout reminder_inner;
     private PopupWindow pwindo;
@@ -165,18 +157,21 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
                 word = words.get(i).split(" ");
                 Set_timer(converttime(word[3].substring(0, (word[3].length() - 3))));
             }
-            if(reminderArchclass.getSchedule_duration().equals("continuous")) {
-               buttonduration=(RadioButton) findViewById(R.id.rb_continuous);
-                buttonduration.setChecked(true);
-            }
-            else if(reminderArchclass.getSchedule_duration().equals("number of days")){
-                buttonduration=(RadioButton)findViewById(R.id.rb_number_of_days);
-                buttonduration.setChecked(true);
-            }else{
-                buttonduration=(RadioButton)findViewById(R.id.rb_number_of_days);
-                buttonduration.setChecked(true);
-                TextView temp_textview=(TextView)findViewById(R.id.set_nod);
-                temp_textview.setText(reminderArchclass.getSchedule_duration().toString());
+            switch (reminderArchclass.getSchedule_duration()) {
+                case "continuous":
+                    buttonduration = (RadioButton) findViewById(R.id.rb_continuous);
+                    buttonduration.setChecked(true);
+                    break;
+                case "number of days":
+                    buttonduration = (RadioButton) findViewById(R.id.rb_number_of_days);
+                    buttonduration.setChecked(true);
+                    break;
+                default:
+                    buttonduration = (RadioButton) findViewById(R.id.rb_number_of_days);
+                    buttonduration.setChecked(true);
+                    TextView temp_textview = (TextView) findViewById(R.id.set_nod);
+                    temp_textview.setText(reminderArchclass.getSchedule_duration());
+                    break;
             }
 
             if(reminderArchclass.getSchedule_days().equals("Every day")){
@@ -190,7 +185,7 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
                 buttonduration=(RadioButton)findViewById(R.id.rb_specific_days_of_week);
                 buttonduration.setChecked(true);
                 TextView temp_textview=(TextView)findViewById(R.id.set_sdow);
-                temp_textview.setText(reminderArchclass.getSchedule_days().toString());
+                temp_textview.setText(reminderArchclass.getSchedule_days());
             }
 
 

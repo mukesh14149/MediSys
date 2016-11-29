@@ -6,21 +6,13 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.text.InputType;
 import android.util.Log;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mukesh.medisys.ReminderArch.ReminderArchclass;
 import com.example.mukesh.medisys.data.MediSysContract;
 import com.example.mukesh.medisys.data.MediSysSQLiteHelper;
 
@@ -39,59 +31,61 @@ public class NotificationReceiverActivity extends BroadcastReceiver {
         System.out.println(intent_1.getIntExtra("unique_temp_timer_id",1)-2014149+"ss"+intent_1.getStringExtra("Unique_id"));
 
 
+        switch (action) {
+            case "Action_Skip": {
+
+                Toast.makeText(context, "I am in", Toast.LENGTH_SHORT).show();
+                Update_skip_take update_skip_take = new Update_skip_take(context, intent_1, "0");
+                update_skip_take.execute();
+                System.out.println(skip + "0" + "sss" + intent_1.getStringExtra("Description"));
+                //  intent.putExtra("Time",intent.getIntExtra("Time",1));
+                System.out.println("voooooooo" + intent_1.getIntExtra("unique_temp_timer_id", 1));
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                        intent_1.getIntExtra("unique_temp_timer_id", 1), intent, 0);
+                pendingIntent.cancel();
+                AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                alarmMgr.cancel(pendingIntent);
+
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.cancel(intent_1.getIntExtra("notification_unique_id", 0));
 
 
+                break;
+            }
+            case "Action_Take": {
 
-        if(action.equals("Action_Skip")){
+                Update_skip_take update_skip_take = new Update_skip_take(context, intent_1, "1");
+                update_skip_take.execute();
+                System.out.println(skip + "1" + "sss" + intent_1.getStringExtra("Description"));
+                //  intent.putExtra("Time",intent.getIntExtra("Time",1));
+                System.out.println("voooooooo" + intent_1.getIntExtra("unique_temp_timer_id", 1));
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, intent_1.getIntExtra("unique_temp_timer_id", 1), intent, 0);
+                pendingIntent.cancel();
+                AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                alarmMgr.cancel(pendingIntent);
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.cancel(intent_1.getIntExtra("notification_unique_id", 0));
 
-            Toast.makeText(context, "I am in", Toast.LENGTH_SHORT).show();
-            Update_skip_take update_skip_take=new Update_skip_take(context,intent_1,"0");
-            update_skip_take.execute();
-             System.out.println(skip+"0"+"sss"+intent_1.getStringExtra("Description"));
-            //  intent.putExtra("Time",intent.getIntExtra("Time",1));
-            System.out.println("voooooooo"+ intent_1.getIntExtra("unique_temp_timer_id",1));
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                intent_1.getIntExtra("unique_temp_timer_id",1), intent, 0);
-            pendingIntent.cancel();
-            AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            alarmMgr.cancel(pendingIntent);
-
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.cancel(intent_1.getIntExtra("notification_unique_id",0));
-
-
-
-        } else if(action.equals("Action_Take")){
-
-            Update_skip_take update_skip_take=new Update_skip_take(context,intent_1,"1");
-            update_skip_take.execute();
-            System.out.println(skip+"1"+"sss"+intent_1.getStringExtra("Description"));
-            //  intent.putExtra("Time",intent.getIntExtra("Time",1));
-            System.out.println("voooooooo"+ intent_1.getIntExtra("unique_temp_timer_id",1));
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, intent_1.getIntExtra("unique_temp_timer_id",1), intent, 0);
-            pendingIntent.cancel();
-            AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            alarmMgr.cancel(pendingIntent);
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.cancel(intent_1.getIntExtra("notification_unique_id",0));
-
-        }
-        else if(action.equals("Action_Snooze")){
+                break;
+            }
+            case "Action_Snooze": {
 
 
-            Update_skip_take update_skip_take=new Update_skip_take(context,intent_1,"2");
-            update_skip_take.execute();
+                Update_skip_take update_skip_take = new Update_skip_take(context, intent_1, "2");
+                update_skip_take.execute();
 
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, intent_1.getIntExtra("unique_temp_timer_id",1), intent, 0);
-            pendingIntent.cancel();
-            AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-            alarmMgr.cancel(pendingIntent);
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(context, intent_1.getIntExtra("unique_temp_timer_id", 1), intent, 0);
+                pendingIntent.cancel();
+                AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                alarmMgr.cancel(pendingIntent);
 
 
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.cancel(intent_1.getIntExtra("notification_unique_id",0));
-            displayAlert(context,intent_1);
+                NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.cancel(intent_1.getIntExtra("notification_unique_id", 0));
+                displayAlert(context, intent_1);
 
+                break;
+            }
         }
       //
 

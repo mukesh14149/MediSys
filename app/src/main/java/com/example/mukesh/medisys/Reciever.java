@@ -7,18 +7,10 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.database.sqlite.SQLiteDatabase;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.preference.PreferenceManager;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
-
-import com.example.mukesh.medisys.data.MediSysContract;
-import com.example.mukesh.medisys.data.MediSysSQLiteHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

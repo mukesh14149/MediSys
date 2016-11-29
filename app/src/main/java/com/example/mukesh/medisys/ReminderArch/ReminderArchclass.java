@@ -62,7 +62,7 @@ public class ReminderArchclass implements Parcelable {
     public void setPrescription_unique_id(String prescription_unique_id){
         this.prescription_unique_id=prescription_unique_id;
     }
-    public void setMedicineUnique_id(String setMedicineUnique_id)
+    public void setMedicineUnique_id(String MedicineUnique_id)
     {
         this.MedicineUnique_id= MedicineUnique_id;
 

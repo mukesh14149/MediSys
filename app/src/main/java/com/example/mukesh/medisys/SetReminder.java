@@ -1,30 +1,16 @@
 package com.example.mukesh.medisys;
 
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.ComponentName;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.database.sqlite.SQLiteDatabase;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-
-import com.example.mukesh.medisys.data.MediSysContract;
-import com.example.mukesh.medisys.data.MediSysSQLiteHelper;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 public class SetReminder extends AppCompatActivity {
@@ -52,6 +38,7 @@ public class SetReminder extends AppCompatActivity {
             intent.putExtra("Advice", getIntent().getStringExtra("Advice"));
             intent.putExtra("Category", getIntent().getStringExtra("Category"));
             intent.putExtra("Description",getIntent().getStringExtra("Description"));
+            intent.putExtra("Medi",intent1.getStringExtra("Medi"));
             intent.putExtra("prescription_unique_id",getIntent().getStringExtra("prescription_unique_id"));
             startActivity(intent);
         }

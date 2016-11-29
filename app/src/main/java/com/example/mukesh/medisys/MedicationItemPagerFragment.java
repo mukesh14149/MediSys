@@ -79,10 +79,11 @@ public class MedicationItemPagerFragment extends Fragment {
 
 
         TextView schedule_duration=(TextView)rootView.findViewById(R.id.schedule_days_view);
-        schedule_duration.setText(reminderArchclass.getSchedule_days());
+        schedule_duration.setText(reminderArchclass.getSchedule_duration());
 
-        TextView scdedule_date=(TextView)rootView.findViewById(R.id.schedule_date_view);
-        scdedule_date.setText(reminderArchclass.getSchedule_duration());
+        TextView schedule_days=(TextView)rootView.findViewById(R.id.schedule_date_view);
+        schedule_days.setText(reminderArchclass.getSchedule_days());
+
 
         ImageButton edit=(ImageButton)rootView.findViewById(R.id.edit);
         edit.setOnClickListener(new View.OnClickListener() {

@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".LoginActivity"
-            android:icon="@mipmap/ic_launcher">
+            android:icon="@mipmap/ic_launcher"
+            android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +25,8 @@
         </activity>
         <activity
             android:name=".SignupForm"
-            android:label="@string/title_activity_signup_form" />
+            android:label="@string/title_activity_signup_form"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".SetReminder"
             android:icon="@drawable/health"
@@ -53,13 +55,19 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".AddMedication"
-            android:windowFullscreen="true" />
-        <activity android:name=".AlertDialogClass" />
-        <activity android:name=".Profile" />
-        <activity android:name=".History" />
+            android:windowFullscreen="true"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".AlertDialogClass"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".Profile"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".History"
+            android:theme="@style/AppTheme"/>
         <activity android:name=".Rough" />
-        <activity android:name=".Medicine_Graph" />
-        <activity android:name=".AddMedical_history" />
+        <activity android:name=".Medicine_Graph"
+            android:theme="@style/AppTheme"/>
+        <activity android:name=".AddMedical_history"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".OkGoogle"
             android:label="@string/title_activity_ok_google"
@@ -71,7 +79,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainFragmentDetails" />
-        <activity android:name=".MedicationItemPagerActivity" />
+        <activity android:name=".MedicationItemPagerActivity"
+            android:theme="@style/AppTheme"/>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/title_activity_settings" />

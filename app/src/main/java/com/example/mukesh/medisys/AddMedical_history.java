@@ -154,18 +154,15 @@ int i;
         if(doctor==null||advise==null||speciality==null){
             Toast.makeText(getApplicationContext(), "Some Filled are empty", Toast.LENGTH_SHORT).show();
             System.out.println("holhol");
-
         }
         else{
             Intent intent=new Intent(this,MainActivity.class);
-
 
             AddMedical_history.save_data_history save = new AddMedical_history.save_data_history(doctor, advise, speciality, reminderArchclass,unique_id);
             save.execute();
             startActivity(intent);
 
         }
-
 
     }
     public class save_data_history extends AsyncTask<Void, Void, Boolean> {

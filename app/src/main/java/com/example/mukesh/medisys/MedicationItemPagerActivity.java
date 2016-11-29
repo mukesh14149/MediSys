@@ -15,6 +15,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.mukesh.medisys.ReminderArch.ReminderArchclass;
 import com.example.mukesh.medisys.data.MediSysContract;
@@ -51,18 +53,18 @@ public class MedicationItemPagerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+        //Remove notification bar
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_medication_item_pager);
 
 
 
-        Toolbar toolbar=(Toolbar)findViewById(R.id.toolbar1);
-        setSupportActionBar(toolbar);
+
         // add back arrow to toolbar
 
-        if (getSupportActionBar() != null){
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+
 
         sharedread = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         email=sharedread.getString("email_id","Admin");

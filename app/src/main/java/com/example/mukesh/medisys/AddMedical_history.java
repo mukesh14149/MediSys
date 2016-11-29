@@ -109,14 +109,11 @@ public class AddMedical_history extends AppCompatActivity implements AdapterView
         if(doctor==null||advise==null||speciality==null){
             Toast.makeText(getApplicationContext(), "Some Filled are empty", Toast.LENGTH_SHORT).show();
             System.out.println("holhol");
-
         }
         else{
-
             AddMedical_history.save_data_history save = new AddMedical_history.save_data_history(doctor, advise, speciality, reminderArchclass,unique_id);
             save.execute();
         }
-
 
     }
     public class save_data_history extends AsyncTask<Void, Void, Boolean> {

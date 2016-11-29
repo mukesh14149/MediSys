@@ -45,6 +45,7 @@
 
     </LinearLayout>
 
+<!--
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -94,6 +95,7 @@
             android:textColor="@android:color/holo_blue_light"
             android:textSize="20dp" />
     </LinearLayout>
+-->
 
 
 

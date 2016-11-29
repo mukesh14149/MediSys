@@ -70,6 +70,7 @@ public class MedicationItemPagerFragment extends Fragment {
 
         ArrayList<String> words = reminderArchclass.getReminder_timer();
         TextView timer = (TextView) rootView.findViewById(R.id.timer_view);
+/*
 
         TextView description = (TextView) rootView.findViewById(R.id.description_view);
         description.setText(reminderArchclass.getDescription());
@@ -80,6 +81,7 @@ public class MedicationItemPagerFragment extends Fragment {
 
         TextView schedule_days=(TextView)rootView.findViewById(R.id.schedule_date_view);
         schedule_days.setText(reminderArchclass.getSchedule_days());
+*/
 
 
         ImageButton edit=(ImageButton)rootView.findViewById(R.id.edit);

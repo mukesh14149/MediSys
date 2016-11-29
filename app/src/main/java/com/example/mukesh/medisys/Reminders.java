@@ -436,7 +436,6 @@ public class Reminders extends Fragment {
                                     calendar1.set(Calendar.SECOND, 0);
 
                                     System.out.println(calendar.getTime().toString() + "asd" + calendar1.getTime().toString() + "I am not null" + timer);
-                                    if (calendar1.getTimeInMillis() >= calendar.getTimeInMillis()) {
                                         if (position == 0) {
                                             if (Integer.parseInt(time[0]) >= 4 && Integer.parseInt(time[0]) < 12) {
                                                 tempreminder.add(timer);
@@ -458,7 +457,7 @@ public class Reminders extends Fragment {
                                                 tempreminder.add(timer);
                                             }
                                         }
-                                    }
+
                                     // tempreminder.add(timer);
                                 }
                                 reminderArchclass.setReminder_timer(tempreminder);

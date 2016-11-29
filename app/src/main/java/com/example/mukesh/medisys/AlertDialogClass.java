@@ -74,7 +74,6 @@ public class AlertDialogClass extends AppCompatActivity{
                 alarmMgr.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis()+(60000*time), alarmIntent);
 
 
-                Log.i("gjhkhj","kkkkkkkkkkkkk");
 
                 mAlertDialog.dismiss();
                 finish();

@@ -76,9 +76,9 @@ public class Profile  extends AppCompatActivity {
         TextView mobile_no=(TextView) findViewById(R.id.tvNumber2);
         TextView email_id=(TextView) findViewById(R.id.tvNumber3);
 
-        name.setText(sharedread.getString(getString(R.string.name),"Admin"));
-        mobile_no.setText(sharedread.getString(getString(R.string.mobile_no),"Mobile no."));
-        email_id.setText(sharedread.getString(getString(R.string.email_id),"Email"));
+        name.setText(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("example_text","Admin"));
+        mobile_no.setText("8800183516");
+        email_id.setText("mukesh14149@iiitd.ac.in");
 
         Button button = (Button) findViewById(R.id.select_image);
         button.setOnClickListener(new View.OnClickListener() {

@@ -119,26 +119,34 @@ public class ReminderAdapter extends RecyclerView.Adapter<ReminderAdapter.ViewHo
     }
 
 
-    public String converttime(String time) {
-        String t[] = time.split(":");
-        String h = t[0];
-        String m = t[1];
+    public static String converttime(String time){
+        String t[]=time.split(":");
+        String h=t[0];
+        String m=t[1];
         String suffix;
-        int var = Integer.parseInt(h);
-        if (var < 12) {
-            suffix = "AM";
-        } else {
-            suffix = "PM";
-            if (var >= 13) {
-                var = var - 12;
+        int var=Integer.parseInt(h);
+
+
+        if(var<12)
+        {
+            suffix="AM";
+        }
+        else{
+            suffix="PM";
+            if(var>=13)
+            {
+                var=var-12;
             }
         }
-
-        String local = Integer.toString(var) + ":" + m + " " + suffix;
+        String local;
+        if(var<10) {
+            local = "0"+Integer.toString(var) + ":" + m + " " + suffix;
+        }
+        else
+            local = Integer.toString(var) + ":" + m + " " + suffix;
         System.out.println(local);
         return local;
     }
-
 
     @Override
     public void onBindViewHolder(final ReminderAdapter.ViewHolder holder, int position) {

@@ -89,6 +89,7 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
             LinearLayout.LayoutParams.WRAP_CONTENT);
 
     ImageButton hide1;
+    ImageButton fab1;
 
     int x=0;
     @Override
@@ -105,9 +106,12 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
 
 
         hide1=(ImageButton)findViewById(R.id.imageButton2);
+        fab1=(ImageButton)findViewById(R.id.fab1);
         sharedread = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         email=sharedread.getString("email_id","Admin");
         aSwitch=(Switch)findViewById(R.id.alarm_status);
+        fab1.setVisibility(View.VISIBLE);
+
         aSwitch.setChecked(true);
         aSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -115,9 +119,13 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
                 // true if the switch is in the On position
                 if(isChecked){
                     status_alarm="true";
+                    fab1.setVisibility(View.VISIBLE);
+
                 }
-                else
-                    status_alarm="false";
+                else {
+                    status_alarm = "false";
+                    fab1.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -666,8 +674,24 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
             if(result) {
                 //  Toast.makeText(getApplication().getApplicationContext(), "Data is store", Toast.LENGTH_SHORT);
 
-                if(status.equals("false")){
-                    startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                if(status.equals("false")) {
+                    if (intent1 != null) {
+                        Intent intent = new Intent(AddMedication.this, SetReminder.class);
+                        intent.putExtra("Doctor", intent1.getStringExtra("Doctor"));
+                        intent.putExtra("Advice", intent1.getStringExtra("Advice"));
+                        intent.putExtra("Category", intent1.getStringExtra("Category"));
+                        intent.putExtra("Medi", intent1.getStringExtra("Medi"));
+                        intent.putExtra("Description", description);
+                        intent.putExtra("Reminder_timer", id_reminder_timer);
+                        intent.putExtra("Schedule_duration", schedule_duration);
+                        intent.putExtra("Schedule_days", schedule_days);
+                        intent.putExtra("Unique_id", unique_id);
+                        intent.putExtra("prescription_unique_id", prescription_unique_id);
+                        startActivity(intent);
+
+                    } else {
+                        startActivity(new Intent(getApplicationContext(), AddMedical_history.class));
+                    }
                 }
                 else {
                     Intent intent = new Intent(AddMedication.this, SetReminder.class);

@@ -68,8 +68,14 @@ public class AlertDialogClass extends AppCompatActivity{
                 intent1.putExtra("Unique_id",intent.getStringExtra("Unique_id"));
                 Log.i("ghj",intent.getStringExtra("schedule_duration"));
                 Log.i("what is time",snooze_time.getText().toString());
-                int time=Integer.parseInt(snooze_time.getText().toString());
-                PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), intent.getIntExtra("unique_temp_timer_id",1), intent1, 0);
+                int time;
+                       try {
+                           time = Integer.parseInt(snooze_time.getText().toString());
+                       }catch (Exception e){
+                           time=60000;
+                       }
+
+                           PendingIntent alarmIntent = PendingIntent.getBroadcast(getApplicationContext(), intent.getIntExtra("unique_temp_timer_id",1), intent1, 0);
                 AlarmManager alarmMgr = (AlarmManager) getApplicationContext().getSystemService(Context.ALARM_SERVICE);
                 alarmMgr.set(AlarmManager.RTC_WAKEUP, Calendar.getInstance().getTimeInMillis()+(60000*time), alarmIntent);
 

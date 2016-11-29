@@ -81,7 +81,7 @@ try {
     } else {
         System.out.println(Calendar.SATURDAY + "a" + Calendar.SUNDAY + "b" + Calendar.MONDAY);
 
-        //  System.out.println(dayofweek.contains(week.get(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)))+"aaaaa"+week.get(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))+Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
+          System.out.println(dayofweek.contains(week.get(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)))+"aaaaa"+week.get(Calendar.getInstance().get(Calendar.DAY_OF_WEEK))+Calendar.getInstance().get(Calendar.DAY_OF_WEEK));
         if (dayofweek.equals("Every day") || dayofweek.equals("specific days of week") || dayofweek.contains(week.get(Calendar.getInstance().get(Calendar.DAY_OF_WEEK)))) {
             show_notiication(intent, string, context);
         }

@@ -7,7 +7,7 @@
         android:id="@+id/snooze_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="This is your popup dialog preview"
+        android:hint="Enter time in minutes"
         android:inputType="number"
         android:textSize="20sp"
         />

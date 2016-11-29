@@ -25,7 +25,7 @@ import java.util.List;
 
 public class AddMedical_history extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String speciality=null;
-    String med=null;
+    String med="";
     String doctor=null;
     String advise=null;
     TextView Doctor;
@@ -65,21 +65,29 @@ public class AddMedical_history extends AppCompatActivity implements AdapterView
                 System.out.println("aaaasdf" + getIntent().getStringExtra("Description")+med);
               //  String[] parts = med.split("=");
 int i;
-               /*
-                for (String retval: med.split("=")) {
-                    FragmentManager fragmentManager = getFragmentManager();
-                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    frag_history hello = new  frag_history();
-                    Bundle bundle=new Bundle();
-                    bundle.putString("key",retval);
+               if(med!=null) {
+                   for (String retval : med.split("=")) {
+                       System.out.println(retval+"sujeet");
+                       try {
+                           if (!retval.equals("null")) {
+                               FragmentManager fragmentManager = getFragmentManager();
+                               FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                               frag_history hello = new frag_history();
+                               Bundle bundle = new Bundle();
+                               bundle.putString("key", retval);
 
-                    hello.setArguments(bundle);
+                               hello.setArguments(bundle);
 
 
-                    fragmentTransaction.add(R.id.ddupli, hello, "HELLO");
+                               fragmentTransaction.add(R.id.ddupli, hello, "HELLO");
 
-                    fragmentTransaction.commit();
-                }*/
+                               fragmentTransaction.commit();
+                           }
+                       }catch (Exception e){
+                           e.printStackTrace();
+                       }
+                   }
+               }
                 FragmentManager fragmentManager = getFragmentManager();
                 FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                 frag_history hello = new  frag_history();
@@ -100,6 +108,7 @@ int i;
 
                     t1.setText(Integer.toString(per(skip))+"%"+"\n");*/
                 fragmentTransaction.commit();
+                if(getIntent().getStringExtra("Description")!=null)
                 med=med+"="+getIntent().getStringExtra("Description");
             }
 

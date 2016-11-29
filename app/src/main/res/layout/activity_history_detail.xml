@@ -12,8 +12,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Name"
-        android:id="@+id/disease_name"
+        android:text="Prescription Details"
+
         android:textSize="28sp"
         android:layout_marginBottom="15dp"
         android:textColor="?android:attr/colorPressedHighlight"
@@ -36,16 +36,19 @@
         android:layout_marginBottom="1dp" >
 
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:src="@drawable/doctor1"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="5dp"
             android:id="@+id/doctor_name"
-            android:textSize="20sp"
+            android:textSize="22sp"
             android:layout_marginLeft="20dp"
-            android:hint="Doctor's Name"/>
+            android:hint="Doctor's Name"
+            android:textColor="@android:color/background_dark"
+            android:textStyle="normal|bold|italic" />
     </LinearLayout>
 
 
@@ -56,8 +59,9 @@
             android:id="@+id/speciality"
             android:textSize="15sp"
 
-            android:layout_marginLeft="60dp"
-            android:hint="Doctor's Name"/>
+            android:layout_marginLeft="80dp"
+            android:hint="Doctor's Name"
+            android:textColor="@android:color/background_dark" />
     </LinearLayout>
 
 
@@ -76,8 +80,32 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:layout_marginRight="70dp"
+            android:id="@+id/disease_name"
+            android:layout_marginLeft="80dp"
+            android:textSize="25sp"
+            android:text="Disease"
+            android:textColor="@color/Red" />
+        <ImageView
+
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/doct"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="40dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="70dp"
             android:layout_marginLeft="10dp"
-            android:textSize="20sp"
+            android:textSize="25sp"
             android:text="Prescribed Medicines" />
         <ImageView
 
@@ -86,7 +114,6 @@
             android:src="@drawable/disease"
             />
     </LinearLayout>
-
 
 
 

@@ -153,6 +153,25 @@ TextView Name,Advise,Speciaity;
                         name = cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION));
                        // time = cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationEntry.COLUMN_NAME_REMINDER_TIMER));
                         System.out.println(name+"SUjeet");
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        frag_history hello = new  frag_history();
+                        Bundle bundle=new Bundle();
+                        bundle.putString("key",name);
+                        //bundle.putString("time",converttime(s12));
+
+
+
+                        hello.setArguments(bundle);
+
+
+                        fragmentTransaction.add(R.id.last, hello, "HELLO");
+                /*   TextView t =(TextView)findViewById(R.id.percent);
+                    TextView t1 =(TextView)findViewById(R.id.percent2);
+                    t.setText(converttime(s12));
+
+                    t1.setText(Integer.toString(per(skip))+"%"+"\n");*/
+                        fragmentTransaction.commit();
 
 
 
@@ -176,25 +195,7 @@ TextView Name,Advise,Speciaity;
             Advise.setText(advise);
             Speciaity.setText(speciality);
 
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            frag_history hello = new  frag_history();
-            Bundle bundle=new Bundle();
-            bundle.putString("key",name);
-            //bundle.putString("time",converttime(s12));
 
-
-
-            hello.setArguments(bundle);
-
-
-            fragmentTransaction.add(R.id.last, hello, "HELLO");
-                /*   TextView t =(TextView)findViewById(R.id.percent);
-                    TextView t1 =(TextView)findViewById(R.id.percent2);
-                    t.setText(converttime(s12));
-
-                    t1.setText(Integer.toString(per(skip))+"%"+"\n");*/
-            fragmentTransaction.commit();
 
         }
     }

@@ -193,13 +193,14 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
             e.printStackTrace();
         }
 
-        if(getIntent()!=null){
-            intent1=getIntent();
-            System.out.println();
+           intent1=getIntent();
+
             if(getIntent().getStringExtra("unique_id")!=null){
+
                 unique_id=getIntent().getStringExtra("unique_id");
+                System.out.println("aas"+unique_id);
             }
-        }
+
 
 
 
@@ -650,6 +651,7 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
                     intent.putExtra("Doctor",intent1.getStringExtra("Doctor"));
                     intent.putExtra("Advice",intent1.getStringExtra("Advice"));
                     intent.putExtra("Category",intent1.getStringExtra("Category"));
+                    intent.putExtra("Medi",intent1.getStringExtra("Medi"));
 
                 }
                 intent.putExtra("Description",description);
@@ -657,6 +659,7 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
                 intent.putExtra("Schedule_duration",schedule_duration);
                 intent.putExtra("Schedule_days",schedule_days);
                 intent.putExtra("Unique_id",unique_id);
+                intent.putExtra("prescription_unique_id",prescription_unique_id);
                 startActivity(intent);
             }
             else {

@@ -168,14 +168,27 @@ public class Adapter_medicine extends RecyclerView.Adapter<Adapter_medicine.View
             );
             Log.i("Reminders","cursor count");
             System.out.println(cursor.getCount()+"qaz");
-
+            holder.indic.setImageResource(R.drawable.exclamtion);
 
             if (cursor.getCount() > 0) {
 
                 while(cursor.moveToNext()) {
 
                     skip=cursor.getString(cursor.getColumnIndex(MediSysContract.MedicationReminders.COLUMN_NAME_SKIP));
+                    if (skip.length() > 0) {
+                        char h = skip.charAt(skip.length() - 1);
+                        //
+                        System.out.println(h+"hi");
 
+                        if (h == '0') {
+                            holder.indic.setImageResource(R.drawable.cross);
+                        } else if (h == '1') {
+                            holder.indic.setImageResource(R.drawable.green);
+                        } else {
+                            holder.indic.setImageResource(R.drawable.exclamtion);
+                        }
+
+                    }
 
 
 
@@ -203,19 +216,7 @@ public class Adapter_medicine extends RecyclerView.Adapter<Adapter_medicine.View
 
 
 
-        if (skip.length() > 0) {
-            char h = skip.charAt(skip.length() - 1);
-            //
 
-            if (h == '0') {
-                holder.indic.setImageResource(R.drawable.cross);
-            } else if (h == '1') {
-                holder.indic.setImageResource(R.drawable.green);
-            } else {
-                holder.indic.setImageResource(R.drawable.exclamtion);
-            }
-
-        }
 
 
     }

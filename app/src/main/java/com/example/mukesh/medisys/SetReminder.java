@@ -52,6 +52,7 @@ public class SetReminder extends AppCompatActivity {
             intent.putExtra("Advice", getIntent().getStringExtra("Advice"));
             intent.putExtra("Category", getIntent().getStringExtra("Category"));
             intent.putExtra("Description",getIntent().getStringExtra("Description"));
+            intent.putExtra("prescription_unique_id",getIntent().getStringExtra("prescription_unique_id"));
             startActivity(intent);
         }
     }

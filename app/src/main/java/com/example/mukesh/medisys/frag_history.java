@@ -22,13 +22,13 @@ public class frag_history extends Fragment
         //Inflate the layout for this fragment
 
         View rootView = inflater.inflate(
-                R.layout.rough, container, false);
+                R.layout.frag_history, container, false);
         TextView t = (TextView) rootView.findViewById(R.id.Name);
-        TextView t1 = (TextView) rootView.findViewById(R.id.Time);
+       // TextView t1 = (TextView) rootView.findViewById(R.id.Time);
 
-        t.setText(getArguments().getString("Time"));
+        t.setText(getArguments().getString("key"));
 
-        t1.setText(getArguments().getString("Name"));
+      //  t1.setText(getArguments().getString("Name"));
 
 
         return rootView;

@@ -28,20 +28,22 @@
                 android:textStyle="normal|bold"
                 android:id="@+id/Name"
                 android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-              />
-
-            <TextView
-                android:text="09:00 am"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="24sp"
-                android:textStyle="normal|bold"
-                android:id="@+id/Time"
-
-                android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="10dp" />
+                android:layout_marginStart="44dp"
+                android:layout_marginTop="12dp"
+                android:textColor="@android:color/background_dark" />
+
+            <!-- <TextView
+                 android:text="09:00 am"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:textSize="24sp"
+                 android:textStyle="normal|bold"
+                 android:id="@+id/Time"
+
+                 android:layout_alignParentTop="true"
+                 android:layout_alignParentStart="true"
+                 android:layout_marginStart="10dp" />-->
 
 
         </RelativeLayout>

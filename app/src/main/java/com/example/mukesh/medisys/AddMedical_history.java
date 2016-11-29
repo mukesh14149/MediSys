@@ -1,5 +1,7 @@
 package com.example.mukesh.medisys;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -27,8 +29,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+
 public class AddMedical_history extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String speciality=null;
+    String med=null;
     String doctor=null;
     String advise=null;
     TextView Doctor;
@@ -61,9 +65,49 @@ public class AddMedical_history extends AppCompatActivity implements AdapterView
                 intent=getIntent();
                 Doctor.setText(getIntent().getStringExtra("Doctor"));
                 Advise.setText(getIntent().getStringExtra("Advice"));
+                med=getIntent().getStringExtra("Medi");
+                unique_id=getIntent().getStringExtra("prescription_unique_id");
                 spinner.setSelection(categories.indexOf(getIntent().getStringExtra("Category")));
 
-                System.out.println("aaaasdf" + getIntent().getStringExtra("Description"));
+                System.out.println("aaaasdf" + getIntent().getStringExtra("Description")+med);
+              //  String[] parts = med.split("=");
+int i;
+               /*
+                for (String retval: med.split("=")) {
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    frag_history hello = new  frag_history();
+                    Bundle bundle=new Bundle();
+                    bundle.putString("key",retval);
+
+                    hello.setArguments(bundle);
+
+
+                    fragmentTransaction.add(R.id.ddupli, hello, "HELLO");
+
+                    fragmentTransaction.commit();
+                }*/
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                frag_history hello = new  frag_history();
+                Bundle bundle=new Bundle();
+                bundle.putString("key",getIntent().getStringExtra("Description"));
+
+                //bundle.putString("time",converttime(s12));
+
+
+
+                hello.setArguments(bundle);
+
+
+                fragmentTransaction.add(R.id.ddupli, hello, "HELLO");
+                /*   TextView t =(TextView)findViewById(R.id.percent);
+                    TextView t1 =(TextView)findViewById(R.id.percent2);
+                    t.setText(converttime(s12));
+
+                    t1.setText(Integer.toString(per(skip))+"%"+"\n");*/
+                fragmentTransaction.commit();
+                med=med+"="+getIntent().getStringExtra("Description");
             }
 
             ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
@@ -99,6 +143,7 @@ public class AddMedical_history extends AppCompatActivity implements AdapterView
         intent.putExtra("Doctor",Doctor.getText().toString());
         intent.putExtra("Advice",Advise.getText().toString());
         intent.putExtra("Category",speciality.toString());
+        intent.putExtra("Medi",med);
         startActivity(intent);
     }
     public void save_history(View view) {
@@ -112,9 +157,13 @@ public class AddMedical_history extends AppCompatActivity implements AdapterView
 
         }
         else{
+            Intent intent=new Intent(this,MainActivity.class);
+
 
             AddMedical_history.save_data_history save = new AddMedical_history.save_data_history(doctor, advise, speciality, reminderArchclass,unique_id);
             save.execute();
+            startActivity(intent);
+
         }
 
 

@@ -41,10 +41,10 @@ public class MainFragmentDetails extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_wb_sunny_black_24dp));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_wb_sunny_black_24dp));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_wb_sunny_black_24dp));
-        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_wb_sunny_black_24dp));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.sunrise));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.sun));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.sunset));
+        tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.moon));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         current_date= getIntent().getStringExtra("CurrentDate");
@@ -64,7 +64,7 @@ public class MainFragmentDetails extends AppCompatActivity {
                 viewPager.setCurrentItem(tab.getPosition());
                 System.out.println("see position"+tab.getPosition());
 
-                switch (tab.getPosition()){
+                /*switch (tab.getPosition()){
                     case 0:
                         tab.setIcon(R.drawable.ic_wb_sunny_white_24dp);
                         break;
@@ -77,14 +77,14 @@ public class MainFragmentDetails extends AppCompatActivity {
                     case 3:
                         tab.setIcon(R.drawable.ic_wb_sunny_white_24dp);
                         break;
-                }
+                }*/
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
                 System.out.println("see position unselected"+tab.getPosition());
-                switch (tab.getPosition()){
+               /* switch (tab.getPosition()){
                     case 0:
                         tab.setIcon(R.drawable.ic_wb_sunny_black_24dp);
                         break;
@@ -97,7 +97,7 @@ public class MainFragmentDetails extends AppCompatActivity {
                     case 3:
                         tab.setIcon(R.drawable.ic_wb_sunny_black_24dp);
                         break;
-                }
+                }*/
             }
 
             @Override

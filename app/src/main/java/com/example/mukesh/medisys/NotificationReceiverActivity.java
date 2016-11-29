@@ -49,7 +49,6 @@ public class NotificationReceiverActivity extends BroadcastReceiver {
             update_skip_take.execute();
              System.out.println(skip+"0"+"sss"+intent_1.getStringExtra("Description"));
             //  intent.putExtra("Time",intent.getIntExtra("Time",1));
-            System.out.println("voooooooo"+ intent_1.getIntExtra("unique_temp_timer_id",1));
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                 intent_1.getIntExtra("unique_temp_timer_id",1), intent, 0);
             pendingIntent.cancel();

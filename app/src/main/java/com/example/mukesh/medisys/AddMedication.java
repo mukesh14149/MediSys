@@ -123,7 +123,6 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
         startdate=(TextView)findViewById(R.id.start_date);
         startdate.setText(currentTime.get(Calendar.YEAR)+"-"+(currentTime.get(Calendar.MONTH)+1)+"-"+currentTime.get(Calendar.DAY_OF_MONTH));
 
-        System.out.println("in oncreate method 111");
 
         hide1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,7 +150,6 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
 
             Bundle b = getIntent().getExtras();
              reminderArchclass = b.getParcelable("ReminderArchclass");
-            Log.i("Check bhai","yo budd");
             System.out.println(reminderArchclass.getDescription());
             editdesc.setText(reminderArchclass.getDescription());
 
@@ -197,7 +195,7 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
             flag_for_object=1;
         }catch (Exception e){
             flag_for_object=0;
-            Log.i("Check bhai","yo");
+            Log.i("Check in Medication","type");
             e.printStackTrace();
         }
 
@@ -206,7 +204,6 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
             if(getIntent().getStringExtra("unique_id")!=null){
 
                 unique_id=getIntent().getStringExtra("unique_id");
-                System.out.println("aas"+unique_id);
             }
 
 
@@ -295,13 +292,14 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
             description = editdesc.getText().toString();
 
             fill_reminder_timer();
-            System.out.println("yo kha ha "+reminder_timer.size());
+
+            System.out.println("in save_medication"+reminder_timer.size());
             for(int i=0;i<reminder_timer.size();i++){
                 System.out.println("aaa"+reminder_timer);
             }
 
             radio_duration_selected = radioduration.getCheckedRadioButtonId();
-            System.out.println("yo buddy we are done" + radio_duration_selected);
+            System.out.println("Done here" + radio_duration_selected);
 
             buttonduration = (RadioButton) findViewById(radio_duration_selected);
             schedule_duration = buttonduration.getText().toString();
@@ -555,10 +553,10 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
 
 
         for(int k=2014149;k<c;k++){
-            textView =(TextView)findViewById(k);
-            System.out.println(textView.getText()+"checkout");
 
             try {
+                textView =(TextView)findViewById(k);
+                System.out.println(textView.getText()+"checkout");
                 String [] time=convertime_12_to_24(textView.getText().toString()).split(":");
               //  System.out.println(convertime_12_to_24(textView.getText().toString())+"sd"+time[1]+"aaaseer"+time[0]+"   "+textView.getText().toString());
                 beginCal.set(Year,Month-1, Day, Integer.parseInt(time[0]), Integer.parseInt(time[1]));

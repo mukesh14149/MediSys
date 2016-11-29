@@ -178,10 +178,8 @@ public class PropNumberDialogFragment extends DialogFragment {
                 @Override
                 public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                     Log.i("Check timepicker","Below me");
-                    System.out.println(selectedHour + ":" + selectedMinute+"mml");
                     //          t.setText( converttime(selectedHour + ":" + selectedMinute));
                     beginCal.set(Year,Month-1, Day, selectedHour, selectedMinute);
-                    System.out.println(selectedHour + ":" + selectedMinute+"mml"+beginCal.getTime().toString());
 
                     reminder_timer=beginCal.getTime().toString();
                     mListener.onComplete(reminder_timer,selectedHour,selectedMinute);

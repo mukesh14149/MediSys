@@ -44,7 +44,16 @@ public class SetReminder extends AppCompatActivity {
         setContentView(R.layout.activity_set_reminder);
         intent1=getIntent();
         createNotification();
-       startActivity(new Intent(this,MainActivity.class));
+        if(getIntent().getStringExtra("Doctor")==null){
+            startActivity(new Intent(this,MainActivity.class));
+        }else {
+            Intent intent = new Intent(this, AddMedical_history.class);
+            intent.putExtra("Doctor", getIntent().getStringExtra("Doctor"));
+            intent.putExtra("Advice", getIntent().getStringExtra("Advice"));
+            intent.putExtra("Category", getIntent().getStringExtra("Category"));
+            intent.putExtra("Description",getIntent().getStringExtra("Description"));
+            startActivity(intent);
+        }
     }
     public void createNotification() {
         // Prepare intent which is triggered if the

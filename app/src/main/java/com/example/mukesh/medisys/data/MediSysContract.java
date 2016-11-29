@@ -27,6 +27,7 @@ public final class MediSysContract {
 
         final public static String TABLE_NAME="medication_detail";
         final public static String COLUMN_NAME_EMAIL="email";
+        final public static String COLUMN_NAME_PRESCRIPTION_UNIQUE_ID="prescription_unique_id";
         final public static String COLUMN_NAME_UNIQUE_ID="unique_id";
         final public static String COLUMN_NAME_DESCRIPTION="medication_description";
         final public static String COLUMN_NAME_REMINDER_TIMER="reminder_timer";
@@ -52,7 +53,6 @@ public final class MediSysContract {
         final public static String COLUMN_NAME_DOCTOR="name";
         final public static String COLUMN_NAME_SPECIALITY="speciality";
         final public static String COLUMN_NAME_ADVISE="advise";
-
 
     }
 

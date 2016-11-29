@@ -80,7 +80,7 @@ public class Record_tab extends Fragment {
 
         Record_tab.Getreminder getreminder = new Record_tab.Getreminder(advise);
         getreminder.execute();
-       
+
 
 
 

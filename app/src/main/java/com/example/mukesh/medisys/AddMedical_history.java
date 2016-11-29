@@ -25,6 +25,7 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 public class AddMedical_history extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     String speciality=null;
@@ -32,7 +33,9 @@ public class AddMedical_history extends AppCompatActivity implements AdapterView
     String advise=null;
     TextView Doctor;
     TextView Advise;
+    Intent intent;
     ReminderArchclass reminderArchclass;
+    String unique_id=Long.toString(System.currentTimeMillis());
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,22 +47,36 @@ public class AddMedical_history extends AppCompatActivity implements AdapterView
         spinner.setOnItemSelectedListener(this);
         Doctor=(TextView)findViewById(R.id.doctor);
         Advise=(TextView)findViewById(R.id.advise);
+        try {
 
-        // Spinner Drop down elements
-        List<String> categories = new ArrayList<String>();
-        categories.add("Physician");
-        categories.add("Surgion");
-        categories.add("Cardiologist");
-        categories.add("Dermalogist");
-        categories.add("Geriatrics");
-        categories.add("General");
-        ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+            // Spinner Drop down elements
+            List<String> categories = new ArrayList<String>();
+            categories.add("Physician");
+            categories.add("Surgion");
+            categories.add("Cardiologist");
+            categories.add("Dermalogist");
+            categories.add("Geriatrics");
+            categories.add("General");
+            if (getIntent() != null) {
+                intent=getIntent();
+                Doctor.setText(getIntent().getStringExtra("Doctor"));
+                Advise.setText(getIntent().getStringExtra("Advice"));
+                spinner.setSelection(categories.indexOf(getIntent().getStringExtra("Category")));
 
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                System.out.println("aaaasdf" + getIntent().getStringExtra("Description"));
+            }
 
-        // attaching data adapter to spinner
-        spinner.setAdapter(dataAdapter);
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+
+            // Drop down layout style - list view with radio button
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            // attaching data adapter to spinner
+            spinner.setAdapter(dataAdapter);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
     }
     @Override
@@ -75,7 +92,13 @@ public class AddMedical_history extends AppCompatActivity implements AdapterView
     }
     void onclick(View v)
     {
+        System.out.println("aaa"+unique_id);
+
         Intent intent=new Intent(this,AddMedication.class);
+        intent.putExtra("unique_id",unique_id);
+        intent.putExtra("Doctor",Doctor.getText().toString());
+        intent.putExtra("Advice",Advise.getText().toString());
+        intent.putExtra("Category",speciality.toString());
         startActivity(intent);
     }
     public void save_history(View view) {
@@ -83,15 +106,14 @@ public class AddMedical_history extends AppCompatActivity implements AdapterView
         doctor = Doctor.getText().toString();
         advise=Advise.getText().toString();
 
-
-
         if(doctor==null||advise==null||speciality==null){
             Toast.makeText(getApplicationContext(), "Some Filled are empty", Toast.LENGTH_SHORT).show();
             System.out.println("holhol");
 
         }
         else{
-            AddMedical_history.save_data_history save = new AddMedical_history.save_data_history(doctor, advise, speciality, reminderArchclass);
+
+            AddMedical_history.save_data_history save = new AddMedical_history.save_data_history(doctor, advise, speciality, reminderArchclass,unique_id);
             save.execute();
         }
 
@@ -106,20 +128,19 @@ public class AddMedical_history extends AppCompatActivity implements AdapterView
 
         ReminderArchclass reminderArchclass;
         final MediSysSQLiteHelper mDbHelper = new MediSysSQLiteHelper(getApplication().getApplicationContext());
-        save_data_history(String doctor, String advise,String speciality,ReminderArchclass reminderArchclass){
+        save_data_history(String doctor, String advise,String speciality,ReminderArchclass reminderArchclass, String unique_id){
 
             this.doctor=doctor;
             this.advise=advise;
             this.speciality=speciality;
 
-            this.unique_id=Long.toString(System.currentTimeMillis());
+            this.unique_id=unique_id;
             this.reminderArchclass=reminderArchclass;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            SQLiteDatabase db = mDbHelper.getWritableDatabase();
-
+               SQLiteDatabase db = mDbHelper.getWritableDatabase();
 
 
 

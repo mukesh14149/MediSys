@@ -70,12 +70,11 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
 
     RadioGroup radioduration;
     RadioButton buttonduration;
-
     RadioGroup radiodays;
     RadioButton buttondays;
-
+    Intent intent1;
     int radio_duration_selected=0;
-
+    String unique_id=Long.toString(System.currentTimeMillis());
     String number_of_days="";
     int flag_for_object=0;
 
@@ -194,6 +193,13 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
             e.printStackTrace();
         }
 
+        if(getIntent()!=null){
+            intent1=getIntent();
+            System.out.println();
+            if(getIntent().getStringExtra("unique_id")!=null){
+                unique_id=getIntent().getStringExtra("unique_id");
+            }
+        }
 
 
 
@@ -275,6 +281,7 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
 
 
     public void save_medication(View view) {
+
         try {
             description = editdesc.getText().toString();
 
@@ -318,9 +325,12 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
                 if(flag_for_object==1){
                     Reminders.Delete_item delete_item=new Reminders.Delete_item(reminderArchclass,getApplicationContext());
                     delete_item.execute();
+
                 }
-                save_data save = new save_data(email, description, reminder_timer, schedule_duration, schedule_days,skip,flag_for_object, reminderArchclass);
-                save.execute();
+
+                    save_data save = new save_data(email, description, reminder_timer, schedule_duration, schedule_days, skip, flag_for_object, reminderArchclass, unique_id);
+                    save.execute();
+
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -559,18 +569,20 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
         String schedule_duration=null;
         String schedule_days=null;
         String skip=null;
+        String prescription_unique_id=null;
         String unique_id=null;
         int flag_for_object=0;
         ReminderArchclass reminderArchclass;
         final MediSysSQLiteHelper mDbHelper = new MediSysSQLiteHelper(getApplication().getApplicationContext());
-        save_data(String email, String description, ArrayList<String> reminder_timer, String schedule_duration, String schedule_days,String  skip, int flag_for_object,ReminderArchclass reminderArchclass){
-           this.flag_for_object=flag_for_object;
+        save_data(String email, String description, ArrayList<String> reminder_timer, String schedule_duration, String schedule_days,String  skip, int flag_for_object,ReminderArchclass reminderArchclass,String unique_id){
+            this.flag_for_object=flag_for_object;
             this.email=email;
             this.description=description;
             this.reminder_timer=reminder_timer;
             this.schedule_duration=schedule_duration;
             this.schedule_days=schedule_days;
             this.skip=skip;
+            this.prescription_unique_id=unique_id;
             this.unique_id=Long.toString(System.currentTimeMillis());
             this.reminderArchclass=reminderArchclass;
         }
@@ -583,6 +595,7 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
 
 
             ContentValues values = new ContentValues();
+            values.put(MediSysContract.MedicationEntry.COLUMN_NAME_PRESCRIPTION_UNIQUE_ID,prescription_unique_id);
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_UNIQUE_ID,unique_id);
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_EMAIL, email);
             values.put(MediSysContract.MedicationEntry.COLUMN_NAME_DESCRIPTION, description);
@@ -631,8 +644,14 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
         protected void onPostExecute(Boolean result) {
             System.out.println("yo bddd"+result);
             if(result) {
-              //  Toast.makeText(getApplication().getApplicationContext(), "Data is store", Toast.LENGTH_SHORT);
+                //  Toast.makeText(getApplication().getApplicationContext(), "Data is store", Toast.LENGTH_SHORT);
                 Intent intent=new Intent(AddMedication.this,SetReminder.class);
+                if(intent1!=null){
+                    intent.putExtra("Doctor",intent1.getStringExtra("Doctor"));
+                    intent.putExtra("Advice",intent1.getStringExtra("Advice"));
+                    intent.putExtra("Category",intent1.getStringExtra("Category"));
+
+                }
                 intent.putExtra("Description",description);
                 intent.putExtra("Reminder_timer",id_reminder_timer);
                 intent.putExtra("Schedule_duration",schedule_duration);
@@ -646,5 +665,6 @@ public class AddMedication extends AppCompatActivity implements PropNumberDialog
         }
     }
 }
+
 
 

@@ -180,7 +180,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             // updated to reflect the new value, per the Android Design
             // guidelines.
             bindPreferenceSummaryToValue(getActivity(), findPreference("example_text"));
-            bindPreferenceSummaryToValue(getActivity(),findPreference("example_list"));
+//            bindPreferenceSummaryToValue(getActivity(),findPreference("example_list"));
         }
 
         @Override

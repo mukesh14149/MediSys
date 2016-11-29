@@ -35,21 +35,32 @@ public class MedicationItemPagerFragment extends Fragment {
         return fragment;
     }
 
-    public String converttime(String time) {
-        String t[] = time.split(":");
-        String h = t[0];
-        String m = t[1];
+    public static String converttime(String time){
+        String t[]=time.split(":");
+        System.out.println("Tarun"+time.toString());
+        String h=t[0];
+        String m=t[1];
         String suffix;
-        int var = Integer.parseInt(h);
-        if (var < 12) {
-            suffix = "AM";
-        } else {
-            suffix = "PM";
-            if (var >= 13) {
-                var = var - 12;
+        int var=Integer.parseInt(h);
+
+
+        if(var<12)
+        {
+            suffix="AM";
+        }
+        else{
+            suffix="PM";
+            if(var>=13)
+            {
+                var=var-12;
             }
         }
-        String local = Integer.toString(var) + ":" + m + " " + suffix;
+        String local;
+        if(var<10) {
+            local = "0"+Integer.toString(var) + ":" + m + " " + suffix;
+        }
+        else
+            local = Integer.toString(var) + ":" + m + " " + suffix;
         System.out.println(local);
         return local;
     }
@@ -70,18 +81,18 @@ public class MedicationItemPagerFragment extends Fragment {
 
         ArrayList<String> words = reminderArchclass.getReminder_timer();
         TextView timer = (TextView) rootView.findViewById(R.id.timer_view);
-/*
+
 
         TextView description = (TextView) rootView.findViewById(R.id.description_view);
         description.setText(reminderArchclass.getDescription());
 
 
-        TextView schedule_duration=(TextView)rootView.findViewById(R.id.schedule_days_view);
-        schedule_duration.setText(reminderArchclass.getSchedule_duration());
-
-        TextView schedule_days=(TextView)rootView.findViewById(R.id.schedule_date_view);
+        TextView schedule_days=(TextView)rootView.findViewById(R.id.schedule_days_view);
         schedule_days.setText(reminderArchclass.getSchedule_days());
-*/
+
+        TextView schedule_duration=(TextView)rootView.findViewById(R.id.schedule_duration);
+        schedule_duration.setText(reminderArchclass.getSchedule_duration());
+        System.out.println(reminderArchclass.getSchedule_days()+"aaaa");
 
 
         ImageButton edit=(ImageButton)rootView.findViewById(R.id.edit);
@@ -110,6 +121,7 @@ public class MedicationItemPagerFragment extends Fragment {
 
         int i;
         //String[] words = a.split("BBB");
+        System.out.println("Sujeet"+words.get(0));
         String[] word = words.get(0).split(" ");
         if (word.length > 2) {
             word[3] = word[3].substring(0, (word[3].length() - 3));

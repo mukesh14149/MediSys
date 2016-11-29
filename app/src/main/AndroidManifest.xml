@@ -74,7 +74,9 @@
         <activity android:name=".MedicationItemPagerActivity" />
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
+        <activity android:name=".ReminderArch.history_detail" />
+        <activity android:name=".History_detail"></activity>
     </application>
 
 </manifest>

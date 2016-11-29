@@ -50,6 +50,7 @@ TextView naMe;
         Intent intent = getIntent();
         String skip = intent.getStringExtra("skip");
         String name = intent.getStringExtra("name");
+        String unique = intent.getStringExtra("unique_id");
 
    al=(RelativeLayout)findViewById(R.id.all);
 
@@ -118,8 +119,8 @@ TextView naMe;
         try {
             SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
-            String selection = MediSysContract.MedicationReminders.COLUMN_NAME_DESCRIPTION+"=?";
-            String[] selectionArgs = {name};
+            String selection = MediSysContract.MedicationReminders.COLUMN_NAME_UNIQUE_ID+"=?";
+            String[] selectionArgs = {unique};
 
 
             String[] projection = {
@@ -373,6 +374,7 @@ f=f+skip;
                 var = var - 12;
             }
         }
+
         String local = Integer.toString(var) + ":" + m + " " + suffix;
         System.out.println(local);
         return local;

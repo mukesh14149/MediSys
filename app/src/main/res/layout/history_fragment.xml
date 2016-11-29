@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingBottom="8dp"
+    android:paddingBottom="5dp"
     >
 
 
@@ -50,7 +50,7 @@
             <TextView
                 android:paddingTop="3dp"
                 android:layout_marginLeft="45dp"
-                android:id="@+id/description_view"
+                android:id="@+id/disease"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Description"
@@ -69,32 +69,9 @@
 -->
 
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/emptyforskip"
-                android:visibility="gone"/>
-
-            <ImageView
-                android:paddingTop="3dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/green"
-                android:id="@+id/indicator"
-
-                android:layout_weight="1"
-                android:layout_alignTop="@+id/description_view"
-                android:layout_toEndOf="@+id/description_view" />
-
-            <ImageView
-                android:layout_marginLeft="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/pill"
 
 
-                android:layout_below="@+id/emptyforskip"
-                android:layout_toEndOf="@+id/emptyforskip" />
+
 
         </RelativeLayout>
 

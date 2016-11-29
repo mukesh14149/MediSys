@@ -68,6 +68,18 @@ public class Medicine_tab extends Fragment {
         listView = (RecyclerView) rootView.findViewById(R.id.recycler_view2);
         listView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+        listView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getActivity(), new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override public void onItemClick(View view, int position) {
+                        //ShowPopup(getContext(),view, position);
+
+                        Intent intent=new Intent(getActivity(), Medicine_Graph.class);
+                        intent.putExtra("unique_id",remArc.get(position).getUnique_id());
+                        intent.putExtra("name",remArc.get(position).getDescription());
+                        startActivity(intent);
+                    }
+                })
+        );
 
         Medicine_tab.Getreminder getreminder = new Medicine_tab.Getreminder(email);
         getreminder.execute();

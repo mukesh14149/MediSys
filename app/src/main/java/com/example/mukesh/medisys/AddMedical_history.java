@@ -60,6 +60,7 @@ public class AddMedical_history extends AppCompatActivity implements AdapterView
 
         // attaching data adapter to spinner
         spinner.setAdapter(dataAdapter);
+
     }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -84,7 +85,7 @@ public class AddMedical_history extends AppCompatActivity implements AdapterView
 
 
 
-        if(doctor!=null||advise!=null||speciality!=null){
+        if(doctor==null||advise==null||speciality==null){
             Toast.makeText(getApplicationContext(), "Some Filled are empty", Toast.LENGTH_SHORT).show();
             System.out.println("holhol");
 
@@ -171,6 +172,7 @@ public class AddMedical_history extends AppCompatActivity implements AdapterView
             if(result) {
 
                 Toast.makeText(getApplicationContext(), "Data is  store", Toast.LENGTH_SHORT);
+                System.out.println("yo bddd"+result);
             }
             else {
                 Toast.makeText(getApplicationContext(), "Data is not store", Toast.LENGTH_SHORT);

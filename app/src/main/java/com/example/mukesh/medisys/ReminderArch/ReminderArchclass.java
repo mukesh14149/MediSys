@@ -17,6 +17,8 @@ public class ReminderArchclass implements Parcelable {
     private String skip=null;
     private String unique_id=null;
     private String alarm_status=null;
+    private String MedicineUnique_id=null;
+    private String prescription_unique_id=null;
     private String doctor=null;
     private String advise=null;
     private String speciality=null;
@@ -48,6 +50,24 @@ public class ReminderArchclass implements Parcelable {
     public void setUnique_id(String unique_id){
         this.unique_id=unique_id;
     }
+    public void setDoctor(String doctor){
+        this.doctor= doctor;
+    }
+    public void setAdvise(String advise){
+        this.advise= advise;
+    }
+    public void setSpeciality(String speciality){
+        this.speciality= speciality;
+    }
+    public void setPrescription_unique_id(String prescription_unique_id){
+        this.prescription_unique_id=prescription_unique_id;
+    }
+    public void setMedicineUnique_id(String setMedicineUnique_id)
+    {
+        this.MedicineUnique_id= MedicineUnique_id;
+
+    }
+
 
     public void setskip(String skip){
         this.skip=skip;
@@ -72,6 +92,11 @@ public class ReminderArchclass implements Parcelable {
     public  String getSchedule_days(){
         return  schedule_days;
     }
+    public String getMedicineUnique_id()
+    {
+        return MedicineUnique_id;
+
+    }
 
     public String getDescription(){
         return description;
@@ -94,6 +119,10 @@ public class ReminderArchclass implements Parcelable {
     public String getSpeciality(){
         return speciality;
     }
+    public String getPrescription_unique_id(){
+        return prescription_unique_id;
+    }
+
     private ReminderArchclass(Parcel in){
         reminder_timer = (ArrayList<String>) in.readSerializable();
         id_reminder_timer=(HashMap<String, String>)in.readSerializable();

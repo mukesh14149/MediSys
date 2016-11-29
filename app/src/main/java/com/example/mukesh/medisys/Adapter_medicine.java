@@ -50,7 +50,7 @@ public class Adapter_medicine extends RecyclerView.Adapter<Adapter_medicine.View
     }
 
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class ViewHolder extends RecyclerView.ViewHolder{
         // each data item is just a string in this case
 
         TextView t;
@@ -67,7 +67,7 @@ public class Adapter_medicine extends RecyclerView.Adapter<Adapter_medicine.View
 
             layout = (LinearLayout) item.findViewById(R.id.medicine_details);
             frag = (LinearLayout) item.findViewById(R.id.parent_frag);
-            item.setOnClickListener(this);
+           // item.setOnClickListener(this);
 
 
             description = (TextView) item.findViewById(R.id.description_view);
@@ -76,14 +76,14 @@ public class Adapter_medicine extends RecyclerView.Adapter<Adapter_medicine.View
 
         }
 
-        @Override
+      /*  @Override
         public void onClick(View v) {
 
 
 
 
 
-              /* Toast.makeText(v.getContext(), "ROW PRESSED = " + String.valueOf(this), Toast.LENGTH_SHORT).show();*/
+              *//* Toast.makeText(v.getContext(), "ROW PRESSED = " + String.valueOf(this), Toast.LENGTH_SHORT).show();*//*
             Intent intent=new Intent(context,Medicine_Graph.class);
 
             intent.putExtra("skip",t.getText() );
@@ -92,7 +92,7 @@ public class Adapter_medicine extends RecyclerView.Adapter<Adapter_medicine.View
             context.startActivity(intent);
 
         }
-
+*/
 
     }
 
